@@ -147,13 +147,13 @@ export type ParseAndSimulateResult =
   | { supported: true; usedFallback: boolean; interpretation: string; parsedIntents: ParseIntent[]; data: SimulationData }
   | { supported: false; usedFallback: boolean; interpretation: string };
 
-export async function parseAndSimulate(text: string, day?: string, slug?: string): Promise<ParseAndSimulateResult> {
+export async function parseAndSimulate(text: string, day?: string, slug?: string, scopeDays: number = 1): Promise<ParseAndSimulateResult> {
   const raw = await request<RawSimulateResult & { supported: boolean; usedFallback: boolean; interpretation: string; parsedIntents?: ParseIntent[] }>(
     "/api/parse-and-simulate",
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text, ...(day ? { day } : {}), ...(slug ? { slug } : {}) }),
+      body: JSON.stringify({ text, ...(day ? { day } : {}), ...(slug ? { slug } : {}), scope_days: scopeDays }),
     }
   );
   if (!raw.supported) {
@@ -216,11 +216,11 @@ export interface RecoveryStartResponse {
   estimatedDurationSec: number;
 }
 
-export function startRecovery(day: string, disruptions: BackendDisruptionRequest[]): Promise<RecoveryStartResponse> {
+export function startRecovery(day: string, disruptions: BackendDisruptionRequest[], scopeDays: number = 1): Promise<RecoveryStartResponse> {
   return request<RecoveryStartResponse>("/api/recovery", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ day, disruptions }),
+    body: JSON.stringify({ day, disruptions, scope_days: scopeDays }),
   });
 }
 
