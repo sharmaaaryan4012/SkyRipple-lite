@@ -46,7 +46,7 @@ const BOOT_DATA_SOURCE_SCENARIO_ID = "december-full";
 function HomeInner() {
   const searchParams = useSearchParams();
   const scenarioId = searchParams.get("scenario") || BOOT_DATA_SOURCE_SCENARIO_ID;
-  const skipCleanBoot = searchParams.get("raw") !== "0"; // default true for lite version
+  const skipCleanBoot = searchParams.get("raw") === "1"; // default false (clean boot), requires ?raw=1 to skip
   return <ControlRoomApp bootDataSourceScenarioId={scenarioId} skipCleanBoot={skipCleanBoot} />;
 }
 

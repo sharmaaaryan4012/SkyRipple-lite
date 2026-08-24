@@ -248,7 +248,7 @@ export function ChatDock({
   }
 
   function handleStarterClick(prompt: { label: string; id: string }) {
-    window.location.href = `/?scenario=${prompt.id}`;
+    window.location.href = `/?scenario=${prompt.id}&raw=1`;
   }
 
   function handleKeyDown(e: React.KeyboardEvent) {
