@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { Panel } from "@/components/ui/Panel";
 import { DateClockReadout } from "./DateClockReadout";
 import { ScenarioScopePanel } from "./ScenarioScopePanel";
@@ -5,6 +8,7 @@ import { TimelineScrubber } from "./TimelineScrubber";
 import { PlaybackControls } from "./PlaybackControls";
 import { InspectorModeToggle } from "./InspectorModeToggle";
 import { DataProvenanceLine } from "./DataProvenanceLine";
+import { AboutModal } from "@/components/ui/AboutModal";
 import type { ScenarioData } from "@/lib/types";
 
 /**
@@ -22,9 +26,25 @@ import type { ScenarioData } from "@/lib/types";
  * cost-chart card).
  */
 export function TimeControlPanel({ scenario }: { scenario: ScenarioData }) {
+  const [aboutOpen, setAboutOpen] = useState(false);
+
   return (
     <div className="flex flex-col gap-3">
-      <p className="font-display text-lg font-semibold text-aubergine px-1">SkyRipple<span className="font-light text-muted ml-1 text-base">lite</span></p>
+      <div className="flex items-center justify-between px-1">
+        <p className="font-display text-lg font-semibold text-aubergine">SkyRipple<span className="font-light text-muted ml-1 text-base">lite</span></p>
+        <button 
+          onClick={() => setAboutOpen(true)}
+          className="text-xs font-medium text-muted hover:text-aubergine hover:bg-elevated px-2 py-1 rounded transition-colors flex items-center gap-1"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+          About
+        </button>
+      </div>
+      <AboutModal open={aboutOpen} onClose={() => setAboutOpen(false)} />
       <Panel eyebrow="Simulated time">
         <DateClockReadout day={scenario.meta.day} />
       </Panel>

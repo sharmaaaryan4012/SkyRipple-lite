@@ -129,7 +129,7 @@ export function ChatDock({
     {
       id: nextId(),
       role: "assistant",
-      text: "Hi,  I'm the ops assistant. Describe any airline disruption and I'll run it through the live simulator,  try one of the examples below, or type your own.",
+      text: "Welcome to SkyRipple! ✈️\n\nI am an agentic simulation engine. I've loaded a full day of real US air traffic. Pick a scenario below to watch how a single disruption cascades through the network, costs airlines millions, and how an AI operations team recovers it.",
     },
   ]);
   const [input, setInput] = useState("");
