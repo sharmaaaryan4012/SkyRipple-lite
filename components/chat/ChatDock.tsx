@@ -235,71 +235,11 @@ export function ChatDock({
   // /api/ask never computes or returns a number itself.
   async function submitText(text: string) {
     if (!text || busy) return;
-    // A submission made while collapsed reopens the panel to show its own
-    // progress/answer -- see this component's own docstring for why this
-    // (not a generic "any assistant message" watcher) is how re-expansion
-    // works.
     if (!expanded) expandDock();
     pushMessage("user", text);
     setInput("");
 
-    if (nlAvailable === false) {
-      pushMessage("assistant", "Live simulation via chat isn't available right now (no GEMINI_API_KEY configured on the backend).");
-      return;
-    }
-
-    setBusy(true);
-    const pendingId = pushPending("Thinking…");
-
-    try {
-      const ask = await askChat(text, buildSnapshot(scenario, recovery));
-
-      if (ask.classification === "question") {
-        const result = executeQuery(ask.queryKind ?? "", ask.params, { scenario, flights, recovery });
-        resolvePending(pendingId, `${result.interpretation}\n${result.text}`, "answer");
-        return;
-      }
-
-      if (ask.classification === "ambiguous" || ask.classification === "tier_c" || ask.classification === "unknown") {
-        resolvePending(pendingId, ask.interpretation, "answer");
-        return;
-      }
-
-      // ask.classification === "disruption" -- the EXISTING 5b flow, untouched.
-      updatePending(pendingId, STAGES[0].text);
-      startStages(pendingId);
-      const result = await parseAndSimulate(text, scenario.meta.day);
-      stopStages();
-      if (result.supported) {
-        resolvePending(pendingId, result.interpretation);
-        const disruptions: BackendDisruptionRequest[] = result.parsedIntents.map((i) => ({ kind: i.kind, target: i.target, params: i.params }));
-        onActivateLive(result.data, disruptions);
-        armSummary(result.data.scenario.meta.scenarioId);
-        // Onboarding is done: the map is the star from here on. Only the
-        // FIRST successful disruption auto-collapses -- later ones leave
-        // the panel wherever the user has it (hasRunOnce guards this).
-        if (!hasRunOnce) {
-          setHasRunOnce(true);
-          setExpanded(false);
-        }
-      } else {
-        resolvePending(pendingId, result.interpretation);
-      }
-    } catch (err) {
-      stopStages();
-      if (err instanceof BackendApiError && err.status === 400) {
-        const interpretation = typeof err.detail.interpretation === "string" ? err.detail.interpretation : "";
-        resolvePending(pendingId, interpretation ? `${interpretation}\n\nBut: ${err.message}` : `I couldn't run that: ${err.message}`);
-      } else if (err instanceof BackendApiError && err.status === 503) {
-        resolvePending(pendingId, "Live simulation via chat isn't available right now (no GEMINI_API_KEY configured on the backend).");
-      } else if (err instanceof BackendUnreachableError) {
-        resolvePending(pendingId, err.message);
-      } else {
-        resolvePending(pendingId, `Something went wrong: ${err instanceof Error ? err.message : String(err)}`);
-      }
-    } finally {
-      setBusy(false);
-    }
+    pushMessage("assistant", "Live NLP simulation and querying are only available in the full local version of SkyRipple, as they require the Python engine and Gemini API.\n\nIn this Lite version, you can click the scenario chips below to explore pre-computed cascades!");
   }
 
   function handleSubmit(e: React.FormEvent) {
