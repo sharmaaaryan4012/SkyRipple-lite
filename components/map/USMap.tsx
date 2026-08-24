@@ -12,6 +12,7 @@ import { useViewWindow } from "@/lib/viewWindowContext";
 import { dayOptions } from "@/lib/viewScale";
 import { bearingDeg, PLANE_ICON_SIZE, PLANE_ICON_URL } from "@/lib/planeIcon";
 import { singleDayAirportStats, multiDayAirportStats, airportDailyRows, airportFlights, isAirportAffected, type AirportPanelStats } from "@/lib/airportAggregation";
+import { markersInWindow } from "@/lib/timeAggregation";
 import { MapHoverBox } from "./MapHoverBox";
 import { MapDetailPanel } from "./MapDetailPanel";
 import { AirportHoverBox } from "./AirportHoverBox";
@@ -165,13 +166,18 @@ export function USMap({
     return map;
   }, [airportsWithCoords, multiDay, airportDaily, viewDays, flights, impactSummary]);
 
+  const activeDisruptionMarkers = useMemo(
+    () => (multiDay ? markersInWindow(disruptionMarkers, viewWindow.startMin, viewWindow.endMin) : disruptionMarkers),
+    [disruptionMarkers, multiDay, viewWindow]
+  );
+
   const affectedIatas = useMemo(() => {
     const set = new Set<string>();
     for (const a of airportsWithCoords) {
-      if (isAirportAffected(a.iata, disruptionMarkers)) set.add(a.iata);
+      if (isAirportAffected(a.iata, activeDisruptionMarkers)) set.add(a.iata);
     }
     return set;
-  }, [airportsWithCoords, disruptionMarkers]);
+  }, [airportsWithCoords, activeDisruptionMarkers]);
 
   // Only flights actually airborne AT the current cursor minute -- "before
   // it departs or after it arrives, it's not in the air" (Task 2's own
@@ -218,8 +224,8 @@ export function USMap({
     [airportsWithCoords, focusedAirportIata]
   );
   const focusedAirportDisruptions = useMemo(
-    () => (focusedAirportIata ? disruptionMarkers.filter((m) => m.airportIata === focusedAirportIata) : []),
-    [disruptionMarkers, focusedAirportIata]
+    () => (focusedAirportIata ? activeDisruptionMarkers.filter((m) => m.airportIata === focusedAirportIata) : []),
+    [activeDisruptionMarkers, focusedAirportIata]
   );
   const focusedAirportStats = focusedAirportIata ? airportStatsByIata.get(focusedAirportIata) : undefined;
   const focusedAirportPerDayRows = useMemo(
@@ -471,7 +477,7 @@ export function USMap({
     ];
   });
 
-  const hoveredAirportDisruptions = hoveredAirport ? disruptionMarkers.filter((m) => m.airportIata === hoveredAirport.airport.iata) : [];
+  const hoveredAirportDisruptions = hoveredAirport ? activeDisruptionMarkers.filter((m) => m.airportIata === hoveredAirport.airport.iata) : [];
 
   return (
     <div className="relative w-full h-full">
