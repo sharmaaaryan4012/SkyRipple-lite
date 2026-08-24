@@ -54,9 +54,8 @@ This repository contains the Next.js + TypeScript + Tailwind "Control Room" inte
 - **FlightRadar-style Map:** Watch planes as severity-colored icons flying live paths. Click on any plane to view flight details, tail numbers, and passenger impacts (e.g., "178/178 connecting passengers stranded").
 - **Dashboard & Timeline:** Scrub through the simulated day, monitor the cost curves climbing in real-time, and view per-carrier financial impacts.
 - **Pre-computed Scenarios:** 
-  - *December Full Baseline:* Calm baseline flying, no disruptions.
   - *ORD Runway Closure:* A massive cascade stemming from a single airport restriction.
-  - *December Cascade:* A multi-day ripple effect.
+  - *Live NL Example:* An example showing how natural language routing resolves into a specific delay simulation.
 
 ---
 
