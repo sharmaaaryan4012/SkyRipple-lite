@@ -8,12 +8,12 @@
 
 ## 🌪️ What is SkyRipple?
 
-**SkyRipple** is an agentic US-domestic airline delay-propagation simulator. It is an interactive control room that takes a real day of US domestic air traffic (based on Dec 2025 BTS data) and lets you watch — and provoke — how delay cascades through the system, what it costs, and how an AI operations team recovers from it.
+**SkyRipple** is an agentic US-domestic airline delay-propagation simulator. It is an interactive control room that takes a real day of US domestic air traffic (based on Dec 2025 BTS data) and lets you watch - and provoke - how delay cascades through the system, what it costs, and how an AI operations team recovers from it.
 
 Have you ever wondered what happens when a single runway closes at O'Hare for 2 hours? Or what the true financial cost is when a ground stop hits Atlanta? SkyRipple simulates exactly that.
 
 ### The One-Line Pitch
-Type any airline disruption in plain English, watch it ripple through a full day of real US air traffic — validated against Bureau of Transportation Statistics ground truth — see it cost ~$942K, then watch a five-role agentic OCC recover it and show you the dollars saved. Every number is honest to the range.
+Type any airline disruption in plain English, watch it ripple through a full day of real US air traffic - validated against Bureau of Transportation Statistics ground truth - see it cost ~$942K, then watch a five-role agentic OCC recover it and show you the dollars saved. Every number is honest to the range.
 
 ---
 

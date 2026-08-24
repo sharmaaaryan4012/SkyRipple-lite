@@ -107,7 +107,7 @@ function coverageHasDay(coverage: Coverage, day: string): boolean {
 }
 
 function outOfRangeText(coverage: Coverage, day: string): string {
-  return `This scenario only covers ${formatShort(coverage.startDay)}–${formatShort(coverage.endDay)} — ${day} isn't in the loaded range.`;
+  return `This scenario only covers ${formatShort(coverage.startDay)}–${formatShort(coverage.endDay)} - ${day} isn't in the loaded range.`;
 }
 
 /** The whole loaded scenario's own span, as a ViewWindow -- for queries

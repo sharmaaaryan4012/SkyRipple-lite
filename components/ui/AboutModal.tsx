@@ -46,7 +46,7 @@ export function AboutModal({ open, onClose }: { open: boolean; onClose: () => vo
 
         <div className="space-y-6 text-sm text-aubergine/90">
           <p className="text-base leading-relaxed">
-            <strong>SkyRipple</strong> is an agentic US-domestic airline delay-propagation simulator. It takes a real day of US domestic air traffic (based on Dec 2025 BTS data) and lets you watch — and provoke — how delay cascades through the system, what it costs, and how an AI operations team recovers from it.
+            <strong>SkyRipple</strong> is an agentic US-domestic airline delay-propagation simulator. It takes a real day of US domestic air traffic (based on Dec 2025 BTS data) and lets you watch - and provoke - how delay cascades through the system, what it costs, and how an AI operations team recovers from it.
           </p>
 
           <div>
