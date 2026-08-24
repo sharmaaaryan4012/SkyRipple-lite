@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useTimeCursor } from "@/lib/timeCursor";
+
 import { buildScenarioSummary } from "@/lib/qaEngine";
 import { askChat, parseAndSimulate, BackendApiError, BackendUnreachableError } from "@/lib/backendClient";
 import { buildSnapshot } from "@/lib/qaSnapshot";
@@ -110,7 +110,7 @@ export function ChatDock({
   nlAvailable: boolean | null; // null = still checking /api/health
   onActivateLive: (data: SimulationData, disruptions: BackendDisruptionRequest[]) => void;
 }) {
-  const { setMinute } = useTimeCursor();
+
   // Floating-over-map rework: starts EXPANDED (onboarding -- greeting +
   // chips visible on first load), auto-collapses once after the FIRST
   // successful disruption run (`hasRunOnce` below), then stays wherever
