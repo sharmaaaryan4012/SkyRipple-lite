@@ -197,9 +197,6 @@ export function ChatDock({
     if (pendingSummaryKey && pendingSummaryKey.startsWith(`${scenario.meta.scenarioId}#`) && lastProcessedKeyRef.current !== pendingSummaryKey) {
       lastProcessedKeyRef.current = pendingSummaryKey;
       pushMessage("assistant", buildScenarioSummary(scenario));
-      if (scenario.disruptionMarkers[0]) {
-        setMinute(scenario.disruptionMarkers[0].simMin);
-      }
       setPendingSummaryKey(null);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

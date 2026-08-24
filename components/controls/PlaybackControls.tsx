@@ -1,12 +1,21 @@
 "use client";
 
 import { useTimeCursor } from "@/lib/timeCursor";
+import { useViewWindow } from "@/lib/viewWindowContext";
+import { markersInWindow } from "@/lib/timeAggregation";
 import type { DisruptionMarker } from "@/lib/types";
+import { useMemo } from "react";
 
 const SPEEDS = [1, 2, 4] as const;
 
-export function PlaybackControls({ disruptionMarkers }: { disruptionMarkers: DisruptionMarker[] }) {
-  const { isPlaying, toggle, speedMultiplier, setSpeedMultiplier, setMinute } = useTimeCursor();
+export function PlaybackControls({ disruptionMarkers: rawMarkers }: { disruptionMarkers: DisruptionMarker[] }) {
+  const { isPlaying, toggle, speedMultiplier, setSpeedMultiplier, setMinute, minMinute, maxMinute } = useTimeCursor();
+  const { multiDay } = useViewWindow();
+
+  const disruptionMarkers = useMemo(
+    () => (multiDay ? markersInWindow(rawMarkers, minMinute, maxMinute) : rawMarkers),
+    [rawMarkers, multiDay, minMinute, maxMinute]
+  );
 
   return (
     <div className="flex flex-col gap-3">
