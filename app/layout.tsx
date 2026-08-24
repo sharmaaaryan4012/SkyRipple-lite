@@ -26,7 +26,7 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SkyRipple",
+  title: "SkyRipple Lite",
   description: "Control-room view of an agentic airline delay-propagation simulator.",
 };
 

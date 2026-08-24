@@ -98,14 +98,9 @@ export function RecoveryPanel({
     setErrorText(null);
     setProgress(0);
     setMessage("Starting the recovery job…");
-    try {
-      const { jobId } = await startRecovery(day, disruptions);
-      setState("queued");
-      schedulePoll(jobId);
-    } catch (err) {
-      setState("error");
-      setErrorText(err instanceof Error ? err.message : "failed to start recovery");
-    }
+    // Lite version: Disable recovery
+    setState("error");
+    setErrorText("Agentic OCC Recovery is unavailable in the Lite version. Download the full project to use the agentic recovery engine.");
   }
 
   const running = state === "starting" || state === "queued" || state === "running";

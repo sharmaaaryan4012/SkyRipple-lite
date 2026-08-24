@@ -38,8 +38,7 @@ const STAGES: { delayMs: number; text: string }[] = [
 // not just its one canned demo.
 const STARTER_PROMPTS: { label: string; id: string }[] = [
   { label: "ORD Runway Closure", id: "ord-runway-closure" },
-  { label: "December Cascade", id: "december-cascade" },
-  { label: "December Full Baseline", id: "december-full" },
+  { label: "Live NL Example", id: "live-nl" },
 ];
 
 /**

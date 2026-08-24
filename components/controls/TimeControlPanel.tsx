@@ -24,7 +24,7 @@ import type { ScenarioData } from "@/lib/types";
 export function TimeControlPanel({ scenario }: { scenario: ScenarioData }) {
   return (
     <div className="flex flex-col gap-3">
-      <p className="font-display text-lg font-semibold text-aubergine px-1">SkyRipple</p>
+      <p className="font-display text-lg font-semibold text-aubergine px-1">SkyRipple<span className="font-light text-muted ml-1 text-base">lite</span></p>
       <Panel eyebrow="Simulated time">
         <DateClockReadout day={scenario.meta.day} />
       </Panel>
