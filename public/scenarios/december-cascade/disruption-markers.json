@@ -1,0 +1,44 @@
+[
+  {
+    "id": "DISR_8996476ae0ef",
+    "kind": "close_runway",
+    "simMin": 10560,
+    "label": "CLOSE_RUNWAY: ORD capacity reduced 60% 08:00\u201310:00",
+    "airportIata": "ORD",
+    "airportLat": 41.9786,
+    "airportLon": -87.9048,
+    "marginalCost": {
+      "low": 116274.5,
+      "typical": 145687.75,
+      "high": 214151.5
+    }
+  },
+  {
+    "id": "DISR_505e3f1546fa",
+    "kind": "ground_aircraft",
+    "simMin": 11280,
+    "label": "GROUND_AIRCRAFT: N464UA unavailable for 400 min from 20:00",
+    "airportIata": null,
+    "airportLat": null,
+    "airportLon": null,
+    "marginalCost": {
+      "low": 42250.0,
+      "typical": 59150.0,
+      "high": 101400.0
+    }
+  },
+  {
+    "id": "DISR_68b6bca9a209",
+    "kind": "close_runway",
+    "simMin": 20580,
+    "label": "CLOSE_RUNWAY: DEN capacity reduced 35% 07:00\u201308:00",
+    "airportIata": "DEN",
+    "airportLat": 39.86,
+    "airportLon": -104.6738,
+    "marginalCost": {
+      "low": 0.0,
+      "typical": 0.0,
+      "high": 0.0
+    }
+  }
+]

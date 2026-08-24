@@ -1,0 +1,10 @@
+{
+  "scenarioId": "december-cascade",
+  "label": "December 2025 cascade",
+  "day": "2025-12-08",
+  "startDay": "2025-12-08",
+  "endDay": "2025-12-24",
+  "disruptionSummary": "CLOSE_RUNWAY: ORD capacity reduced 60% 08:00\u201310:00; GROUND_AIRCRAFT: N464UA unavailable for 400 min from 20:00; CLOSE_RUNWAY: DEN capacity reduced 35% 07:00\u201308:00",
+  "sourceRunId": "range-2025-12-08-to-2025-12-24",
+  "generatedAt": "2026-08-21T14:47:26.536807+00:00"
+}

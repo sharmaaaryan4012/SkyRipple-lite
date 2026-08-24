@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Design-system baseline: hairline borders everywhere, no shadows, no
+   blur. Depth comes only from the surface -> surface-elevated step
+   (see the design reference, section 04, "Density over decoration"). */
+* {
+  border-color: theme("colors.border");
+}
+
+body {
+  font-variant-numeric: tabular-nums; /* harmless default; mono panels re-assert this explicitly */
+}
+
+/* One shared, restrained transition for state changes (hover, data
+   updates),  300ms, ease-out, no bounce. Springier motion is reserved
+   for the later before/after reveal, not used anywhere in this task. */
+.state-transition {
+  transition-property: color, background-color, border-color, opacity, transform;
+  transition-duration: 300ms;
+  transition-timing-function: ease-out;
+}

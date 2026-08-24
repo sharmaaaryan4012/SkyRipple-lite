@@ -1,0 +1,1500 @@
+[
+  {
+    "carrierCode": "AA",
+    "categories": {
+      "aircraft_operating": {
+        "scenario": {
+          "low": 1327889717.0,
+          "typical": 1501386051.0,
+          "high": 1679267173.0
+        },
+        "baseline": {
+          "low": 1327839085.0,
+          "typical": 1501328919.0,
+          "high": 1679202133.0
+        },
+        "variance": {
+          "low": 50632.0,
+          "typical": 57132.0,
+          "high": 65040.0
+        }
+      },
+      "passenger_delay": {
+        "scenario": {
+          "low": 1119497790.0,
+          "typical": 1679246685.0,
+          "high": 3358493370.0
+        },
+        "baseline": {
+          "low": 1119452238.5,
+          "typical": 1679178357.75,
+          "high": 3358356715.5
+        },
+        "variance": {
+          "low": 45551.5,
+          "typical": 68327.25,
+          "high": 136654.5
+        }
+      },
+      "misconnect_rebook": {
+        "scenario": {
+          "low": 303887200.0,
+          "typical": 359007200.0,
+          "high": 469247200.0
+        },
+        "baseline": {
+          "low": 303856400.0,
+          "typical": 358959600.0,
+          "high": 469166000.0
+        },
+        "variance": {
+          "low": 30800.0,
+          "typical": 47600.0,
+          "high": 81200.0
+        }
+      },
+      "cancellation": {
+        "scenario": {
+          "low": 246515000.0,
+          "typical": 345121000.0,
+          "high": 591636000.0
+        },
+        "baseline": {
+          "low": 246479500.0,
+          "typical": 345071300.0,
+          "high": 591550800.0
+        },
+        "variance": {
+          "low": 35500.0,
+          "typical": 49700.0,
+          "high": 85200.0
+        }
+      },
+      "crew_reserve_callout": {
+        "scenario": {
+          "low": 19888000.0,
+          "typical": 29832000.0,
+          "high": 49720000.0
+        },
+        "baseline": {
+          "low": 19878400.0,
+          "typical": 29817600.0,
+          "high": 49696000.0
+        },
+        "variance": {
+          "low": 9600.0,
+          "typical": 14400.0,
+          "high": 24000.0
+        }
+      }
+    },
+    "total": {
+      "scenario": {
+        "low": 3070519178.497888,
+        "typical": 3971132749.7070026,
+        "high": 6209127810.413934
+      },
+      "baseline": {
+        "low": 3070376183.4671216,
+        "typical": 3970927179.0508304,
+        "high": 6208770183.344707
+      },
+      "variance": {
+        "low": 142995.03076648712,
+        "typical": 205570.65617227554,
+        "high": 357627.0692272186
+      }
+    }
+  },
+  {
+    "carrierCode": "AS",
+    "categories": {
+      "aircraft_operating": {
+        "scenario": {
+          "low": 78461259.0,
+          "typical": 88424776.0,
+          "high": 100286005.0
+        },
+        "baseline": {
+          "low": 78459619.0,
+          "typical": 88422916.0,
+          "high": 100283925.0
+        },
+        "variance": {
+          "low": 1640.0,
+          "typical": 1860.0,
+          "high": 2080.0
+        }
+      },
+      "passenger_delay": {
+        "scenario": {
+          "low": 129653737.0,
+          "typical": 194480605.5,
+          "high": 388961211.0
+        },
+        "baseline": {
+          "low": 129652497.0,
+          "typical": 194478745.5,
+          "high": 388957491.0
+        },
+        "variance": {
+          "low": 1240.0,
+          "typical": 1860.0,
+          "high": 3720.0
+        }
+      },
+      "misconnect_rebook": {
+        "scenario": {
+          "low": 74105300.0,
+          "typical": 86556600.0,
+          "high": 111459200.0
+        },
+        "baseline": {
+          "low": 74105300.0,
+          "typical": 86556600.0,
+          "high": 111459200.0
+        },
+        "variance": {
+          "low": 0.0,
+          "typical": 0.0,
+          "high": 0.0
+        }
+      },
+      "cancellation": {
+        "scenario": {
+          "low": 79135500.0,
+          "typical": 110789700.0,
+          "high": 189925200.0
+        },
+        "baseline": {
+          "low": 79135500.0,
+          "typical": 110789700.0,
+          "high": 189925200.0
+        },
+        "variance": {
+          "low": 0.0,
+          "typical": 0.0,
+          "high": 0.0
+        }
+      },
+      "crew_reserve_callout": {
+        "scenario": {
+          "low": 3964800.0,
+          "typical": 5947200.0,
+          "high": 9912000.0
+        },
+        "baseline": {
+          "low": 3964800.0,
+          "typical": 5947200.0,
+          "high": 9912000.0
+        },
+        "variance": {
+          "low": 0.0,
+          "typical": 0.0,
+          "high": 0.0
+        }
+      }
+    },
+    "total": {
+      "scenario": {
+        "low": 383387547.72990775,
+        "typical": 505750530.1701799,
+        "high": 821866977.3169223
+      },
+      "baseline": {
+        "low": 383384667.72990775,
+        "typical": 505746810.1701799,
+        "high": 821861177.3169223
+      },
+      "variance": {
+        "low": 2880.0,
+        "typical": 3720.0,
+        "high": 5800.0
+      }
+    }
+  },
+  {
+    "carrierCode": "B6",
+    "categories": {
+      "aircraft_operating": {
+        "scenario": {
+          "low": 44326227.0,
+          "typical": 50579645.0,
+          "high": 56951771.0
+        },
+        "baseline": {
+          "low": 44326227.0,
+          "typical": 50579645.0,
+          "high": 56951771.0
+        },
+        "variance": {
+          "low": 0.0,
+          "typical": 0.0,
+          "high": 0.0
+        }
+      },
+      "passenger_delay": {
+        "scenario": {
+          "low": 116046734.5,
+          "typical": 174070101.75,
+          "high": 348140203.5
+        },
+        "baseline": {
+          "low": 116046749.5,
+          "typical": 174070124.25,
+          "high": 348140248.5
+        },
+        "variance": {
+          "low": -15.0,
+          "typical": -22.5,
+          "high": -45.0
+        }
+      },
+      "misconnect_rebook": {
+        "scenario": {
+          "low": 66370600.0,
+          "typical": 78373200.0,
+          "high": 102378400.0
+        },
+        "baseline": {
+          "low": 66370600.0,
+          "typical": 78373200.0,
+          "high": 102378400.0
+        },
+        "variance": {
+          "low": 0.0,
+          "typical": 0.0,
+          "high": 0.0
+        }
+      },
+      "cancellation": {
+        "scenario": {
+          "low": 81331250.0,
+          "typical": 113863750.0,
+          "high": 195195000.0
+        },
+        "baseline": {
+          "low": 81331250.0,
+          "typical": 113863750.0,
+          "high": 195195000.0
+        },
+        "variance": {
+          "low": 0.0,
+          "typical": 0.0,
+          "high": 0.0
+        }
+      },
+      "crew_reserve_callout": {
+        "scenario": {
+          "low": 3363200.0,
+          "typical": 5044800.0,
+          "high": 8408000.0
+        },
+        "baseline": {
+          "low": 3363200.0,
+          "typical": 5044800.0,
+          "high": 8408000.0
+        },
+        "variance": {
+          "low": 0.0,
+          "typical": 0.0,
+          "high": 0.0
+        }
+      }
+    },
+    "total": {
+      "scenario": {
+        "low": 323339392.9894861,
+        "typical": 434530210.0234777,
+        "high": 724375821.1770413
+      },
+      "baseline": {
+        "low": 323339407.9894861,
+        "typical": 434530232.5234777,
+        "high": 724375866.1770413
+      },
+      "variance": {
+        "low": -15.0,
+        "typical": -22.5,
+        "high": -45.0
+      }
+    }
+  },
+  {
+    "carrierCode": "DL",
+    "categories": {
+      "aircraft_operating": {
+        "scenario": {
+          "low": 754885026.0,
+          "typical": 852004517.0,
+          "high": 967138232.0
+        },
+        "baseline": {
+          "low": 754879806.0,
+          "typical": 851998584.0,
+          "high": 967131427.0
+        },
+        "variance": {
+          "low": 5220.0,
+          "typical": 5933.0,
+          "high": 6805.0
+        }
+      },
+      "passenger_delay": {
+        "scenario": {
+          "low": 841494277.5,
+          "typical": 1262241416.25,
+          "high": 2524482832.5
+        },
+        "baseline": {
+          "low": 841504503.0,
+          "typical": 1262256754.5,
+          "high": 2524513509.0
+        },
+        "variance": {
+          "low": -10225.5,
+          "typical": -15338.25,
+          "high": -30676.5
+        }
+      },
+      "misconnect_rebook": {
+        "scenario": {
+          "low": 254448000.0,
+          "typical": 304966400.0,
+          "high": 406003200.0
+        },
+        "baseline": {
+          "low": 254466100.0,
+          "typical": 304990600.0,
+          "high": 406039600.0
+        },
+        "variance": {
+          "low": -18100.0,
+          "typical": -24200.0,
+          "high": -36400.0
+        }
+      },
+      "cancellation": {
+        "scenario": {
+          "low": 289091000.0,
+          "typical": 404727400.0,
+          "high": 693818400.0
+        },
+        "baseline": {
+          "low": 289169250.0,
+          "typical": 404836950.0,
+          "high": 694006200.0
+        },
+        "variance": {
+          "low": -78250.0,
+          "typical": -109550.0,
+          "high": -187800.0
+        }
+      },
+      "crew_reserve_callout": {
+        "scenario": {
+          "low": 14800000.0,
+          "typical": 22200000.0,
+          "high": 37000000.0
+        },
+        "baseline": {
+          "low": 14800000.0,
+          "typical": 22200000.0,
+          "high": 37000000.0
+        },
+        "variance": {
+          "low": 0.0,
+          "typical": 0.0,
+          "high": 0.0
+        }
+      }
+    },
+    "total": {
+      "scenario": {
+        "low": 2196618754.676848,
+        "typical": 2890850469.0418468,
+        "high": 4676451316.044099
+      },
+      "baseline": {
+        "low": 2196728848.198104,
+        "typical": 2891003493.1158533,
+        "high": 4676710695.571607
+      },
+      "variance": {
+        "low": -110093.52125597,
+        "typical": -153024.07400655746,
+        "high": -259379.52750778198
+      }
+    }
+  },
+  {
+    "carrierCode": "F9",
+    "categories": {
+      "aircraft_operating": {
+        "scenario": {
+          "low": 49706362.0,
+          "typical": 55939158.0,
+          "high": 63182654.0
+        },
+        "baseline": {
+          "low": 49704364.0,
+          "typical": 55936890.0,
+          "high": 63180116.0
+        },
+        "variance": {
+          "low": 1998.0,
+          "typical": 2268.0,
+          "high": 2538.0
+        }
+      },
+      "passenger_delay": {
+        "scenario": {
+          "low": 92178649.5,
+          "typical": 138267974.25,
+          "high": 276535948.5
+        },
+        "baseline": {
+          "low": 92176915.0,
+          "typical": 138265372.5,
+          "high": 276530745.0
+        },
+        "variance": {
+          "low": 1734.5,
+          "typical": 2601.75,
+          "high": 5203.5
+        }
+      },
+      "misconnect_rebook": {
+        "scenario": {
+          "low": 30006100.0,
+          "typical": 36485400.0,
+          "high": 49444000.0
+        },
+        "baseline": {
+          "low": 30006100.0,
+          "typical": 36485400.0,
+          "high": 49444000.0
+        },
+        "variance": {
+          "low": 0.0,
+          "typical": 0.0,
+          "high": 0.0
+        }
+      },
+      "cancellation": {
+        "scenario": {
+          "low": 66482500.0,
+          "typical": 93075500.0,
+          "high": 159558000.0
+        },
+        "baseline": {
+          "low": 66482500.0,
+          "typical": 93075500.0,
+          "high": 159558000.0
+        },
+        "variance": {
+          "low": 0.0,
+          "typical": 0.0,
+          "high": 0.0
+        }
+      },
+      "crew_reserve_callout": {
+        "scenario": {
+          "low": 4334400.0,
+          "typical": 6501600.0,
+          "high": 10836000.0
+        },
+        "baseline": {
+          "low": 4334400.0,
+          "typical": 6501600.0,
+          "high": 10836000.0
+        },
+        "variance": {
+          "low": 0.0,
+          "typical": 0.0,
+          "high": 0.0
+        }
+      }
+    },
+    "total": {
+      "scenario": {
+        "low": 253739298.51836878,
+        "typical": 342150473.42302465,
+        "high": 572421411.4664842
+      },
+      "baseline": {
+        "low": 253735566.01836878,
+        "typical": 342145603.67302465,
+        "high": 572413669.9664842
+      },
+      "variance": {
+        "low": 3732.5,
+        "typical": 4869.75,
+        "high": 7741.5
+      }
+    }
+  },
+  {
+    "carrierCode": "G4",
+    "categories": {
+      "aircraft_operating": {
+        "scenario": {
+          "low": 20049075.0,
+          "typical": 24058890.0,
+          "high": 28068705.0
+        },
+        "baseline": {
+          "low": 20049075.0,
+          "typical": 24058890.0,
+          "high": 28068705.0
+        },
+        "variance": {
+          "low": 0.0,
+          "typical": 0.0,
+          "high": 0.0
+        }
+      },
+      "passenger_delay": {
+        "scenario": {
+          "low": 42187410.5,
+          "typical": 63281115.75,
+          "high": 126562231.5
+        },
+        "baseline": {
+          "low": 42187410.5,
+          "typical": 63281115.75,
+          "high": 126562231.5
+        },
+        "variance": {
+          "low": 0.0,
+          "typical": 0.0,
+          "high": 0.0
+        }
+      },
+      "misconnect_rebook": {
+        "scenario": {
+          "low": 9848500.0,
+          "typical": 10580200.0,
+          "high": 12043600.0
+        },
+        "baseline": {
+          "low": 9848500.0,
+          "typical": 10580200.0,
+          "high": 12043600.0
+        },
+        "variance": {
+          "low": 0.0,
+          "typical": 0.0,
+          "high": 0.0
+        }
+      },
+      "cancellation": {
+        "scenario": {
+          "low": 17470250.0,
+          "typical": 24458350.0,
+          "high": 41928600.0
+        },
+        "baseline": {
+          "low": 17470250.0,
+          "typical": 24458350.0,
+          "high": 41928600.0
+        },
+        "variance": {
+          "low": 0.0,
+          "typical": 0.0,
+          "high": 0.0
+        }
+      },
+      "crew_reserve_callout": {
+        "scenario": {
+          "low": 705600.0,
+          "typical": 1058400.0,
+          "high": 1764000.0
+        },
+        "baseline": {
+          "low": 705600.0,
+          "typical": 1058400.0,
+          "high": 1764000.0
+        },
+        "variance": {
+          "low": 0.0,
+          "typical": 0.0,
+          "high": 0.0
+        }
+      }
+    },
+    "total": {
+      "scenario": {
+        "low": 94300271.01304558,
+        "typical": 127699718.36565469,
+        "high": 214853226.21826378
+      },
+      "baseline": {
+        "low": 94300271.01304558,
+        "typical": 127699718.36565469,
+        "high": 214853226.21826378
+      },
+      "variance": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      }
+    }
+  },
+  {
+    "carrierCode": "HA",
+    "categories": {
+      "aircraft_operating": {
+        "scenario": {
+          "low": 29211493.0,
+          "typical": 34142733.0,
+          "high": 39466293.0
+        },
+        "baseline": {
+          "low": 29211493.0,
+          "typical": 34142733.0,
+          "high": 39466293.0
+        },
+        "variance": {
+          "low": 0.0,
+          "typical": 0.0,
+          "high": 0.0
+        }
+      },
+      "passenger_delay": {
+        "scenario": {
+          "low": 43167226.0,
+          "typical": 64750839.0,
+          "high": 129501678.0
+        },
+        "baseline": {
+          "low": 43167226.0,
+          "typical": 64750839.0,
+          "high": 129501678.0
+        },
+        "variance": {
+          "low": 0.0,
+          "typical": 0.0,
+          "high": 0.0
+        }
+      },
+      "misconnect_rebook": {
+        "scenario": {
+          "low": 20675000.0,
+          "typical": 26159600.0,
+          "high": 37128800.0
+        },
+        "baseline": {
+          "low": 20675000.0,
+          "typical": 26159600.0,
+          "high": 37128800.0
+        },
+        "variance": {
+          "low": 0.0,
+          "typical": 0.0,
+          "high": 0.0
+        }
+      },
+      "cancellation": {
+        "scenario": {
+          "low": 23303500.0,
+          "typical": 32624900.0,
+          "high": 55928400.0
+        },
+        "baseline": {
+          "low": 23303500.0,
+          "typical": 32624900.0,
+          "high": 55928400.0
+        },
+        "variance": {
+          "low": 0.0,
+          "typical": 0.0,
+          "high": 0.0
+        }
+      },
+      "crew_reserve_callout": {
+        "scenario": {
+          "low": 596000.0,
+          "typical": 894000.0,
+          "high": 1490000.0
+        },
+        "baseline": {
+          "low": 596000.0,
+          "typical": 894000.0,
+          "high": 1490000.0
+        },
+        "variance": {
+          "low": 0.0,
+          "typical": 0.0,
+          "high": 0.0
+        }
+      }
+    },
+    "total": {
+      "scenario": {
+        "low": 119352012.10176383,
+        "typical": 161041138.58446357,
+        "high": 266065547.3102871
+      },
+      "baseline": {
+        "low": 119352012.10176383,
+        "typical": 161041138.58446357,
+        "high": 266065547.3102871
+      },
+      "variance": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      }
+    }
+  },
+  {
+    "carrierCode": "MQ",
+    "categories": {
+      "aircraft_operating": {
+        "scenario": {
+          "low": 2147099284.0,
+          "typical": 2503831990.0,
+          "high": 2979475598.0
+        },
+        "baseline": {
+          "low": 2147086916.0,
+          "typical": 2503817666.0,
+          "high": 2979458666.0
+        },
+        "variance": {
+          "low": 12368.0,
+          "typical": 14324.0,
+          "high": 16932.0
+        }
+      },
+      "passenger_delay": {
+        "scenario": {
+          "low": 994324724.5,
+          "typical": 1491487086.75,
+          "high": 2982974173.5
+        },
+        "baseline": {
+          "low": 994250984.5,
+          "typical": 1491376476.75,
+          "high": 2982752953.5
+        },
+        "variance": {
+          "low": 73740.0,
+          "typical": 110610.0,
+          "high": 221220.0
+        }
+      },
+      "misconnect_rebook": {
+        "scenario": {
+          "low": 35495000.0,
+          "typical": 40840800.0,
+          "high": 51532400.0
+        },
+        "baseline": {
+          "low": 35448200.0,
+          "typical": 40786400.0,
+          "high": 51462800.0
+        },
+        "variance": {
+          "low": 46800.0,
+          "typical": 54400.0,
+          "high": 69600.0
+        }
+      },
+      "cancellation": {
+        "scenario": {
+          "low": 35901000.0,
+          "typical": 50261400.0,
+          "high": 86162400.0
+        },
+        "baseline": {
+          "low": 35901000.0,
+          "typical": 50261400.0,
+          "high": 86162400.0
+        },
+        "variance": {
+          "low": 0.0,
+          "typical": 0.0,
+          "high": 0.0
+        }
+      },
+      "crew_reserve_callout": {
+        "scenario": {
+          "low": 1174400.0,
+          "typical": 1761600.0,
+          "high": 2936000.0
+        },
+        "baseline": {
+          "low": 1174400.0,
+          "typical": 1761600.0,
+          "high": 2936000.0
+        },
+        "variance": {
+          "low": 0.0,
+          "typical": 0.0,
+          "high": 0.0
+        }
+      }
+    },
+    "total": {
+      "scenario": {
+        "low": 3221684342.382274,
+        "typical": 4096095808.7375274,
+        "high": 6111290834.294529
+      },
+      "baseline": {
+        "low": 3221540634.382274,
+        "typical": 4095905674.7375274,
+        "high": 6110972282.294529
+      },
+      "variance": {
+        "low": 143708.0,
+        "typical": 190134.0,
+        "high": 318552.0
+      }
+    }
+  },
+  {
+    "carrierCode": "NK",
+    "categories": {
+      "aircraft_operating": {
+        "scenario": {
+          "low": 42274525.0,
+          "typical": 47701632.0,
+          "high": 53467279.0
+        },
+        "baseline": {
+          "low": 42274525.0,
+          "typical": 47701632.0,
+          "high": 53467279.0
+        },
+        "variance": {
+          "low": 0.0,
+          "typical": 0.0,
+          "high": 0.0
+        }
+      },
+      "passenger_delay": {
+        "scenario": {
+          "low": 67276042.0,
+          "typical": 100914063.0,
+          "high": 201828126.0
+        },
+        "baseline": {
+          "low": 67238815.5,
+          "typical": 100858223.25,
+          "high": 201716446.5
+        },
+        "variance": {
+          "low": 37226.5,
+          "typical": 55839.75,
+          "high": 111679.5
+        }
+      },
+      "misconnect_rebook": {
+        "scenario": {
+          "low": 21113300.0,
+          "typical": 25071000.0,
+          "high": 32986400.0
+        },
+        "baseline": {
+          "low": 21107600.0,
+          "typical": 25067200.0,
+          "high": 32986400.0
+        },
+        "variance": {
+          "low": 5700.0,
+          "typical": 3800.0,
+          "high": 0.0
+        }
+      },
+      "cancellation": {
+        "scenario": {
+          "low": 59032000.0,
+          "typical": 82644800.0,
+          "high": 141676800.0
+        },
+        "baseline": {
+          "low": 59032000.0,
+          "typical": 82644800.0,
+          "high": 141676800.0
+        },
+        "variance": {
+          "low": 0.0,
+          "typical": 0.0,
+          "high": 0.0
+        }
+      },
+      "crew_reserve_callout": {
+        "scenario": {
+          "low": 3475200.0,
+          "typical": 5212800.0,
+          "high": 8688000.0
+        },
+        "baseline": {
+          "low": 3475200.0,
+          "typical": 5212800.0,
+          "high": 8688000.0
+        },
+        "variance": {
+          "low": 0.0,
+          "typical": 0.0,
+          "high": 0.0
+        }
+      }
+    },
+    "total": {
+      "scenario": {
+        "low": 199911486.74540046,
+        "typical": 268854065.5951801,
+        "high": 446568107.46219486
+      },
+      "baseline": {
+        "low": 199868560.24540046,
+        "typical": 268794425.8451801,
+        "high": 446456427.96219486
+      },
+      "variance": {
+        "low": 42926.5,
+        "typical": 59639.75,
+        "high": 111679.5
+      }
+    }
+  },
+  {
+    "carrierCode": "OH",
+    "categories": {
+      "aircraft_operating": {
+        "scenario": {
+          "low": 73894496.0,
+          "typical": 84283958.0,
+          "high": 97371610.0
+        },
+        "baseline": {
+          "low": 73894496.0,
+          "typical": 84283958.0,
+          "high": 97371610.0
+        },
+        "variance": {
+          "low": 0.0,
+          "typical": 0.0,
+          "high": 0.0
+        }
+      },
+      "passenger_delay": {
+        "scenario": {
+          "low": 105371912.0,
+          "typical": 158057868.0,
+          "high": 316115736.0
+        },
+        "baseline": {
+          "low": 105371456.0,
+          "typical": 158057184.0,
+          "high": 316114368.0
+        },
+        "variance": {
+          "low": 456.0,
+          "typical": 684.0,
+          "high": 1368.0
+        }
+      },
+      "misconnect_rebook": {
+        "scenario": {
+          "low": 47599200.0,
+          "typical": 53270000.0,
+          "high": 64611600.0
+        },
+        "baseline": {
+          "low": 47599200.0,
+          "typical": 53270000.0,
+          "high": 64611600.0
+        },
+        "variance": {
+          "low": 0.0,
+          "typical": 0.0,
+          "high": 0.0
+        }
+      },
+      "cancellation": {
+        "scenario": {
+          "low": 51170250.0,
+          "typical": 71638350.0,
+          "high": 122808600.0
+        },
+        "baseline": {
+          "low": 51170250.0,
+          "typical": 71638350.0,
+          "high": 122808600.0
+        },
+        "variance": {
+          "low": 0.0,
+          "typical": 0.0,
+          "high": 0.0
+        }
+      },
+      "crew_reserve_callout": {
+        "scenario": {
+          "low": 2073600.0,
+          "typical": 3110400.0,
+          "high": 5184000.0
+        },
+        "baseline": {
+          "low": 2073600.0,
+          "typical": 3110400.0,
+          "high": 5184000.0
+        },
+        "variance": {
+          "low": 0.0,
+          "typical": 0.0,
+          "high": 0.0
+        }
+      }
+    },
+    "total": {
+      "scenario": {
+        "low": 288519906.0935154,
+        "typical": 379008165.99544716,
+        "high": 615027261.0244725
+      },
+      "baseline": {
+        "low": 288519450.0935154,
+        "typical": 379007481.99544716,
+        "high": 615025893.0244725
+      },
+      "variance": {
+        "low": 456.0,
+        "typical": 684.0,
+        "high": 1368.0
+      }
+    }
+  },
+  {
+    "carrierCode": "OO",
+    "categories": {
+      "aircraft_operating": {
+        "scenario": {
+          "low": 93570748.0,
+          "typical": 108150358.0,
+          "high": 125475912.0
+        },
+        "baseline": {
+          "low": 93570894.0,
+          "typical": 108152556.0,
+          "high": 125479292.0
+        },
+        "variance": {
+          "low": -146.0,
+          "typical": -2198.0,
+          "high": -3380.0
+        }
+      },
+      "passenger_delay": {
+        "scenario": {
+          "low": 211407427.5,
+          "typical": 317111141.25,
+          "high": 634222282.5
+        },
+        "baseline": {
+          "low": 211385818.5,
+          "typical": 317078727.75,
+          "high": 634157455.5
+        },
+        "variance": {
+          "low": 21609.0,
+          "typical": 32413.5,
+          "high": 64827.0
+        }
+      },
+      "misconnect_rebook": {
+        "scenario": {
+          "low": 107558500.0,
+          "typical": 122406600.0,
+          "high": 152102800.0
+        },
+        "baseline": {
+          "low": 107528700.0,
+          "typical": 122384600.0,
+          "high": 152096400.0
+        },
+        "variance": {
+          "low": 29800.0,
+          "typical": 22000.0,
+          "high": 6400.0
+        }
+      },
+      "cancellation": {
+        "scenario": {
+          "low": 127172750.0,
+          "typical": 178041850.0,
+          "high": 305214600.0
+        },
+        "baseline": {
+          "low": 127102000.0,
+          "typical": 177942800.0,
+          "high": 305044800.0
+        },
+        "variance": {
+          "low": 70750.0,
+          "typical": 99050.0,
+          "high": 169800.0
+        }
+      },
+      "crew_reserve_callout": {
+        "scenario": {
+          "low": 6320000.0,
+          "typical": 9480000.0,
+          "high": 15800000.0
+        },
+        "baseline": {
+          "low": 6320000.0,
+          "typical": 9480000.0,
+          "high": 15800000.0
+        },
+        "variance": {
+          "low": 0.0,
+          "typical": 0.0,
+          "high": 0.0
+        }
+      }
+    },
+    "total": {
+      "scenario": {
+        "low": 564632424.6682138,
+        "typical": 754474388.1677223,
+        "high": 1252933857.3062012
+      },
+      "baseline": {
+        "low": 564513495.8740015,
+        "typical": 754327118.1818889,
+        "high": 1252701322.3676386
+      },
+      "variance": {
+        "low": 118928.79421234131,
+        "typical": 147269.98583340645,
+        "high": 232534.9385626316
+      }
+    }
+  },
+  {
+    "carrierCode": "UA",
+    "categories": {
+      "aircraft_operating": {
+        "scenario": {
+          "low": 153872327.0,
+          "typical": 173497348.0,
+          "high": 197086419.0
+        },
+        "baseline": {
+          "low": 153816554.0,
+          "typical": 173434485.0,
+          "high": 197015042.0
+        },
+        "variance": {
+          "low": 55773.0,
+          "typical": 62863.0,
+          "high": 71377.0
+        }
+      },
+      "passenger_delay": {
+        "scenario": {
+          "low": 449546840.5,
+          "typical": 674320260.75,
+          "high": 1348640521.5
+        },
+        "baseline": {
+          "low": 449359455.0,
+          "typical": 674039182.5,
+          "high": 1348078365.0
+        },
+        "variance": {
+          "low": 187385.5,
+          "typical": 281078.25,
+          "high": 562156.5
+        }
+      },
+      "misconnect_rebook": {
+        "scenario": {
+          "low": 286554900.0,
+          "typical": 335212600.0,
+          "high": 432528000.0
+        },
+        "baseline": {
+          "low": 286428800.0,
+          "typical": 335068000.0,
+          "high": 432346400.0
+        },
+        "variance": {
+          "low": 126100.0,
+          "typical": 144600.0,
+          "high": 181600.0
+        }
+      },
+      "cancellation": {
+        "scenario": {
+          "low": 247773500.0,
+          "typical": 346882900.0,
+          "high": 594656400.0
+        },
+        "baseline": {
+          "low": 247773500.0,
+          "typical": 346882900.0,
+          "high": 594656400.0
+        },
+        "variance": {
+          "low": 0.0,
+          "typical": 0.0,
+          "high": 0.0
+        }
+      },
+      "crew_reserve_callout": {
+        "scenario": {
+          "low": 17727200.0,
+          "typical": 26590800.0,
+          "high": 44318000.0
+        },
+        "baseline": {
+          "low": 17727200.0,
+          "typical": 26590800.0,
+          "high": 44318000.0
+        },
+        "variance": {
+          "low": 0.0,
+          "typical": 0.0,
+          "high": 0.0
+        }
+      }
+    },
+    "total": {
+      "scenario": {
+        "low": 1209452297.5754094,
+        "typical": 1614531066.408429,
+        "high": 2679975971.5477257
+      },
+      "baseline": {
+        "low": 1209078239.0754094,
+        "typical": 1614037725.158429,
+        "high": 2679156038.0477257
+      },
+      "variance": {
+        "low": 374058.5,
+        "typical": 493341.25,
+        "high": 819933.5
+      }
+    }
+  },
+  {
+    "carrierCode": "WN",
+    "categories": {
+      "aircraft_operating": {
+        "scenario": {
+          "low": 357346417.0,
+          "typical": 404462602.0,
+          "high": 454943767.0
+        },
+        "baseline": {
+          "low": 357346417.0,
+          "typical": 404462602.0,
+          "high": 454943767.0
+        },
+        "variance": {
+          "low": 0.0,
+          "typical": 0.0,
+          "high": 0.0
+        }
+      },
+      "passenger_delay": {
+        "scenario": {
+          "low": 499377361.5,
+          "typical": 749066042.25,
+          "high": 1498132084.5
+        },
+        "baseline": {
+          "low": 499372742.0,
+          "typical": 749059113.0,
+          "high": 1498118226.0
+        },
+        "variance": {
+          "low": 4619.5,
+          "typical": 6929.25,
+          "high": 13858.5
+        }
+      },
+      "misconnect_rebook": {
+        "scenario": {
+          "low": 227476900.0,
+          "typical": 278313000.0,
+          "high": 379985200.0
+        },
+        "baseline": {
+          "low": 227473600.0,
+          "typical": 278310800.0,
+          "high": 379985200.0
+        },
+        "variance": {
+          "low": 3300.0,
+          "typical": 2200.0,
+          "high": 0.0
+        }
+      },
+      "cancellation": {
+        "scenario": {
+          "low": 481461000.0,
+          "typical": 674045400.0,
+          "high": 1155506400.0
+        },
+        "baseline": {
+          "low": 481461000.0,
+          "typical": 674045400.0,
+          "high": 1155506400.0
+        },
+        "variance": {
+          "low": 0.0,
+          "typical": 0.0,
+          "high": 0.0
+        }
+      },
+      "crew_reserve_callout": {
+        "scenario": {
+          "low": 31488000.0,
+          "typical": 47232000.0,
+          "high": 78720000.0
+        },
+        "baseline": {
+          "low": 31488000.0,
+          "typical": 47232000.0,
+          "high": 78720000.0
+        },
+        "variance": {
+          "low": 0.0,
+          "typical": 0.0,
+          "high": 0.0
+        }
+      }
+    },
+    "total": {
+      "scenario": {
+        "low": 1665037569.3560815,
+        "typical": 2227571800.191195,
+        "high": 3648805196.0600863
+      },
+      "baseline": {
+        "low": 1665029649.8560815,
+        "typical": 2227562670.941195,
+        "high": 3648791337.5600863
+      },
+      "variance": {
+        "low": 7919.5,
+        "typical": 9129.25,
+        "high": 13858.5
+      }
+    }
+  },
+  {
+    "carrierCode": "YX",
+    "categories": {
+      "aircraft_operating": {
+        "scenario": {
+          "low": 41288004.0,
+          "typical": 47550036.0,
+          "high": 55899412.0
+        },
+        "baseline": {
+          "low": 41253604.0,
+          "typical": 47510476.0,
+          "high": 55852972.0
+        },
+        "variance": {
+          "low": 34400.0,
+          "typical": 39560.0,
+          "high": 46440.0
+        }
+      },
+      "passenger_delay": {
+        "scenario": {
+          "low": 146401395.5,
+          "typical": 219602093.25,
+          "high": 439204186.5
+        },
+        "baseline": {
+          "low": 146383056.5,
+          "typical": 219574584.75,
+          "high": 439149169.5
+        },
+        "variance": {
+          "low": 18339.0,
+          "typical": 27508.5,
+          "high": 55017.0
+        }
+      },
+      "misconnect_rebook": {
+        "scenario": {
+          "low": 57143100.0,
+          "typical": 67621800.0,
+          "high": 88579200.0
+        },
+        "baseline": {
+          "low": 57131700.0,
+          "typical": 67610600.0,
+          "high": 88568400.0
+        },
+        "variance": {
+          "low": 11400.0,
+          "typical": 11200.0,
+          "high": 10800.0
+        }
+      },
+      "cancellation": {
+        "scenario": {
+          "low": 63638750.0,
+          "typical": 89094250.0,
+          "high": 152733000.0
+        },
+        "baseline": {
+          "low": 63670750.0,
+          "typical": 89139050.0,
+          "high": 152809800.0
+        },
+        "variance": {
+          "low": -32000.0,
+          "typical": -44800.0,
+          "high": -76800.0
+        }
+      },
+      "crew_reserve_callout": {
+        "scenario": {
+          "low": 3948800.0,
+          "typical": 5923200.0,
+          "high": 9872000.0
+        },
+        "baseline": {
+          "low": 3945600.0,
+          "typical": 5918400.0,
+          "high": 9864000.0
+        },
+        "variance": {
+          "low": 3200.0,
+          "typical": 4800.0,
+          "high": 8000.0
+        }
+      }
+    },
+    "total": {
+      "scenario": {
+        "low": 322823454.36086565,
+        "typical": 440668121.8899124,
+        "high": 757795658.1786413
+      },
+      "baseline": {
+        "low": 322802340.30391383,
+        "typical": 440644472.0744179,
+        "high": 757767344.8517566
+      },
+      "variance": {
+        "low": 21114.05695182085,
+        "typical": 23649.815494537354,
+        "high": 28313.32688474655
+      }
+    }
+  }
+]

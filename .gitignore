@@ -1,0 +1,12 @@
+node_modules
+.next
+out
+next-env.d.ts
+*.tsbuildinfo
+.DS_Store
+
+# Task 5c: local backend base URL override, if ever used for a secret.
+# NEXT_PUBLIC_API_BASE_URL itself isn't sensitive (it's inlined into the
+# client bundle either way), but .env.local is the conventional place a
+# future local override would live, so it's ignored on principle.
+.env*.local

@@ -1,0 +1,3231 @@
+{
+  "asOfMin": 44639,
+  "totalCostUsd": {
+    "low": 748610.3606719971,
+    "typical": 984961.8834915161,
+    "high": 1637983.8071670532
+  },
+  "totalDelayMin": 97250076.0,
+  "flightsDelayed": 217410,
+  "flightsCancelled": 57164,
+  "flightsDiverted": 0,
+  "passengersMisconnected": 6338858,
+  "crewIllegalities": 49214,
+  "byCarrier": {
+    "AA": {
+      "costUsd": {
+        "low": 142995.03076648712,
+        "typical": 205570.65617227554,
+        "high": 357627.0692272186
+      },
+      "delayMin": 16323098.0,
+      "cancelled": 6422
+    },
+    "AS": {
+      "costUsd": {
+        "low": 2880.0,
+        "typical": 3720.0,
+        "high": 5800.0
+      },
+      "delayMin": 911149.0,
+      "cancelled": 1979
+    },
+    "B6": {
+      "costUsd": {
+        "low": -15.0,
+        "typical": -22.5,
+        "high": -45.0
+      },
+      "delayMin": 589388.0,
+      "cancelled": 1925
+    },
+    "DL": {
+      "costUsd": {
+        "low": -110093.52125597,
+        "typical": -153024.07400655746,
+        "high": -259379.52750778198
+      },
+      "delayMin": 8795584.0,
+      "cancelled": 7045
+    },
+    "F9": {
+      "costUsd": {
+        "low": 3732.5,
+        "typical": 4869.75,
+        "high": 7741.5
+      },
+      "delayMin": 591308.0,
+      "cancelled": 1582
+    },
+    "G4": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 265399.0,
+      "cancelled": 458
+    },
+    "HA": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 454553.0,
+      "cancelled": 522
+    },
+    "MQ": {
+      "costUsd": {
+        "low": 143708.0,
+        "typical": 190134.0,
+        "high": 318552.0
+      },
+      "delayMin": 57339600.0,
+      "cancelled": 1975
+    },
+    "NK": {
+      "costUsd": {
+        "low": 42926.5,
+        "typical": 59639.75,
+        "high": 111679.5
+      },
+      "delayMin": 505078.0,
+      "cancelled": 1242
+    },
+    "OH": {
+      "costUsd": {
+        "low": 456.0,
+        "typical": 684.0,
+        "high": 1368.0
+      },
+      "delayMin": 1707991.0,
+      "cancelled": 2533
+    },
+    "OO": {
+      "costUsd": {
+        "low": 118928.79421234131,
+        "typical": 147269.98583340645,
+        "high": 232534.9385626316
+      },
+      "delayMin": 2378177.0,
+      "cancelled": 7395
+    },
+    "UA": {
+      "costUsd": {
+        "low": 374058.5,
+        "typical": 493341.25,
+        "high": 819933.5
+      },
+      "delayMin": 1822740.0,
+      "cancelled": 6234
+    },
+    "WN": {
+      "costUsd": {
+        "low": 7919.5,
+        "typical": 9129.25,
+        "high": 13858.5
+      },
+      "delayMin": 4538129.0,
+      "cancelled": 14463
+    },
+    "YX": {
+      "costUsd": {
+        "low": 21114.05695182085,
+        "typical": 23649.815494537354,
+        "high": 28313.32688474655
+      },
+      "delayMin": 1027882.0,
+      "cancelled": 3389
+    }
+  },
+  "byAirport": {
+    "SCE": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1103.0,
+      "cancelled": 1
+    },
+    "GRK": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1619.0,
+      "cancelled": 20
+    },
+    "MHT": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 9026.0,
+      "cancelled": 80
+    },
+    "STS": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 10949.0,
+      "cancelled": 90
+    },
+    "CPR": {
+      "costUsd": {
+        "low": -166.5,
+        "typical": -299.75,
+        "high": -599.5
+      },
+      "delayMin": 1670.0,
+      "cancelled": 29
+    },
+    "GSP": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 17683.0,
+      "cancelled": 189
+    },
+    "TWF": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 324.0,
+      "cancelled": 4
+    },
+    "DEC": {
+      "costUsd": {
+        "low": 309.0,
+        "typical": 415.5,
+        "high": 663.0
+      },
+      "delayMin": 1573.0,
+      "cancelled": 4
+    },
+    "ATL": {
+      "costUsd": {
+        "low": -6619.719999999999,
+        "typical": -11484.56,
+        "high": -19924.75
+      },
+      "delayMin": 1943861.0,
+      "cancelled": 1269
+    },
+    "ISP": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 11150.0,
+      "cancelled": 89
+    },
+    "LSE": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1402.0,
+      "cancelled": 19
+    },
+    "FWA": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 22331.0,
+      "cancelled": 101
+    },
+    "PIR": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 998.0,
+      "cancelled": 9
+    },
+    "PBG": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1520.0,
+      "cancelled": 3
+    },
+    "SPS": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 527.0,
+      "cancelled": 8
+    },
+    "MQT": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 2289.0,
+      "cancelled": 41
+    },
+    "SAF": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 9424.0,
+      "cancelled": 42
+    },
+    "MCW": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1012.0,
+      "cancelled": 17
+    },
+    "RHI": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1033.0,
+      "cancelled": 13
+    },
+    "INL": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1646.0,
+      "cancelled": 5
+    },
+    "MDW": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 271637.0,
+      "cancelled": 387
+    },
+    "PIE": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 19385.0,
+      "cancelled": 30
+    },
+    "BGM": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 820.0,
+      "cancelled": 0
+    },
+    "CID": {
+      "costUsd": {
+        "low": 11619.5,
+        "typical": 16329.25,
+        "high": 28058.5
+      },
+      "delayMin": 14046.0,
+      "cancelled": 122
+    },
+    "DIK": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1335.0,
+      "cancelled": 6
+    },
+    "BTM": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 783.0,
+      "cancelled": 9
+    },
+    "JFK": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 516828.0,
+      "cancelled": 791
+    },
+    "OAJ": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1189.0,
+      "cancelled": 0
+    },
+    "EWR": {
+      "costUsd": {
+        "low": -6954.0,
+        "typical": -9293.0,
+        "high": -15510.0
+      },
+      "delayMin": 1077017.0,
+      "cancelled": 968
+    },
+    "SBA": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 15584.0,
+      "cancelled": 145
+    },
+    "XNA": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 284834.0,
+      "cancelled": 127
+    },
+    "GEG": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 25238.0,
+      "cancelled": 290
+    },
+    "FCA": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 6960.0,
+      "cancelled": 41
+    },
+    "KOA": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 49328.0,
+      "cancelled": 163
+    },
+    "ORF": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 42238.0,
+      "cancelled": 249
+    },
+    "PNS": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 32048.0,
+      "cancelled": 124
+    },
+    "RST": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 4499.0,
+      "cancelled": 36
+    },
+    "ROW": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 461.0,
+      "cancelled": 16
+    },
+    "IND": {
+      "costUsd": {
+        "low": -3317.0,
+        "typical": -4137.5,
+        "high": -6279.0
+      },
+      "delayMin": 97646.0,
+      "cancelled": 666
+    },
+    "GTR": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 529.0,
+      "cancelled": 2
+    },
+    "EKO": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1250.0,
+      "cancelled": 2
+    },
+    "CMX": {
+      "costUsd": {
+        "low": 997.5,
+        "typical": 1328.25,
+        "high": 2068.5
+      },
+      "delayMin": 3548.0,
+      "cancelled": 21
+    },
+    "MEI": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 360.0,
+      "cancelled": 6
+    },
+    "PAE": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 2646.0,
+      "cancelled": 21
+    },
+    "SJC": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 99878.0,
+      "cancelled": 732
+    },
+    "HOU": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 147119.0,
+      "cancelled": 500
+    },
+    "MKE": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 56248.0,
+      "cancelled": 476
+    },
+    "ALB": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 36471.0,
+      "cancelled": 170
+    },
+    "CHA": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 7362.0,
+      "cancelled": 63
+    },
+    "PHX": {
+      "costUsd": {
+        "low": 46341.0,
+        "typical": 69266.0,
+        "high": 124934.0
+      },
+      "delayMin": 746502.0,
+      "cancelled": 705
+    },
+    "SWF": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 860.0,
+      "cancelled": 2
+    },
+    "CAK": {
+      "costUsd": {
+        "low": 7260.0,
+        "typical": 9330.0,
+        "high": 14100.0
+      },
+      "delayMin": 10793.0,
+      "cancelled": 71
+    },
+    "JAC": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 9262.0,
+      "cancelled": 61
+    },
+    "DTW": {
+      "costUsd": {
+        "low": -65485.5,
+        "typical": -87550.25,
+        "high": -145774.5
+      },
+      "delayMin": 1091630.0,
+      "cancelled": 697
+    },
+    "MRY": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 7804.0,
+      "cancelled": 57
+    },
+    "GNV": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 2787.0,
+      "cancelled": 30
+    },
+    "MBS": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 5545.0,
+      "cancelled": 36
+    },
+    "EYW": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 19918.0,
+      "cancelled": 59
+    },
+    "SWO": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 2661.0,
+      "cancelled": 14
+    },
+    "ELM": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 4071.0,
+      "cancelled": 8
+    },
+    "CKB": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 329.0,
+      "cancelled": 0
+    },
+    "BTR": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 7429.0,
+      "cancelled": 67
+    },
+    "DAB": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 7086.0,
+      "cancelled": 26
+    },
+    "HNL": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 268955.0,
+      "cancelled": 545
+    },
+    "PIA": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 9752.0,
+      "cancelled": 76
+    },
+    "GCK": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1534.0,
+      "cancelled": 14
+    },
+    "SMF": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 129828.0,
+      "cancelled": 751
+    },
+    "HDN": {
+      "costUsd": {
+        "low": 2470.0,
+        "typical": 3249.0,
+        "high": 5206.0
+      },
+      "delayMin": 9397.0,
+      "cancelled": 36
+    },
+    "BRO": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1019.0,
+      "cancelled": 12
+    },
+    "ILM": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 7680.0,
+      "cancelled": 84
+    },
+    "CVG": {
+      "costUsd": {
+        "low": 765.0,
+        "typical": 909.5,
+        "high": 1173.0
+      },
+      "delayMin": 73389.0,
+      "cancelled": 375
+    },
+    "SLC": {
+      "costUsd": {
+        "low": 29530.0,
+        "typical": 31361.0,
+        "high": 33644.0
+      },
+      "delayMin": 1385096.0,
+      "cancelled": 432
+    },
+    "BWI": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 343848.0,
+      "cancelled": 532
+    },
+    "BHM": {
+      "costUsd": {
+        "low": -6585.5,
+        "typical": -5854.25,
+        "high": -3850.5
+      },
+      "delayMin": 27926.0,
+      "cancelled": 209
+    },
+    "BIL": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 5115.0,
+      "cancelled": 49
+    },
+    "ELP": {
+      "costUsd": {
+        "low": -78250.0,
+        "typical": -109550.0,
+        "high": -187800.0
+      },
+      "delayMin": 30965.0,
+      "cancelled": 300
+    },
+    "CHS": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 44284.0,
+      "cancelled": 247
+    },
+    "LGB": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 31246.0,
+      "cancelled": 315
+    },
+    "SMX": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1145.0,
+      "cancelled": 7
+    },
+    "BJI": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1429.0,
+      "cancelled": 12
+    },
+    "AVP": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 15969.0,
+      "cancelled": 32
+    },
+    "LAN": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 4532.0,
+      "cancelled": 48
+    },
+    "ROC": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 24666.0,
+      "cancelled": 172
+    },
+    "MAF": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 13665.0,
+      "cancelled": 153
+    },
+    "SCK": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 2722.0,
+      "cancelled": 1
+    },
+    "BGR": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 2885.0,
+      "cancelled": 36
+    },
+    "ACV": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 4206.0,
+      "cancelled": 26
+    },
+    "MLI": {
+      "costUsd": {
+        "low": -51235.5,
+        "typical": -69972.25,
+        "high": -120338.5
+      },
+      "delayMin": 9066.0,
+      "cancelled": 69
+    },
+    "TLH": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 4635.0,
+      "cancelled": 47
+    },
+    "GFK": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1648.0,
+      "cancelled": 4
+    },
+    "EUG": {
+      "costUsd": {
+        "low": 70673.5,
+        "typical": 90540.25,
+        "high": 147290.5
+      },
+      "delayMin": 12994.0,
+      "cancelled": 146
+    },
+    "MYR": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 79320.0,
+      "cancelled": 83
+    },
+    "LAF": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 881.0,
+      "cancelled": 14
+    },
+    "CWA": {
+      "costUsd": {
+        "low": 43737.5,
+        "typical": 56676.25,
+        "high": 94442.5
+      },
+      "delayMin": 1825.0,
+      "cancelled": 22
+    },
+    "MFE": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 4854.0,
+      "cancelled": 41
+    },
+    "EVV": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 2704.0,
+      "cancelled": 38
+    },
+    "PSC": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 9597.0,
+      "cancelled": 87
+    },
+    "HYS": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 370.0,
+      "cancelled": 11
+    },
+    "GGG": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1206.0,
+      "cancelled": 15
+    },
+    "CDV": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1428.0,
+      "cancelled": 3
+    },
+    "HSV": {
+      "costUsd": {
+        "low": 211.5,
+        "typical": 317.25,
+        "high": 634.5
+      },
+      "delayMin": 4211275.0,
+      "cancelled": 107
+    },
+    "PQI": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1351.0,
+      "cancelled": 7
+    },
+    "CMI": {
+      "costUsd": {
+        "low": 19564.5,
+        "typical": 25366.75,
+        "high": 41823.5
+      },
+      "delayMin": 2823.0,
+      "cancelled": 30
+    },
+    "FSD": {
+      "costUsd": {
+        "low": 1907.5,
+        "typical": 2406.25,
+        "high": 3482.5
+      },
+      "delayMin": 19306.0,
+      "cancelled": 105
+    },
+    "TTN": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1105.0,
+      "cancelled": 11
+    },
+    "LCH": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 784.0,
+      "cancelled": 15
+    },
+    "DAY": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 15456.0,
+      "cancelled": 127
+    },
+    "HOB": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1365.0,
+      "cancelled": 15
+    },
+    "ITO": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 25821.0,
+      "cancelled": 97
+    },
+    "BMI": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1469.0,
+      "cancelled": 29
+    },
+    "SUX": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 2354.0,
+      "cancelled": 7
+    },
+    "SNA": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 81795.0,
+      "cancelled": 715
+    },
+    "MIA": {
+      "costUsd": {
+        "low": 32103.5,
+        "typical": 43694.75,
+        "high": 75295.5
+      },
+      "delayMin": 7660862.0,
+      "cancelled": 579
+    },
+    "BRD": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 2787.0,
+      "cancelled": 4
+    },
+    "STT": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 9313.0,
+      "cancelled": 45
+    },
+    "PWM": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 10715.0,
+      "cancelled": 129
+    },
+    "OKC": {
+      "costUsd": {
+        "low": 37424.0,
+        "typical": 47920.0,
+        "high": 79118.0
+      },
+      "delayMin": 43517.0,
+      "cancelled": 364
+    },
+    "FLG": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 4642.0,
+      "cancelled": 13
+    },
+    "ORH": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1470.0,
+      "cancelled": 6
+    },
+    "OME": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 481.0,
+      "cancelled": 8
+    },
+    "CHO": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 6067.0,
+      "cancelled": 37
+    },
+    "GJT": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 4946.0,
+      "cancelled": 42
+    },
+    "BIS": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 11021.0,
+      "cancelled": 70
+    },
+    "CIU": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 2135.0,
+      "cancelled": 18
+    },
+    "EGE": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 13724.0,
+      "cancelled": 57
+    },
+    "SEA": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 729208.0,
+      "cancelled": 689
+    },
+    "MDT": {
+      "costUsd": {
+        "low": 58245.0,
+        "typical": 77987.5,
+        "high": 133465.0
+      },
+      "delayMin": 14998.0,
+      "cancelled": 64
+    },
+    "IDA": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 9731.0,
+      "cancelled": 52
+    },
+    "CYS": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 552.0,
+      "cancelled": 15
+    },
+    "PVU": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 4096.0,
+      "cancelled": 24
+    },
+    "DEN": {
+      "costUsd": {
+        "low": 22614.0,
+        "typical": 32105.0,
+        "high": 57276.0
+      },
+      "delayMin": 1945330.0,
+      "cancelled": 952
+    },
+    "ATY": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1190.0,
+      "cancelled": 9
+    },
+    "BNA": {
+      "costUsd": {
+        "low": 1917.0,
+        "typical": 2450.5,
+        "high": 4651.0
+      },
+      "delayMin": 407770.0,
+      "cancelled": 893
+    },
+    "MGM": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1356.0,
+      "cancelled": 25
+    },
+    "ROA": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 6398.0,
+      "cancelled": 27
+    },
+    "COU": {
+      "costUsd": {
+        "low": 450.0,
+        "typical": 555.0,
+        "high": 770.0
+      },
+      "delayMin": 6176.0,
+      "cancelled": 58
+    },
+    "LNK": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 6139.0,
+      "cancelled": 54
+    },
+    "ECP": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 11136.0,
+      "cancelled": 107
+    },
+    "SUN": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 7336.0,
+      "cancelled": 55
+    },
+    "BPT": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 5682.0,
+      "cancelled": 20
+    },
+    "CDC": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 251.0,
+      "cancelled": 1
+    },
+    "LBF": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1008.0,
+      "cancelled": 2
+    },
+    "GRI": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1683.0,
+      "cancelled": 15
+    },
+    "CMH": {
+      "costUsd": {
+        "low": 8414.0,
+        "typical": 11585.0,
+        "high": 18358.0
+      },
+      "delayMin": 131349.0,
+      "cancelled": 568
+    },
+    "PHL": {
+      "costUsd": {
+        "low": -19984.0,
+        "typical": -28026.0,
+        "high": -44576.0
+      },
+      "delayMin": 355588.0,
+      "cancelled": 678
+    },
+    "MCI": {
+      "costUsd": {
+        "low": 585.0,
+        "typical": 846.5,
+        "high": 1465.0
+      },
+      "delayMin": 98767.0,
+      "cancelled": 682
+    },
+    "XWA": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 8213.0,
+      "cancelled": 30
+    },
+    "JMS": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1837.0,
+      "cancelled": 4
+    },
+    "RSW": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 89062.0,
+      "cancelled": 531
+    },
+    "VCT": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1222.0,
+      "cancelled": 5
+    },
+    "SAV": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 25425.0,
+      "cancelled": 208
+    },
+    "RNO": {
+      "costUsd": {
+        "low": 27878.0,
+        "typical": 35405.0,
+        "high": 57406.0
+      },
+      "delayMin": 35675.0,
+      "cancelled": 358
+    },
+    "PGD": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 13267.0,
+      "cancelled": 13
+    },
+    "HGR": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 626.0,
+      "cancelled": 0
+    },
+    "HHH": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1349.0,
+      "cancelled": 5
+    },
+    "OMA": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 56968.0,
+      "cancelled": 351
+    },
+    "HPN": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 23691.0,
+      "cancelled": 127
+    },
+    "CLE": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 106873.0,
+      "cancelled": 600
+    },
+    "LWS": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 2577.0,
+      "cancelled": 15
+    },
+    "ESC": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1493.0,
+      "cancelled": 15
+    },
+    "SGF": {
+      "costUsd": {
+        "low": 678.0,
+        "typical": 877.0,
+        "high": 1364.0
+      },
+      "delayMin": 12647.0,
+      "cancelled": 52
+    },
+    "RDU": {
+      "costUsd": {
+        "low": 17552.5,
+        "typical": 23164.75,
+        "high": 37741.5
+      },
+      "delayMin": 148598.0,
+      "cancelled": 795
+    },
+    "SJT": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1336.0,
+      "cancelled": 22
+    },
+    "LRD": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1253.0,
+      "cancelled": 22
+    },
+    "STL": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 177075.0,
+      "cancelled": 655
+    },
+    "OGG": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 98397.0,
+      "cancelled": 235
+    },
+    "SBN": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 24739.0,
+      "cancelled": 120
+    },
+    "MSO": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 4288.0,
+      "cancelled": 38
+    },
+    "PSM": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 510.0,
+      "cancelled": 0
+    },
+    "LAX": {
+      "costUsd": {
+        "low": 17382.0,
+        "typical": 21505.0,
+        "high": 33354.0
+      },
+      "delayMin": 5030417.0,
+      "cancelled": 1460
+    },
+    "LAW": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1964.0,
+      "cancelled": 25
+    },
+    "FAT": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 16824.0,
+      "cancelled": 209
+    },
+    "TUL": {
+      "costUsd": {
+        "low": 79276.0,
+        "typical": 108864.0,
+        "high": 186528.0
+      },
+      "delayMin": 30232.0,
+      "cancelled": 274
+    },
+    "ACT": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1055.0,
+      "cancelled": 14
+    },
+    "BFF": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 861.0,
+      "cancelled": 1
+    },
+    "TPA": {
+      "costUsd": {
+        "low": -5226.0,
+        "typical": -6639.0,
+        "high": -10878.0
+      },
+      "delayMin": 655322.0,
+      "cancelled": 888
+    },
+    "BRW": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 185.0,
+      "cancelled": 9
+    },
+    "GTF": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1550.0,
+      "cancelled": 28
+    },
+    "MHK": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 4719.0,
+      "cancelled": 27
+    },
+    "LBL": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 806.0,
+      "cancelled": 0
+    },
+    "SYR": {
+      "costUsd": {
+        "low": -40087.78,
+        "typical": -52294.990000000005,
+        "high": -84290.45
+      },
+      "delayMin": 22727.0,
+      "cancelled": 175
+    },
+    "BQN": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 4183.0,
+      "cancelled": 37
+    },
+    "SGU": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 2975.0,
+      "cancelled": 26
+    },
+    "BTV": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 32344.0,
+      "cancelled": 96
+    },
+    "DLH": {
+      "costUsd": {
+        "low": -14432.5,
+        "typical": -18998.75,
+        "high": -31997.5
+      },
+      "delayMin": 6378.0,
+      "cancelled": 49
+    },
+    "TXK": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1182.0,
+      "cancelled": 6
+    },
+    "DDC": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 757.0,
+      "cancelled": 0
+    },
+    "LEX": {
+      "costUsd": {
+        "low": -3290.0,
+        "typical": -4277.0,
+        "high": -6768.0
+      },
+      "delayMin": 11917.0,
+      "cancelled": 100
+    },
+    "USA": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 3756.0,
+      "cancelled": 5
+    },
+    "FOD": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1008.0,
+      "cancelled": 11
+    },
+    "LBB": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 10070.0,
+      "cancelled": 108
+    },
+    "AGS": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 5291.0,
+      "cancelled": 46
+    },
+    "AZA": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 12858.0,
+      "cancelled": 13
+    },
+    "BUR": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 64398.0,
+      "cancelled": 523
+    },
+    "AEX": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 624.0,
+      "cancelled": 5
+    },
+    "MFR": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 7968.0,
+      "cancelled": 54
+    },
+    "CLL": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 815.0,
+      "cancelled": 14
+    },
+    "RDD": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 6673.0,
+      "cancelled": 33
+    },
+    "HTS": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 714.0,
+      "cancelled": 0
+    },
+    "MSN": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 25259.0,
+      "cancelled": 195
+    },
+    "ALO": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1105.0,
+      "cancelled": 18
+    },
+    "MCO": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 862965.0,
+      "cancelled": 1174
+    },
+    "PVD": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 26309.0,
+      "cancelled": 252
+    },
+    "DCA": {
+      "costUsd": {
+        "low": 49959.78,
+        "typical": 63131.37,
+        "high": 99958.08
+      },
+      "delayMin": 676097.0,
+      "cancelled": 1050
+    },
+    "LFT": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 4980.0,
+      "cancelled": 60
+    },
+    "HIB": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 2552.0,
+      "cancelled": 0
+    },
+    "IAD": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 116323.0,
+      "cancelled": 450
+    },
+    "TYS": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 22544.0,
+      "cancelled": 136
+    },
+    "RAP": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 5307.0,
+      "cancelled": 47
+    },
+    "RIW": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 585.0,
+      "cancelled": 7
+    },
+    "PSP": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 29048.0,
+      "cancelled": 258
+    },
+    "JLN": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 2227.0,
+      "cancelled": 8
+    },
+    "BZN": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 22960.0,
+      "cancelled": 125
+    },
+    "DVL": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1364.0,
+      "cancelled": 8
+    },
+    "LCK": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1515.0,
+      "cancelled": 0
+    },
+    "SFB": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 24891.0,
+      "cancelled": 27
+    },
+    "CRP": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 4768.0,
+      "cancelled": 44
+    },
+    "SPN": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 66.0,
+      "cancelled": 4
+    },
+    "VPS": {
+      "costUsd": {
+        "low": 46471.0,
+        "typical": 60398.5,
+        "high": 101961.0
+      },
+      "delayMin": 79392.0,
+      "cancelled": 66
+    },
+    "ATW": {
+      "costUsd": {
+        "low": -76092.93,
+        "typical": -98279.27,
+        "high": -165423.11
+      },
+      "delayMin": 16414.0,
+      "cancelled": 110
+    },
+    "PSE": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 2355.0,
+      "cancelled": 12
+    },
+    "ABR": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1450.0,
+      "cancelled": 22
+    },
+    "FNT": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 10414.0,
+      "cancelled": 66
+    },
+    "HRL": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 6722.0,
+      "cancelled": 59
+    },
+    "GCC": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1040.0,
+      "cancelled": 20
+    },
+    "GUC": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 2235.0,
+      "cancelled": 16
+    },
+    "CLT": {
+      "costUsd": {
+        "low": 15515.5,
+        "typical": 18280.75,
+        "high": 27335.5
+      },
+      "delayMin": 1719704.0,
+      "cancelled": 505
+    },
+    "PRC": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 323.0,
+      "cancelled": 7
+    },
+    "JAN": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 8931.0,
+      "cancelled": 85
+    },
+    "CRW": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 7578.0,
+      "cancelled": 48
+    },
+    "BFL": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 5966.0,
+      "cancelled": 44
+    },
+    "GRR": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 50030.0,
+      "cancelled": 239
+    },
+    "SAN": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 348712.0,
+      "cancelled": 1037
+    },
+    "ORD": {
+      "costUsd": {
+        "low": -74659.49,
+        "typical": -102121.42,
+        "high": -190941.46000000002
+      },
+      "delayMin": 52821588.0,
+      "cancelled": 1723
+    },
+    "AVL": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 22014.0,
+      "cancelled": 58
+    },
+    "MGW": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 3660.0,
+      "cancelled": 25
+    },
+    "FAI": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 20470.0,
+      "cancelled": 40
+    },
+    "MLU": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 886.0,
+      "cancelled": 10
+    },
+    "YUM": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 2003.0,
+      "cancelled": 23
+    },
+    "EAU": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1113.0,
+      "cancelled": 19
+    },
+    "MSY": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 95555.0,
+      "cancelled": 679
+    },
+    "ABI": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1318.0,
+      "cancelled": 22
+    },
+    "BLV": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 2266.0,
+      "cancelled": 4
+    },
+    "FSM": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 68743.0,
+      "cancelled": 13
+    },
+    "JAX": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 49775.0,
+      "cancelled": 396
+    },
+    "CLD": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 73.0,
+      "cancelled": 5
+    },
+    "PSG": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1273.0,
+      "cancelled": 13
+    },
+    "KTN": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 4874.0,
+      "cancelled": 26
+    },
+    "AUS": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 223311.0,
+      "cancelled": 867
+    },
+    "LIH": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 45218.0,
+      "cancelled": 201
+    },
+    "SAT": {
+      "costUsd": {
+        "low": 3125.5,
+        "typical": 4023.25,
+        "high": 6431.5
+      },
+      "delayMin": 71743.0,
+      "cancelled": 641
+    },
+    "COS": {
+      "costUsd": {
+        "low": -24729.0,
+        "typical": -37081.5,
+        "high": -66397.0
+      },
+      "delayMin": 24664.0,
+      "cancelled": 196
+    },
+    "MLB": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 4008.0,
+      "cancelled": 26
+    },
+    "YAK": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1220.0,
+      "cancelled": 9
+    },
+    "IAG": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 667.0,
+      "cancelled": 3
+    },
+    "DFW": {
+      "costUsd": {
+        "low": 16243.5,
+        "typical": 20165.25,
+        "high": 31930.5
+      },
+      "delayMin": 1988547.0,
+      "cancelled": 824
+    },
+    "BUF": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 46125.0,
+      "cancelled": 343
+    },
+    "BDL": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 56880.0,
+      "cancelled": 281
+    },
+    "SBP": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 11633.0,
+      "cancelled": 80
+    },
+    "DSM": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 34592.0,
+      "cancelled": 239
+    },
+    "RKS": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 947.0,
+      "cancelled": 13
+    },
+    "SRQ": {
+      "costUsd": {
+        "low": 2055.0,
+        "typical": 2662.5,
+        "high": 4185.0
+      },
+      "delayMin": 46588.0,
+      "cancelled": 157
+    },
+    "LGA": {
+      "costUsd": {
+        "low": 149544.5,
+        "typical": 208185.25,
+        "high": 361711.5
+      },
+      "delayMin": 404513.0,
+      "cancelled": 1187
+    },
+    "LBE": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 835.0,
+      "cancelled": 5
+    },
+    "TOL": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1614.0,
+      "cancelled": 1
+    },
+    "RIC": {
+      "costUsd": {
+        "low": -9094.5,
+        "typical": -11835.75,
+        "high": -18769.5
+      },
+      "delayMin": 37303.0,
+      "cancelled": 264
+    },
+    "MOT": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 5790.0,
+      "cancelled": 58
+    },
+    "GUM": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 290.0,
+      "cancelled": 2
+    },
+    "DRO": {
+      "costUsd": {
+        "low": -1973.0,
+        "typical": -2559.5,
+        "high": -4319.0
+      },
+      "delayMin": 6018.0,
+      "cancelled": 47
+    },
+    "PPG": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 56.0,
+      "cancelled": 0
+    },
+    "SHR": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 2056.0,
+      "cancelled": 10
+    },
+    "FAR": {
+      "costUsd": {
+        "low": 18357.5,
+        "typical": 26961.25,
+        "high": 47962.5
+      },
+      "delayMin": 11963.0,
+      "cancelled": 92
+    },
+    "PDX": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 178038.0,
+      "cancelled": 520
+    },
+    "BLI": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 4734.0,
+      "cancelled": 33
+    },
+    "ANC": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 83862.0,
+      "cancelled": 156
+    },
+    "TVC": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 14131.0,
+      "cancelled": 79
+    },
+    "BOI": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 46594.0,
+      "cancelled": 377
+    },
+    "OAK": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 100957.0,
+      "cancelled": 510
+    },
+    "SCC": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 910.0,
+      "cancelled": 5
+    },
+    "BET": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 951.0,
+      "cancelled": 7
+    },
+    "GPT": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 2946.0,
+      "cancelled": 53
+    },
+    "PLN": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1456.0,
+      "cancelled": 13
+    },
+    "AZO": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 4482.0,
+      "cancelled": 44
+    },
+    "PIT": {
+      "costUsd": {
+        "low": 60.0,
+        "typical": 76.0,
+        "high": 114.0
+      },
+      "delayMin": 81061.0,
+      "cancelled": 567
+    },
+    "LIT": {
+      "costUsd": {
+        "low": -1225.0,
+        "typical": -1537.5,
+        "high": -2225.0
+      },
+      "delayMin": 25440.0,
+      "cancelled": 116
+    },
+    "OTH": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 118.0,
+      "cancelled": 4
+    },
+    "RFD": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 2214.0,
+      "cancelled": 3
+    },
+    "JST": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 2669.0,
+      "cancelled": 33
+    },
+    "LAS": {
+      "costUsd": {
+        "low": 16243.5,
+        "typical": 23901.25,
+        "high": 43238.5
+      },
+      "delayMin": 886721.0,
+      "cancelled": 731
+    },
+    "SFO": {
+      "costUsd": {
+        "low": 145240.5,
+        "typical": 183560.75,
+        "high": 297521.5
+      },
+      "delayMin": 505168.0,
+      "cancelled": 1019
+    },
+    "SIT": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 2320.0,
+      "cancelled": 22
+    },
+    "SHV": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 9249.0,
+      "cancelled": 90
+    },
+    "FLL": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 296164.0,
+      "cancelled": 802
+    },
+    "PIH": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 57.0,
+      "cancelled": 0
+    },
+    "GRB": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 12908.0,
+      "cancelled": 88
+    },
+    "WRG": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 17702.0,
+      "cancelled": 7
+    },
+    "ABY": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1945.0,
+      "cancelled": 2
+    },
+    "TYR": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 2879.0,
+      "cancelled": 21
+    },
+    "TRI": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1333.0,
+      "cancelled": 22
+    },
+    "ASE": {
+      "costUsd": {
+        "low": 43236.0,
+        "typical": 54858.0,
+        "high": 88584.0
+      },
+      "delayMin": 25314.0,
+      "cancelled": 154
+    },
+    "FMN": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 546.0,
+      "cancelled": 4
+    },
+    "MOB": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 2556.0,
+      "cancelled": 19
+    },
+    "MTJ": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 4537.0,
+      "cancelled": 25
+    },
+    "EAR": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 314.0,
+      "cancelled": 9
+    },
+    "SPI": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1180.0,
+      "cancelled": 21
+    },
+    "ADQ": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 767.0,
+      "cancelled": 15
+    },
+    "JNU": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 27033.0,
+      "cancelled": 38
+    },
+    "ABQ": {
+      "costUsd": {
+        "low": 60114.0,
+        "typical": 86127.0,
+        "high": 149606.0
+      },
+      "delayMin": 45317.0,
+      "cancelled": 374
+    },
+    "SLN": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 3130.0,
+      "cancelled": 24
+    },
+    "ONT": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 46306.0,
+      "cancelled": 467
+    },
+    "STX": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 3894.0,
+      "cancelled": 6
+    },
+    "EWN": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 391.0,
+      "cancelled": 0
+    },
+    "OTZ": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1064.0,
+      "cancelled": 3
+    },
+    "SDF": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 39588.0,
+      "cancelled": 306
+    },
+    "SJU": {
+      "costUsd": {
+        "low": 85650.0,
+        "typical": 111933.0,
+        "high": 188374.0
+      },
+      "delayMin": 74493.0,
+      "cancelled": 450
+    },
+    "ACY": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 5162.0,
+      "cancelled": 36
+    },
+    "MEM": {
+      "costUsd": {
+        "low": 23704.5,
+        "typical": 33636.75,
+        "high": 60533.5
+      },
+      "delayMin": 40618.0,
+      "cancelled": 333
+    },
+    "GSO": {
+      "costUsd": {
+        "low": 6.0,
+        "typical": 9.0,
+        "high": 18.0
+      },
+      "delayMin": 16513.0,
+      "cancelled": 144
+    },
+    "IAH": {
+      "costUsd": {
+        "low": 24047.0,
+        "typical": 37520.5,
+        "high": 79641.0
+      },
+      "delayMin": 275186.0,
+      "cancelled": 691
+    },
+    "PIB": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1353.0,
+      "cancelled": 6
+    },
+    "ABE": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 6135.0,
+      "cancelled": 38
+    },
+    "IMT": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 4827.0,
+      "cancelled": 10
+    },
+    "FAY": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 12334.0,
+      "cancelled": 0
+    },
+    "MSP": {
+      "costUsd": {
+        "low": 11252.0,
+        "typical": 14815.0,
+        "high": 24504.0
+      },
+      "delayMin": 701210.0,
+      "cancelled": 520
+    },
+    "APN": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 2157.0,
+      "cancelled": 6
+    },
+    "BOS": {
+      "costUsd": {
+        "low": -11563.0,
+        "typical": -16421.5,
+        "high": -30927.0
+      },
+      "delayMin": 940166.0,
+      "cancelled": 845
+    },
+    "DAL": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 294909.0,
+      "cancelled": 267
+    },
+    "ICT": {
+      "costUsd": {
+        "low": -1150.0,
+        "typical": -1525.0,
+        "high": -2350.0
+      },
+      "delayMin": 20164.0,
+      "cancelled": 143
+    },
+    "HLN": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1494.0,
+      "cancelled": 14
+    },
+    "LAR": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 925.0,
+      "cancelled": 1
+    },
+    "PBI": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 80521.0,
+      "cancelled": 371
+    },
+    "CAE": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 7796.0,
+      "cancelled": 55
+    },
+    "ERI": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 171.0,
+      "cancelled": 0
+    },
+    "COD": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1387.0,
+      "cancelled": 13
+    },
+    "RDM": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 9794.0,
+      "cancelled": 85
+    },
+    "TUS": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 32227.0,
+      "cancelled": 328
+    },
+    "AMA": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 5543.0,
+      "cancelled": 70
+    },
+    "STC": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 294.0,
+      "cancelled": 0
+    },
+    "ADK": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 19.0,
+      "cancelled": 0
+    },
+    "GUF": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 643.0,
+      "cancelled": 5
+    },
+    "BIH": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 2121.0,
+      "cancelled": 5
+    },
+    "VRB": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 1738.0,
+      "cancelled": 1
+    },
+    "PHF": {
+      "costUsd": {
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
+      },
+      "delayMin": 0.0,
+      "cancelled": 0
+    }
+  }
+}

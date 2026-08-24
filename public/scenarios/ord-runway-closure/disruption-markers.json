@@ -1,0 +1,16 @@
+[
+  {
+    "id": "DISR_b9044ef2ce05",
+    "kind": "close_runway",
+    "simMin": 480,
+    "label": "CLOSE_RUNWAY: ORD capacity reduced 60% 08:00\u201310:00",
+    "airportIata": "ORD",
+    "airportLat": 41.9786,
+    "airportLon": -87.9048,
+    "marginalCost": {
+      "low": 144050.0,
+      "typical": 181375.5,
+      "high": 269311.0
+    }
+  }
+]

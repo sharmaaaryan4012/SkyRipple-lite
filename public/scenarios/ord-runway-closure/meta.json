@@ -1,0 +1,13 @@
+{
+  "scenarioId": "ord-runway-closure",
+  "label": "ORD runway closure",
+  "day": "2025-12-15",
+  "disruptionSummary": "CLOSE_RUNWAY: ORD capacity reduced 60% 08:00\u201310:00",
+  "sourceRunId": "20260820T130545Z-d2f843",
+  "generatedAt": "2026-08-23T06:04:06.154216+00:00",
+  "recordCounts": {
+    "flightLegCount": 582304,
+    "airportCount": 343,
+    "ourAirportsRecordCount": 85845
+  }
+}
