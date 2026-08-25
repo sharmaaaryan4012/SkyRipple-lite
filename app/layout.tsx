@@ -14,14 +14,41 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SkyRipple Lite",
-  description: "Control-room view of an agentic airline delay-propagation simulator.",
+  metadataBase: new URL('https://skyripple.saaryan.com'),
+  title: {
+    template: "%s | SkyRipple",
+    default: "SkyRipple",
+  },
+  description: "SkyRipple is a control-room view of multi-day cascading disruptions and AI-driven recovery scenarios, built for strategic aviation analysis.",
+  keywords: ["Aviation Analysis", "Airline Simulation", "Disruption Modeling", "SkyRipple", "Aaryan Sharma"],
+  authors: [{ name: "Aaryan Sharma" }],
+  creator: "Aaryan Sharma",
+  alternates: {
+    canonical: 'https://skyripple.saaryan.com',
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://skyripple.saaryan.com",
+    title: "SkyRipple",
+    description: "SkyRipple is a control-room view of multi-day cascading disruptions and AI-driven recovery scenarios, built for strategic aviation analysis.",
+    siteName: "SkyRipple",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "SkyRipple",
+    description: "Control-room view of multi-day cascading disruptions and AI-driven recovery scenarios.",
+  },
+  icons: {
+    icon: '/images/headshot.jpg',
+    apple: '/images/headshot.jpg',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
-      <body className="bg-page text-aubergine font-body text-sm antialiased">
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
+      <body className="bg-page text-aubergine font-body text-sm antialiased" suppressHydrationWarning>
         <Cursor />
         {children}
       </body>
