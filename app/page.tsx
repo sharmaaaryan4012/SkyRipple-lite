@@ -90,7 +90,7 @@ export default function LandingPage() {
             <h3 className="text-lg font-display font-semibold mb-2 group-hover:text-gold transition-colors">Product Journey</h3>
             <p className="text-sm text-aubergine-soft">Explore the evolution and development process behind SkyRipple.</p>
           </Link>
-          <Link href="https://www.saaryan.com/cases/" className="group p-6 rounded-xl border border-border bg-surface hover:bg-elevated transition-colors">
+          <Link href="https://www.saaryan.com/cases/skyripple-agentic-simulator/" className="group p-6 rounded-xl border border-border bg-surface hover:bg-elevated transition-colors">
             <BookOpenIcon className="w-8 h-8 text-gold mb-4" />
             <h3 className="text-lg font-display font-semibold mb-2 group-hover:text-gold transition-colors">Case Study</h3>
             <p className="text-sm text-aubergine-soft">Read in-depth analysis of disruption and recovery strategies.</p>
