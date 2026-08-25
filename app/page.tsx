@@ -81,13 +81,6 @@ export default function LandingPage() {
               <PlayIcon className="w-4 h-4" />
               Launch Simulation
             </Link>
-            <Link 
-              href="/pitch-deck"
-              className="inline-flex items-center gap-2 bg-transparent text-aubergine-soft px-6 py-3 rounded-full border border-border font-medium hover:text-gold hover:border-border-strong transition-colors"
-            >
-              <PresentationIcon className="w-4 h-4" />
-              View Pitch Deck
-            </Link>
           </div>
         </div>
 
@@ -102,10 +95,10 @@ export default function LandingPage() {
             <h3 className="text-lg font-display font-semibold mb-2 group-hover:text-gold transition-colors">Case Study</h3>
             <p className="text-sm text-aubergine-soft">Read in-depth analysis of disruption and recovery strategies.</p>
           </Link>
-          <Link href="/simulation" className="group p-6 rounded-xl border border-border bg-surface hover:bg-elevated transition-colors">
-            <ArrowRightIcon className="w-8 h-8 text-gold mb-4" />
-            <h3 className="text-lg font-display font-semibold mb-2 group-hover:text-gold transition-colors">Live Demo</h3>
-            <p className="text-sm text-aubergine-soft">Experience the control room view with live agentic planning.</p>
+          <Link href="/pitch-deck" className="group p-6 rounded-xl border border-border bg-surface hover:bg-elevated transition-colors">
+            <PresentationIcon className="w-8 h-8 text-gold mb-4" />
+            <h3 className="text-lg font-display font-semibold mb-2 group-hover:text-gold transition-colors">Pitch Deck</h3>
+            <p className="text-sm text-aubergine-soft">View the strategic business and technical presentation.</p>
           </Link>
         </div>
       </main>
