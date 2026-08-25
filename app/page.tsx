@@ -65,8 +65,8 @@ export default function LandingPage() {
         </nav>
 
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-20 md:pt-24 md:pb-28">
-          <div className="space-y-8 max-w-4xl">
-            <h1 className="font-display text-[clamp(2.75rem,10vw,6rem)] leading-[0.95] font-medium tracking-tight text-white">
+          <div className="space-y-8">
+            <h1 className="font-display text-[clamp(2.75rem,13vw,9rem)] leading-[0.95] font-medium tracking-tight text-white">
               <RevealText>Agentic airline delay-propagation simulator.</RevealText>
             </h1>
             <p className="max-w-2xl text-lg sm:text-xl text-aubergine-soft leading-relaxed">
