@@ -2,13 +2,15 @@
 
 import { useEffect, useState } from "react";
 import { motion, useMotionValue, useSpring, useReducedMotion } from "framer-motion";
+import { usePathname } from "next/navigation";
 
 export function Cursor() {
+  const pathname = usePathname();
   const shouldReduce = useReducedMotion();
   const [pointerFine, setPointerFine] = useState(false);
   const [hovering, setHovering] = useState(false);
   const [visible, setVisible] = useState(false);
-  const enabled = pointerFine && !shouldReduce;
+  const enabled = pointerFine && !shouldReduce && pathname !== "/simulation";
 
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
