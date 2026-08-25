@@ -111,26 +111,24 @@ export function TimelineScrubber({
         />
 
         <svg viewBox={`0 0 ${VIEW_W} ${VIEW_H}`} preserveAspectRatio="none" className="absolute inset-0 w-full h-full pointer-events-none">
-          {/* Sparkline: muted, quiet,  context, not a headline chart. Never
-              categorical/gold, per the design system's semantic rules. */}
-          <path d={areaPath} fill="#E4DCE6" fillOpacity={0.5} stroke="none" />
+          {/* Sparkline */}
+          <path d={areaPath} fill="rgba(255, 255, 255, 0.05)" stroke="none" />
           <polyline
             points={sparkline.bucketStartMin.map((min, i) => `${xFor(min).toFixed(1)},${sparkYFor(sparkline.values[i] ?? 0).toFixed(1)}`).join(" ")}
             fill="none"
-            stroke="#7A6E82"
+            stroke="#94a3b8"
             strokeWidth={1}
           />
 
           {/* Track background. */}
-          <rect x={0} y={TRACK_Y} width={VIEW_W} height={TRACK_H} rx={3.5} fill="#EFEAE3" />
-          {/* Elapsed portion, filled quietly (muted, not gold,  gold is
-              reserved for recovered value, not part of this task). */}
-          <rect x={0} y={TRACK_Y} width={Math.max(0, cursorX)} height={TRACK_H} rx={3.5} fill="#6A3B72" fillOpacity={0.55} />
+          <rect x={0} y={TRACK_Y} width={VIEW_W} height={TRACK_H} rx={3.5} fill="rgba(255, 255, 255, 0.1)" />
+          {/* Elapsed portion */}
+          <rect x={0} y={TRACK_Y} width={Math.max(0, cursorX)} height={TRACK_H} rx={3.5} fill="#C5A059" fillOpacity={0.8} />
 
           {dayBoundaries.map((boundaryMin) => (
             <g key={boundaryMin}>
-              <line x1={xFor(boundaryMin)} y1={TICK_TOP} x2={xFor(boundaryMin)} y2={TICK_BOTTOM} stroke="#7A6E82" strokeWidth={1} strokeDasharray="2 2" />
-              <text x={xFor(boundaryMin) + 3} y={SPARK_TOP + 7} fill="#7A6E82" fontSize={7} fontFamily="var(--font-mono)">
+              <line x1={xFor(boundaryMin)} y1={TICK_TOP} x2={xFor(boundaryMin)} y2={TICK_BOTTOM} stroke="#94a3b8" strokeWidth={1} strokeDasharray="2 2" />
+              <text x={xFor(boundaryMin) + 3} y={SPARK_TOP + 7} fill="#94a3b8" fontSize={7} fontFamily="var(--font-mono)">
                 {multiDay ? formatWindowTick(coverage.startDay, boundaryMin) : `D${boundaryMin / 1440}`}
               </text>
             </g>
@@ -139,7 +137,7 @@ export function TimelineScrubber({
           {scale === "month" && multiDay
             ? clusters.map((c) => (
                 <g key={c.dayStartMin} data-testid="scrubber-cluster-marker" data-count={c.markers.length}>
-                  <line x1={xFor(c.dayStartMin)} y1={TICK_TOP} x2={xFor(c.dayStartMin)} y2={TICK_BOTTOM} stroke="#C1121F" strokeWidth={hoveredClusterDay === c.dayStartMin ? 2 : 1.4} />
+                  <line x1={xFor(c.dayStartMin)} y1={TICK_TOP} x2={xFor(c.dayStartMin)} y2={TICK_BOTTOM} stroke="#EF4444" strokeWidth={hoveredClusterDay === c.dayStartMin ? 2 : 1.4} />
                   <circle
                     cx={xFor(c.dayStartMin)}
                     cy={TICK_TOP}
@@ -150,9 +148,9 @@ export function TimelineScrubber({
                     onMouseLeave={() => setHoveredClusterDay((d) => (d === c.dayStartMin ? null : d))}
                     onClick={() => setMinute(c.dayStartMin)}
                   />
-                  <circle cx={xFor(c.dayStartMin)} cy={TICK_TOP} r={2.5} fill="#C1121F" style={{ pointerEvents: "none" }} />
+                  <circle cx={xFor(c.dayStartMin)} cy={TICK_TOP} r={2.5} fill="#EF4444" style={{ pointerEvents: "none" }} />
                   {c.markers.length > 1 && (
-                    <text x={xFor(c.dayStartMin)} y={TICK_TOP - 3} textAnchor="middle" fontSize={6} fontFamily="var(--font-mono)" fill="#C1121F" fontWeight={600}>
+                    <text x={xFor(c.dayStartMin)} y={TICK_TOP - 3} textAnchor="middle" fontSize={6} fontFamily="var(--font-mono)" fill="#EF4444" fontWeight={600}>
                       {c.markers.length}
                     </text>
                   )}
@@ -160,9 +158,7 @@ export function TimelineScrubber({
               ))
             : disruptionMarkers.map((m) => (
                 <g key={m.id}>
-                  <line x1={xFor(m.simMin)} y1={TICK_TOP} x2={xFor(m.simMin)} y2={TICK_BOTTOM} stroke="#C1121F" strokeWidth={hoveredMarkerId === m.id ? 2 : 1.4} />
-                  {/* An oversized, transparent hit-circle -- easier to hover/click
-                      than the thin line itself, without visually widening it. */}
+                  <line x1={xFor(m.simMin)} y1={TICK_TOP} x2={xFor(m.simMin)} y2={TICK_BOTTOM} stroke="#EF4444" strokeWidth={hoveredMarkerId === m.id ? 2 : 1.4} />
                   <circle
                     cx={xFor(m.simMin)}
                     cy={TICK_TOP}
@@ -173,14 +169,13 @@ export function TimelineScrubber({
                     onMouseLeave={() => setHoveredMarkerId((id) => (id === m.id ? null : id))}
                     onClick={() => setMinute(m.simMin)}
                   />
-                  <circle cx={xFor(m.simMin)} cy={TICK_TOP} r={2.5} fill="#C1121F" style={{ pointerEvents: "none" }} />
+                  <circle cx={xFor(m.simMin)} cy={TICK_TOP} r={2.5} fill="#EF4444" style={{ pointerEvents: "none" }} />
                 </g>
               ))}
 
-          {/* The scrub handle, drawn on top so it's always visible even
-              directly over a disruption tick. */}
-          <line x1={cursorX} y1={TICK_TOP} x2={cursorX} y2={TICK_BOTTOM} stroke="#4A1E52" strokeWidth={1.5} />
-          <circle cx={cursorX} cy={TRACK_Y + TRACK_H / 2} r={4.5} fill="#4A1E52" style={{ pointerEvents: "none" }} />
+          {/* The scrub handle */}
+          <line x1={cursorX} y1={TICK_TOP} x2={cursorX} y2={TICK_BOTTOM} stroke="#ffffff" strokeWidth={1.5} />
+          <circle cx={cursorX} cy={TRACK_Y + TRACK_H / 2} r={4.5} fill="#ffffff" style={{ pointerEvents: "none" }} />
         </svg>
 
         {hoveredMarker && <MarkerBubble marker={hoveredMarker} leftPct={(xFor(hoveredMarker.simMin) / VIEW_W) * 100} />}

@@ -112,19 +112,19 @@ export function RecoverySavingsChart({
     <div className="relative">
       <ResponsiveContainer width="100%" height={260}>
         <ComposedChart data={rows} margin={{ top: 20, right: 16, bottom: 8, left: 8 }}>
-          <CartesianGrid stroke="#E4DCE6" strokeDasharray="2 3" vertical={false} />
+          <CartesianGrid stroke="rgba(255, 255, 255, 0.05)" strokeDasharray="2 3" vertical={false} />
           <XAxis
             dataKey="min"
             tickFormatter={tickFormatter}
-            stroke="#7A6E82"
-            tick={{ fontFamily: "var(--font-mono)", fontSize: 11, fill: "#7A6E82" }}
+            stroke="#94a3b8"
+            tick={{ fontFamily: "var(--font-mono)", fontSize: 11, fill: "#94a3b8" }}
             tickLine={false}
-            axisLine={{ stroke: "#E4DCE6" }}
+            axisLine={{ stroke: "rgba(255, 255, 255, 0.05)" }}
           />
           <YAxis
             tickFormatter={(v) => formatUsd(v)}
-            stroke="#7A6E82"
-            tick={{ fontFamily: "var(--font-mono)", fontSize: 11, fill: "#7A6E82" }}
+            stroke="#94a3b8"
+            tick={{ fontFamily: "var(--font-mono)", fontSize: 11, fill: "#94a3b8" }}
             tickLine={false}
             axisLine={false}
             width={70}
@@ -139,22 +139,22 @@ export function RecoverySavingsChart({
             dataKey="gap"
             stackId="saving"
             stroke="none"
-            fill="#C79A3F"
+            fill="#C5A059"
             fillOpacity={goldOpacity}
             isAnimationActive={false}
             style={{ transition: "fill-opacity 700ms cubic-bezier(0.34, 1.56, 0.64, 1)" }}
           />
 
-          <Line type="monotone" dataKey="noRecovery" stroke="#C1121F" strokeWidth={2} dot={false} isAnimationActive={false} />
-          <Line type="monotone" dataKey="recovered" stroke="#9A7420" strokeWidth={2} dot={false} isAnimationActive={false} />
+          <Line type="monotone" dataKey="noRecovery" stroke="#EF4444" strokeWidth={2} dot={false} isAnimationActive={false} />
+          <Line type="monotone" dataKey="recovered" stroke="#ffffff" strokeWidth={2} dot={false} isAnimationActive={false} />
         </ComposedChart>
       </ResponsiveContainer>
 
       <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1 px-2 font-mono text-xs text-muted">
-        <Legend swatch="#C1121F" label="No recovery" />
-        <Legend swatch="#9A7420" label="Recovered" />
+        <Legend swatch="#EF4444" label="No recovery" />
+        <Legend swatch="#ffffff" label="Recovered" />
         <span className="flex items-center gap-1.5">
-          <span className="inline-block w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: "#C79A3F", opacity: 0.6 }} />
+          <span className="inline-block w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: "#C5A059", opacity: 0.6 }} />
           Gold area = saved by recovery
         </span>
       </div>

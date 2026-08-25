@@ -40,7 +40,7 @@ export function CarrierBreakdownTable({ rows }: { rows: CarrierLedgerRow[] }) {
                     className="h-full state-transition"
                     style={{
                       width: `${widthPct}%`,
-                      backgroundColor: typical >= 0 ? "#C1121F" : "#4FA8A0", // a rare, cost-side-only negative (net cheaper) reads distinctly, still cool/neutral-family, never gold
+                      backgroundColor: typical >= 0 ? "#EF4444" : "#10B981", // a rare, cost-side-only negative (net cheaper) reads distinctly, still cool/neutral-family, never gold
                     }}
                   />
                 </div>

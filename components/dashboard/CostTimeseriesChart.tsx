@@ -132,19 +132,19 @@ export function CostTimeseriesChart({ data: rawData, markers: rawMarkers }: { da
       <div className="relative">
         <ResponsiveContainer width="100%" height={340}>
           <LineChart data={chartData} margin={{ top: 20, right: 16, bottom: 8, left: 8 }}>
-            <CartesianGrid stroke="#E4DCE6" strokeDasharray="2 3" vertical={false} />
+            <CartesianGrid stroke="rgba(255, 255, 255, 0.05)" strokeDasharray="2 3" vertical={false} />
             <XAxis
               dataKey="min"
               tickFormatter={tickFormatter}
-              stroke="#7A6E82"
-              tick={{ fontFamily: "var(--font-mono)", fontSize: 11, fill: "#7A6E82" }}
+              stroke="#94a3b8"
+              tick={{ fontFamily: "var(--font-mono)", fontSize: 11, fill: "#94a3b8" }}
               tickLine={false}
-              axisLine={{ stroke: "#E4DCE6" }}
+              axisLine={{ stroke: "rgba(255, 255, 255, 0.05)" }}
             />
             <YAxis
               tickFormatter={(v) => formatUsd(v)}
-              stroke="#7A6E82"
-              tick={{ fontFamily: "var(--font-mono)", fontSize: 11, fill: "#7A6E82" }}
+              stroke="#94a3b8"
+              tick={{ fontFamily: "var(--font-mono)", fontSize: 11, fill: "#94a3b8" }}
               tickLine={false}
               axisLine={false}
               width={70}
@@ -179,10 +179,10 @@ export function CostTimeseriesChart({ data: rawData, markers: rawMarkers }: { da
               <ReferenceLine
                 key={`boundary-${boundaryMin}`}
                 x={boundaryMin}
-                stroke="#7A6E82"
+                stroke="#94a3b8"
                 strokeOpacity={0.4}
                 strokeDasharray="2 2"
-                label={{ value: formatWindowTick(coverage.startDay, boundaryMin), position: "insideTopRight", fill: "#7A6E82", fontSize: 10, fontFamily: "var(--font-mono)" }}
+                label={{ value: formatWindowTick(coverage.startDay, boundaryMin), position: "insideTopRight", fill: "#94a3b8", fontSize: 10, fontFamily: "var(--font-mono)" }}
               />
             ))}
 
@@ -195,7 +195,7 @@ export function CostTimeseriesChart({ data: rawData, markers: rawMarkers }: { da
                   <ReferenceLine
                     key={cluster.dayStartMin}
                     x={cluster.dayStartMin}
-                    stroke="#C1121F"
+                    stroke="#EF4444"
                     strokeOpacity={0.35}
                     strokeDasharray="2 3"
                     label={(props: unknown) => (
@@ -222,7 +222,7 @@ export function CostTimeseriesChart({ data: rawData, markers: rawMarkers }: { da
                   <ReferenceLine
                     key={marker.id}
                     x={marker.simMin}
-                    stroke="#C1121F"
+                    stroke="#EF4444"
                     strokeOpacity={0.35}
                     strokeDasharray="2 3"
                     label={(props: unknown) => (
@@ -286,11 +286,11 @@ function DisruptionDot({
   if (cx === undefined || cy === undefined) return null;
   return (
     <g onMouseEnter={onEnter} onMouseLeave={onLeave} style={{ cursor: "pointer" }}>
-      <circle cx={cx} cy={cy} r={9} fill="#C1121F" opacity={0.35}>
+      <circle cx={cx} cy={cy} r={9} fill="#EF4444" opacity={0.35}>
         <animate attributeName="r" values="6;11;6" dur="2.2s" repeatCount="indefinite" />
         <animate attributeName="opacity" values="0.35;0;0.35" dur="2.2s" repeatCount="indefinite" />
       </circle>
-      <circle cx={cx} cy={cy} r={5} fill="#C1121F" stroke="#F7F4F0" strokeWidth={1.5} />
+      <circle cx={cx} cy={cy} r={5} fill="#EF4444" stroke="#0A1128" strokeWidth={1.5} />
     </g>
   );
 }
@@ -328,13 +328,13 @@ function ClusteredDisruptionDot({
   if (cx === undefined || cy === undefined) return null;
   return (
     <g onMouseEnter={onEnter} onMouseLeave={onLeave} style={{ cursor: "pointer" }} data-testid="clustered-disruption-dot" data-count={count}>
-      <circle cx={cx} cy={cy} r={9} fill="#C1121F" opacity={0.35}>
+      <circle cx={cx} cy={cy} r={9} fill="#EF4444" opacity={0.35}>
         <animate attributeName="r" values="6;11;6" dur="2.2s" repeatCount="indefinite" />
         <animate attributeName="opacity" values="0.35;0;0.35" dur="2.2s" repeatCount="indefinite" />
       </circle>
-      <circle cx={cx} cy={cy} r={5} fill="#C1121F" stroke="#F7F4F0" strokeWidth={1.5} />
+      <circle cx={cx} cy={cy} r={5} fill="#EF4444" stroke="#0A1128" strokeWidth={1.5} />
       {count > 1 && (
-        <text x={cx} y={cy - 11} textAnchor="middle" fontSize={9} fontFamily="var(--font-mono)" fill="#C1121F" fontWeight={600}>
+        <text x={cx} y={cy - 11} textAnchor="middle" fontSize={9} fontFamily="var(--font-mono)" fill="#EF4444" fontWeight={600}>
           {count}
         </text>
       )}

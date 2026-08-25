@@ -8,8 +8,8 @@ const TONE_CLASS: Record<ValueTone, string> = {
   // figures, so "gold" is unused today but kept for when the later
   // with/without-recovery comparison introduces recovered-value numbers.
   // Uses `gold-deep`, NOT `gold` -- the v2 reference is explicit that
-  // plain gold (#C79A3F) is for fills/CTAs only and fails contrast as
-  // text on the new white/off-white surfaces; gold-deep (#9A7420) is
+  // plain gold (#C5A059) is for fills/CTAs only and fails contrast as
+  // text on the new white/off-white surfaces; gold-deep (#ffffff) is
   // its documented text-safe exception.
   red: "text-red-soft",
   gold: "text-gold-deep",
