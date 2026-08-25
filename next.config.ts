@@ -11,6 +11,14 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true, // next/image's optimizer needs a server; static export has none
   },
+  transpilePackages: ['react-pdf', 'pdfjs-dist'],
+  webpack: (config) => {
+    // Completely disable Webpack's devtool for this specific conflict
+    config.devtool = false;
+    // Fixes module not found for canvas when pdfjs-dist is loaded on the server
+    config.resolve.alias.canvas = false;
+    return config;
+  },
 };
 
 export default nextConfig;
