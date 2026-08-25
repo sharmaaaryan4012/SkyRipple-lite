@@ -77,7 +77,7 @@ export function AboutModal({ open, onClose }: { open: boolean; onClose: () => vo
           <div className="pt-4 border-t border-border flex justify-end">
             <button
               onClick={onClose}
-              className="px-4 py-2 bg-aubergine text-white rounded font-medium hover:bg-aubergine/90 transition-colors"
+              className="px-6 py-2.5 bg-gold text-page rounded-full font-bold hover:bg-white transition-colors"
             >
               Start Exploring
             </button>
