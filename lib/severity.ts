@@ -22,12 +22,12 @@ import type { SeverityBucket } from "./types";
  * "muted, non-alarming" treatment (v2's own `--muted` token value).
  */
 export const SEVERITY_COLORS: Record<SeverityBucket, string> = {
-  on_time: "#8A8194",
-  minor: "#C79A3F",
-  moderate: "#D07B2E",
-  severe: "#C1121F",
-  cancelled: "#2D6CB5",
-  unresolved: "#7A6E82",
+  on_time: "#94A3B8",
+  minor: "#C5A059",
+  moderate: "#F59E0B",
+  severe: "#EF4444",
+  cancelled: "#3B82F6",
+  unresolved: "#64748B",
 };
 
 function hexToRgb(hex: string): [number, number, number] {

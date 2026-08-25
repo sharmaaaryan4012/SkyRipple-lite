@@ -1,28 +1,16 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Inter, IBM_Plex_Mono } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
+import { Cursor } from "@/components/cursor";
 import "./globals.css";
 
-// next/font self-hosts these at build time (no runtime request to Google
-// Fonts, no render-blocking <link>, and it works fine in a static export).
-// Each font exposes a CSS variable that tailwind.config.ts's fontFamily
-// entries point at, so `font-display` / `font-body` / `font-mono` classes
-// work anywhere in the app.
-const spaceGrotesk = Space_Grotesk({
+const geistSans = Geist({
+  variable: "--font-geist-sans",
   subsets: ["latin"],
-  weight: ["500", "600"],
-  variable: "--font-display",
 });
 
-const inter = Inter({
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-body",
-});
-
-const plexMono = IBM_Plex_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-mono",
 });
 
 export const metadata: Metadata = {
@@ -32,8 +20,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${spaceGrotesk.variable} ${inter.variable} ${plexMono.variable}`}>
-      <body className="bg-page text-aubergine font-body text-sm antialiased">{children}</body>
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className="bg-page text-aubergine font-body text-sm antialiased">
+        <Cursor />
+        {children}
+      </body>
     </html>
   );
 }

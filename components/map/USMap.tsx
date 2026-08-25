@@ -37,14 +37,14 @@ const INITIAL_VIEW_STATE = {
 // everywhere else); BORDER_RGB is a mid-purple visible AGAINST that dark
 // canvas (v2's `aubergine-soft`, not the new light-theme hairline
 // `border`, which would be nearly invisible on a dark map).
-const MAP_CANVAS_RGB: [number, number, number] = [42, 14, 49]; // --map-canvas
-const BORDER_RGB: [number, number, number] = [106, 59, 114]; // --aubergine-soft, for contrast against the dark map
-const RED_RGB: [number, number, number] = [193, 18, 31]; // --red
+const MAP_CANVAS_RGB: [number, number, number] = [10, 17, 40]; // --map-canvas #0A1128
+const BORDER_RGB: [number, number, number] = [51, 65, 85]; // --border-strong #334155
+const RED_RGB: [number, number, number] = [239, 68, 68]; // --red #EF4444
 // The before/after recovery view's debut of gold (--gold) -- ONLY used
 // when `improvedLegIds` marks a flight as having gotten better under
 // recovery (see MapPanel.tsx/lib/recoveryView.ts). Every other map color
 // on this file predates this and stays on the red/severity palette.
-const GOLD_RGB: [number, number, number] = [199, 154, 63];
+const GOLD_RGB: [number, number, number] = [197, 160, 89]; // --gold #C5A059
 
 // Task B: planes-as-icons replaces the old always-on ArcLayer field, so
 // the per-severity alpha tuning is now about ICON opacity (still against
