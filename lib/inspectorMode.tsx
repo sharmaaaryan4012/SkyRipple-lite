@@ -1,8 +1,7 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
-const STORAGE_KEY = "skyripple:inspectorMode";
 
 export interface InspectorModeContextValue {
   enabled: boolean;
@@ -28,21 +27,8 @@ const InspectorModeContext = createContext<InspectorModeContextValue | null>(nul
 export function InspectorModeProvider({ children }: { children: React.ReactNode }) {
   const [enabled, setEnabledState] = useState(false);
 
-  useEffect(() => {
-    try {
-      setEnabledState(window.localStorage.getItem(STORAGE_KEY) === "1");
-    } catch {
-      // ignore -- stays default-off
-    }
-  }, []);
-
   function setEnabled(next: boolean) {
     setEnabledState(next);
-    try {
-      window.localStorage.setItem(STORAGE_KEY, next ? "1" : "0");
-    } catch {
-      // ignore -- in-memory state still updates for this session
-    }
   }
 
   return <InspectorModeContext.Provider value={{ enabled, setEnabled }}>{children}</InspectorModeContext.Provider>;

@@ -248,8 +248,7 @@ export function ChatDock({
   }
 
   function handleStarterClick(prompt: { label: string; id: string }) {
-    window.location.href = `/?scenario=${prompt.id}&raw=1`;
-  }
+    router.push(`/simulation?scenario=${prompt.id}&raw=1`);
 
   function handleKeyDown(e: React.KeyboardEvent) {
     if (e.key === "Escape" && expanded) setExpanded(false);
