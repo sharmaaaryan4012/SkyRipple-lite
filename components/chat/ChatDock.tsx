@@ -3,9 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 
 import { buildScenarioSummary } from "@/lib/qaEngine";
-import { askChat, parseAndSimulate, BackendApiError, BackendUnreachableError } from "@/lib/backendClient";
-import { buildSnapshot } from "@/lib/qaSnapshot";
-import { executeQuery } from "@/lib/qaQuery";
 import { MessageBubble, type ChatMessage } from "./MessageBubble";
 import { PromptChip } from "./PromptChip";
 import type { RecoveryView } from "@/lib/recoveryView";
@@ -25,17 +22,12 @@ const STAGES: { delayMs: number; text: string }[] = [
   { delayMs: 12000, text: "Pricing the impact…" },
 ];
 
-// Fix 1 (Task B follow-up): these REPLACE the old precomputed-scenario
-// showcase chips. Each one is real free text that runs through the
-// EXACT SAME live /api/parse-and-simulate path as anything typed by
-// hand (see submitText() below) -- they are examples-that-RUN, not
-// links to a preloaded file. Deliberately spans more than "runway
-// closure at an airport" (the ONLY disruption kind the old precomputed
-// chip demonstrated): a non-airport target (GROUND_AIRCRAFT), a
-// multi-disruption sentence (proving the multi-parse capability), and a
-// single-flight DELAY_FLIGHT, alongside one airport-capacity example --
-// so the starters themselves teach a new user the tool's actual range,
-// not just its one canned demo.
+// Each `id` is a precomputed export slug under public/scenarios/<id>/.
+// Clicking one activates it as the app's `active` scenario IN PLACE (see
+// handleStarterClick() below) -- no navigation, no remount, chat history
+// stays put. Free-text NL parsing needs the Python/Gemini backend this
+// static Lite build doesn't ship with, so these chips are the only way
+// to load a real disruption cascade here.
 const STARTER_PROMPTS: { label: string; id: string }[] = [
   { label: "ORD Runway Closure", id: "ord-runway-closure" },
   { label: "Live NL Example", id: "live-nl" },
@@ -45,51 +37,29 @@ const STARTER_PROMPTS: { label: string; id: string }[] = [
  * The Ops Assistant -- a floating, collapsible dock positioned absolutely
  * over the map (composed there by ControlRoomApp.tsx; see
  * ControlRoomShell.tsx's own docstring for why there's no separate `chat`
- * grid area to reserve space for it anymore). Task 5c replaces Task 4's client-side
- * keyword matcher with the REAL backend: free text goes to
- * POST /api/parse-and-simulate (Gemini NL parsing + live simulation),
- * and the backend's own `interpretation` string becomes the assistant's
- * confirmation message verbatim,  the honest "here's what I understood"
- * the task requires, not a client-reconstructed paraphrase.
+ * grid area to reserve space for it anymore).
  *
- * STAGED LOADING: /api/parse-and-simulate is a single synchronous
- * request (~15-45s) with no streaming/SSE phase signal, so the "Parsing…
- * -> Simulating… -> Pricing…" progression below is a client-side,
- * TIME-based guess at what the backend is doing (calibrated against
- * observed timingMs breakdowns from Task 5a/5b's own verification runs:
- * resolveDisruptions is near-instant, the clean+reproduce DES pairs
- * dominate the first several seconds, passenger costing dominates the
- * back half),  NOT a real per-stage progress signal, unlike the
- * recovery job's actual 0..1 value. This is deliberately labeled
- * honestly in code (here) rather than presented as more precise than it
- * is; it exists purely so a ~30s wait shows motion instead of one silent
- * spinner.
+ * Lite build: there's no Python/Gemini backend to send free text to, so
+ * submitText() below just posts an honest "NL parsing needs the full
+ * local version" message instead of calling a live API -- see that
+ * function. The STARTER_PROMPTS chips are the real interaction here:
+ * each names a precomputed scenario slug (public/scenarios/<id>/) and
+ * activates it as the app's `active` result via `onActivatePrecomputed`
+ * (handleStarterClick() below) -- the SAME seam ControlRoomApp already
+ * uses for its own boot load, just re-fired with a new scenarioId. This
+ * swaps the map/dashboard/ledger data IN PLACE: no navigation, no
+ * component remount, chat history and dock state untouched.
  *
- * Three distinct honest outcomes from a submission, all rendered as
- * plain assistant text (see lib/backendClient.ts's ParseAndSimulateResult
- * / BackendApiError):
- *   - supported: true  -> interpretation + the live result activates
- *   - supported: false -> an honest miss (interpretation lists supported kinds), no simulation
- *   - BackendApiError(400) -> "understood but failed" (interpretation + the specific resolver error)
- *   - BackendApiError(503) -> NL unavailable (no GEMINI_API_KEY)
- *   - BackendUnreachableError -> can't reach the backend at all (connection refused/network)
+ * That in-place swap replaces an earlier version that routed a starter
+ * click through `router.push('/simulation?scenario=...')` -- a real URL
+ * navigation that remounted ControlRoomApp from scratch via
+ * app/simulation/page.tsx, discarding this whole chat session and
+ * reading, to the user, as the entire site reloading just to load a
+ * scenario.
  *
- * Fix 1 (Task B follow-up): this component USED to also render a row of
- * chips loading PRECOMPUTED scenarios (GET /api/scenarios,
- * onActivatePrecomputed),  dropped entirely, along with the greeting's
- * "or pick a showcase scenario below" framing, because both implied a
- * fixed/canned set of scenarios the live NL front-door has never
- * actually been limited to since 5b/5c. STARTER_PROMPTS above replaces
- * them: real example TEXT that runs through submitText() below exactly
- * like anything typed by hand -- see that function for why it's shared
- * between the form's onSubmit and a starter chip's onClick rather than
- * two separate code paths. The app's initial boot still loads a
- * PRECOMPUTED scenario (page.tsx's own INITIAL_SCENARIO_ID, unrelated to
- * this component),  only the CHAT's own chip row and copy changed here.
- *
- * Shared-state seam: `onActivateLive` is how this component is an INPUT
- * to ControlRoomApp's shared `active` state, exactly like
- * TimeControlPanel is an input to the shared cursor.
+ * Shared-state seam: `onActivateLive` and `onActivatePrecomputed` are how
+ * this component is an INPUT to ControlRoomApp's shared `active` state,
+ * exactly like TimeControlPanel is an input to the shared cursor.
  */
 export function ChatDock({
   scenario,
@@ -97,6 +67,7 @@ export function ChatDock({
   recovery,
   nlAvailable,
   onActivateLive,
+  onActivatePrecomputed,
 }: {
   scenario: ScenarioData;
   /** Task 8e: needed by lib/qaQuery.ts's airport-level executors (the
@@ -109,6 +80,10 @@ export function ChatDock({
   recovery: RecoveryView | null;
   nlAvailable: boolean | null; // null = still checking /api/health
   onActivateLive: (data: SimulationData, disruptions: BackendDisruptionRequest[]) => void;
+  /** Swaps ControlRoomApp's shared `active` to a different precomputed
+   * scenario slug (public/scenarios/<id>/), in place -- see
+   * handleStarterClick() below and this component's own docstring. */
+  onActivatePrecomputed: (scenarioId: string) => void;
 }) {
 
   // Floating-over-map rework: starts EXPANDED (onboarding -- greeting +
@@ -216,23 +191,9 @@ export function ChatDock({
     setHasUnread(false);
   }
 
-  // Fix 1: the ONE path both a typed submission AND a starter-chip click
-  // go through -- a starter is real text run exactly like anything typed
-  // by hand, not a shortcut to a different (precomputed) code path. See
-  // this component's own docstring for why the old chip row (precomputed
-  // scenarios) was removed rather than kept alongside this.
-  //
-  // Task 8e: EVERY message now goes through POST /api/ask FIRST -- a
-  // single Gemini call that classifies disruption vs question vs
-  // ambiguous vs out-of-scope (tier_c) vs unknown (see api/qa_router.py's
-  // own docstring). This REPLACES the old client-side looksLikeQuestion()
-  // regex gate: routing is now the LLM's job, not a keyword heuristic.
-  // route=="disruption" falls through to the EXISTING /api/parse-and-
-  // simulate call below completely unchanged -- 8e only decides WHICH
-  // path a message takes, never how the disruption path itself behaves.
-  // route=="question" executes a closed, typed query (lib/qaQuery.ts)
-  // against data already sitting in this component's own props --
-  // /api/ask never computes or returns a number itself.
+  // Lite build: free text has no backend to parse it, so this just posts
+  // the honest disabled-feature message. See handleStarterClick() below
+  // for the actual scenario-loading path.
   async function submitText(text: string) {
     if (!text || busy) return;
     if (!expanded) expandDock();
@@ -247,8 +208,20 @@ export function ChatDock({
     submitText(input.trim());
   }
 
+  // Activates the precomputed scenario IN PLACE via onActivatePrecomputed
+  // (ControlRoomApp swaps its shared `active` state) -- no navigation, so
+  // the map/dashboard/ledger update where they sit and this chat's own
+  // history survives. armSummary() arms the same "post the new scenario's
+  // summary once its data lands" effect the app's own boot uses (see that
+  // effect above); the summary itself confirms the load instead of a
+  // separate "user said X" bubble, since a chip click isn't really the
+  // user typing a sentence.
   function handleStarterClick(prompt: { label: string; id: string }) {
-    router.push(`/simulation?scenario=${prompt.id}&raw=1`);
+    if (busy) return;
+    if (!expanded) expandDock();
+    onActivatePrecomputed(prompt.id);
+    armSummary(prompt.id);
+  }
 
   function handleKeyDown(e: React.KeyboardEvent) {
     if (e.key === "Escape" && expanded) setExpanded(false);

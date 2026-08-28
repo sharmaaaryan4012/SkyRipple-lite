@@ -12,27 +12,28 @@ import type { BackendDisruptionRequest, SimulationData } from "./types";
  * keeps those consumers origin-agnostic (the task's own "seam
  * discipline" requirement).
  *
- * Task B follow-up (Fix 1, clean-slate boot): "precomputed" now
- * exclusively means the app's own clean-baseline BOOT load,  the chat's
- * old precomputed-scenario showcase chips (the only other thing that
- * ever set this kind) were removed in an earlier fix (see
- * ChatDock.tsx's own docstring), and SimulationProvider.tsx transforms
- * whatever it fetches through lib/bootState.ts's buildCleanBootState()
- * before it's ever shown,  so a "precomputed" ActiveResult always
- * renders as "normal day, nothing injected," never a pre-cascaded
- * disruption.
+ * Task B follow-up (Fix 1, clean-slate boot): "precomputed" originally
+ * meant exclusively the app's own clean-baseline BOOT load. The starter
+ * chips in ChatDock (see its own docstring) now also produce a
+ * "precomputed" result -- swapping WHICH precomputed export is active
+ * in place, no navigation -- so `raw` distinguishes the two: the boot
+ * load stays cleaned (`raw: false`, SimulationProvider.tsx runs it
+ * through lib/bootState.ts's buildCleanBootState()) while a chip
+ * activation wants the export's REAL, un-cleaned cascade (`raw: true`),
+ * exactly like the `?raw=1` verification param already did for the boot
+ * scenario.
  *
  * `disruptions` travels alongside both variants because /api/recovery
  * needs to re-POST the exact structured disruption(s) that produced the
  * active scenario -- for a live result these are exactly what the chat
  * already sent (or what the backend's parser resolved them to). For the
- * boot/precomputed case it's always `null` now -- the clean boot state
- * has, honestly, no disruption to recover from yet (see
- * ControlRoomApp.tsx's initial state); RecoveryPanel's disabled state
- * already handles `null` gracefully.
+ * precomputed case it's always `null` -- no precomputed export has a
+ * lib/scenarioRegistry.ts mapping back to structured disruption params
+ * -- RecoveryPanel's disabled state already handles `null` gracefully
+ * (moot in the Lite build anyway, where recovery is disabled outright).
  */
 export type ActiveResult =
-  | { kind: "precomputed"; scenarioId: string; disruptions: BackendDisruptionRequest[] | null }
+  | { kind: "precomputed"; scenarioId: string; disruptions: BackendDisruptionRequest[] | null; raw: boolean }
   | { kind: "live"; requestId: number; data: SimulationData; disruptions: BackendDisruptionRequest[] };
 
 let liveRequestCounter = 0;
@@ -45,4 +46,11 @@ let liveRequestCounter = 0;
 export function makeLiveActiveResult(data: SimulationData, disruptions: BackendDisruptionRequest[]): ActiveResult {
   liveRequestCounter += 1;
   return { kind: "live", requestId: liveRequestCounter, data, disruptions };
+}
+
+/** Mints a `precomputed` ActiveResult for a starter-chip activation --
+ * always `raw: true` (the chip's whole point is showing the export's
+ * real disruption cascade in place, not another clean boot). */
+export function makePrecomputedActiveResult(scenarioId: string): ActiveResult {
+  return { kind: "precomputed", scenarioId, disruptions: null, raw: true };
 }

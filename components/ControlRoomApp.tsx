@@ -11,7 +11,7 @@ import { ChatDock } from "@/components/chat/ChatDock";
 import { SimulationProvider } from "./SimulationProvider";
 import { InspectorModeProvider } from "@/lib/inspectorMode";
 import { fetchHealth, recoveryResultToSimulationData } from "@/lib/backendClient";
-import { makeLiveActiveResult, type ActiveResult } from "@/lib/activeResult";
+import { makeLiveActiveResult, makePrecomputedActiveResult, type ActiveResult } from "@/lib/activeResult";
 import { buildRecoveryView, type RecoveryView } from "@/lib/recoveryView";
 import type { BackendDisruptionRequest, SimulationData } from "@/lib/types";
 
@@ -25,12 +25,17 @@ import type { BackendDisruptionRequest, SimulationData } from "@/lib/types";
  * any one scenario's data.
  *
  * Fix 1 (Task B follow-up, clean-slate boot) removed this component's
- * own GET /api/scenarios fetch + `showcaseScenarios` state +
- * `activatePrecomputed`,  the chat's precomputed-scenario chip row that
- * consumed them is gone (replaced with live-running starter prompts,
- * see ChatDock.tsx's own docstring); nothing else in the app ever
- * activated a DIFFERENT precomputed scenario after boot, so keeping
- * that fetch/state around with no consumer would just be dead code.
+ * own GET /api/scenarios fetch + `showcaseScenarios` state (there's no
+ * backend to list scenarios from in the Lite build). `activatePrecomputed`
+ * below is back, though: ChatDock's starter chips (see its own docstring)
+ * each name a fixed precomputed export slug already baked into the
+ * static site, so swapping `active` to point at one needs no fetch of
+ * its own -- it just hands SimulationProvider a new scenarioId and lets
+ * the SAME load path the boot already uses run again, in place. This is
+ * deliberately NOT a URL navigation (an earlier version routed starter
+ * clicks through `router.push('/simulation?scenario=...')`, which
+ * remounted this whole component from scratch via app/simulation/page.tsx
+ * -- losing chat history and reading as a full page reload to the user).
  *
  * The app's initial `active` below still uses `bootDataSourceScenarioId`
  * to know WHICH precomputed export to fetch data FROM, but
@@ -41,7 +46,10 @@ import type { BackendDisruptionRequest, SimulationData } from "@/lib/types";
  * no injected disruption to recover from (RecoveryPanel's disabled
  * state already handles `null` gracefully),  it must NOT reuse
  * ord-runway-closure's own disruption params, which would let a user
- * "recover" from a disruption that was never actually run.
+ * "recover" from a disruption that was never actually run. A starter-chip
+ * activation also sets `disruptions: null` for the same honest reason --
+ * see lib/activeResult.ts's own docstring on `raw` for how it differs
+ * from the boot load.
  *
  * SimulationProvider owns the data load + the TimeCursorProvider; this
  * component just decides what each ControlRoomShell slot renders. Chat
@@ -62,6 +70,7 @@ export function ControlRoomApp({
     kind: "precomputed",
     scenarioId: bootDataSourceScenarioId,
     disruptions: null,
+    raw: skipCleanBoot,
   });
   const [nlAvailable, setNlAvailable] = useState<boolean | null>(null);
   // The finale: the before/after recovery view's derived data (see
@@ -91,6 +100,10 @@ export function ControlRoomApp({
     setActive(makeLiveActiveResult(data, disruptions));
   }
 
+  function activatePrecomputed(scenarioId: string) {
+    setActive(makePrecomputedActiveResult(scenarioId));
+  }
+
   const activeKey = active.kind === "precomputed" ? `precomputed:${active.scenarioId}` : `live:${active.requestId}`;
 
   // A recovery result belongs to ONE specific active scenario -- injecting
@@ -105,7 +118,7 @@ export function ControlRoomApp({
 
   return (
     <InspectorModeProvider>
-    <SimulationProvider active={active} skipCleanBoot={skipCleanBoot}>
+    <SimulationProvider active={active}>
       {(data, error) => (
         <ControlRoomShell
           controls={
@@ -138,7 +151,7 @@ export function ControlRoomApp({
                   airportDaily={data.scenario.airportDaily}
                   flightsDetailDay={data.scenario.meta.flightsDetailDay}
                 />
-                <ChatDock scenario={data.scenario} flights={data.flights} recovery={recovery} nlAvailable={nlAvailable} onActivateLive={activateLive} />
+                <ChatDock scenario={data.scenario} flights={data.flights} recovery={recovery} nlAvailable={nlAvailable} onActivateLive={activateLive} onActivatePrecomputed={activatePrecomputed} />
               </div>
             ) : (
               <PlaceholderPanel label="Map" note="Loading flight positions…" />
