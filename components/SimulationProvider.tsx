@@ -86,31 +86,21 @@ export type { SimulationData } from "@/lib/types";
  */
 export function SimulationProvider({
   active,
-  skipCleanBoot = false,
   children,
 }: {
   active: ActiveResult;
-  /** Task 8b verification affordance ONLY -- default false preserves
-   * the app's real user-facing behavior exactly (every precomputed load
-   * goes through buildCleanBootState, unchanged). true shows a
-   * precomputed scenario's REAL (un-cleaned) data instead -- there is no
-   * other way to see a multi-day scenario's real disruption markers/
-   * divergence in this app, since live chat-driven results are always
-   * single-day (no /api/simulate|/api/parse-and-simulate range
-   * equivalent exists) and the normal boot flow always cleans. Wired
-   * from a URL query param in app/page.tsx, never on by default. */
-  skipCleanBoot?: boolean;
   children: (data: SimulationData | null, error: string | null) => React.ReactNode;
 }) {
   const [fetched, setFetched] = useState<SimulationData | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   // A stable string key that changes exactly when a NEW fetch/activation
-  // should happen: a new precomputed slug, or a new live result (even one
-  // that happens to share the same backend scenarioId,  e.g. two live
-  // requests both defaulting to "live",  requestId disambiguates those;
-  // see lib/activeResult.ts's makeLiveActiveResult).
-  const activeKey = active.kind === "precomputed" ? `precomputed:${active.scenarioId}` : `live:${active.requestId}`;
+  // should happen: a new precomputed slug (or the SAME slug requested with
+  // a different `raw`), or a new live result (even one that happens to
+  // share the same backend scenarioId,  e.g. two live requests both
+  // defaulting to "live",  requestId disambiguates those; see
+  // lib/activeResult.ts's makeLiveActiveResult).
+  const activeKey = active.kind === "precomputed" ? `precomputed:${active.scenarioId}:${active.raw}` : `live:${active.requestId}`;
 
   useEffect(() => {
     if (active.kind === "live") {
@@ -121,20 +111,30 @@ export function SimulationProvider({
     }
     let cancelled = false;
     const scenarioId = active.scenarioId;
-    setFetched(null);
+    const raw = active.raw;
+    // Deliberately NOT `setFetched(null)` here: that would drop `data` to
+    // null for the whole in-flight fetch, and ControlRoomApp renders every
+    // grid slot's placeholder the instant `data` is null (see its own
+    // render) -- unmounting MapPanel/ChatDock/RecoveryPanel and remounting
+    // them fresh once the new data lands. For the FIRST load that's the
+    // only option (there's nothing to show yet), but for a starter-chip
+    // switch between two precomputed scenarios it meant ChatDock's whole
+    // `messages` state (and everything else's local state) got wiped for
+    // a "Loading…" flash on every click -- indistinguishable, to a user,
+    // from the page having reloaded. Leaving the PREVIOUS scenario's data
+    // in place until the new one resolves (stale-while-revalidate) keeps
+    // the tree mounted throughout; only `error` resets up front, since a
+    // fresh attempt should not keep showing a stale error either.
     setError(null);
     Promise.all([loadFlights(scenarioId), loadScenario(scenarioId)])
       .then(([flightsData, scenario]) => {
         if (cancelled) return;
-        // Fix 1 (clean-slate boot): "precomputed" now exclusively means
-        // the app's OWN clean-baseline boot load (nothing else creates
-        // this ActiveResult kind since chat's showcase chips were
-        // removed,  see lib/activeResult.ts and ChatDock.tsx's own
-        // docstrings) -- so the fetched precomputed export is always
-        // transformed into the clean-baseline presentation here, never
-        // shown as a pre-cascaded disruption. See lib/bootState.ts.
+        // `raw` (lib/activeResult.ts) decides the presentation: the app's
+        // own boot load stays cleaned (buildCleanBootState -- "normal day,
+        // nothing injected"), while a starter-chip activation shows the
+        // export's real, pre-cascaded disruption as-is. See lib/bootState.ts.
         const merged: SimulationData = { flights: flightsData.flights, scenario };
-        setFetched(skipCleanBoot ? merged : buildCleanBootState(merged));
+        setFetched(raw ? merged : buildCleanBootState(merged));
       })
       .catch((err: Error) => {
         if (!cancelled) setError(err.message);
@@ -143,7 +143,7 @@ export function SimulationProvider({
       cancelled = true;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps -- activeKey is the intentional dependency; active itself is a fresh object each render
-  }, [activeKey, skipCleanBoot]);
+  }, [activeKey]);
 
   const data = active.kind === "live" ? active.data : fetched;
 
