@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { Panel } from "@/components/ui/Panel";
 import { DateClockReadout } from "./DateClockReadout";
 import { ScenarioScopePanel } from "./ScenarioScopePanel";
@@ -31,7 +32,9 @@ export function TimeControlPanel({ scenario }: { scenario: ScenarioData }) {
   return (
     <div className="flex flex-col gap-3">
       <div className="flex items-center justify-between px-1">
-        <p className="font-display text-lg font-semibold text-aubergine">SkyRipple<span className="font-light text-muted ml-1 text-base">lite</span></p>
+        <Link href="/" className="font-display text-lg font-semibold text-aubergine hover:text-gold transition-colors">
+          SkyRipple<span className="font-light text-muted ml-1 text-base">lite</span>
+        </Link>
         <button 
           onClick={() => setAboutOpen(true)}
           className="text-xs font-medium text-muted hover:text-aubergine hover:bg-elevated px-2 py-1 rounded transition-colors flex items-center gap-1"
