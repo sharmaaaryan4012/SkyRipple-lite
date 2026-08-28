@@ -46,8 +46,15 @@ function BookOpenIcon(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
+import type { Metadata } from 'next';
 import { PageTransition } from '@/components/page-transition';
 import { RevealText } from '@/components/reveal-text';
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: '/',
+  },
+};
 
 export default function LandingPage() {
   return (
@@ -90,10 +97,10 @@ export default function LandingPage() {
             <h3 className="text-lg font-display font-semibold mb-2 group-hover:text-gold transition-colors">Product Journey</h3>
             <p className="text-sm text-aubergine-soft">Explore the evolution and development process behind SkyRipple.</p>
           </Link>
-          <Link href="https://www.saaryan.com/cases/skyripple-agentic-simulator/" className="group p-6 rounded-xl border border-border bg-surface hover:bg-elevated transition-colors">
+          <Link href="/case-study" className="group p-6 rounded-xl border border-border bg-surface hover:bg-elevated transition-colors">
             <BookOpenIcon className="w-8 h-8 text-gold mb-4" />
-            <h3 className="text-lg font-display font-semibold mb-2 group-hover:text-gold transition-colors">Case Study</h3>
-            <p className="text-sm text-aubergine-soft">Read in-depth analysis of disruption and recovery strategies.</p>
+            <h3 className="text-lg font-display font-semibold mb-2 group-hover:text-gold transition-colors">Project Overview</h3>
+            <p className="text-sm text-aubergine-soft">The stats, the architecture, and the tech stack behind the cascade.</p>
           </Link>
           <Link href="/pitch-deck" className="group p-6 rounded-xl border border-border bg-surface hover:bg-elevated transition-colors">
             <PresentationIcon className="w-8 h-8 text-gold mb-4" />
