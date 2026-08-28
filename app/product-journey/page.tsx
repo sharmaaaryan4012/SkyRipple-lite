@@ -1,5 +1,23 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeftIcon } from "@/components/icons";
+
+export const metadata: Metadata = {
+  title: "Product Journey",
+  description: "How SkyRipple pivoted from an open-ended technical flex into a focused, enterprise-grade AI Operations platform - the CIRCLES-method product story.",
+  alternates: {
+    canonical: '/product-journey',
+  },
+  openGraph: {
+    title: "Product Journey | SkyRipple",
+    description: "How SkyRipple pivoted from an open-ended technical flex into a focused, enterprise-grade AI Operations platform.",
+    url: "https://skyripple.saaryan.com/product-journey",
+    // Next's metadata API replaces (doesn't merge) a parent's `openGraph`
+    // object when a page overrides it -- omitting `images` here would
+    // silently drop the OG image on this page's link previews.
+    images: [{ url: "https://skyripple.saaryan.com/og-image.jpg", width: 1200, height: 630, alt: "SkyRipple - Agentic Airtraffic Simulator" }],
+  },
+};
 
 export default function ProductJourney() {
   return (
