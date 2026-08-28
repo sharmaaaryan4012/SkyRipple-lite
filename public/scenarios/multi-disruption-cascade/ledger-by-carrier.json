@@ -1147,9 +1147,9 @@
     "categories": {
       "aircraft_operating": {
         "scenario": {
-          "low": 1991269.0,
-          "typical": 2250251.0,
-          "high": 2555667.0
+          "low": 2017399.0,
+          "typical": 2279731.0,
+          "high": 2588497.0
         },
         "baseline": {
           "low": 1920944.0,
@@ -1157,9 +1157,9 @@
           "high": 2465593.0
         },
         "variance": {
-          "low": 70325.0,
-          "typical": 79433.0,
-          "high": 90074.0
+          "low": 96455.0,
+          "typical": 108913.0,
+          "high": 122904.0
         }
       },
       "cancellation": {
@@ -1215,9 +1215,9 @@
       },
       "passenger_delay": {
         "scenario": {
-          "low": 5947704.0,
-          "typical": 8921556.0,
-          "high": 17843112.0
+          "low": 5972159.0,
+          "typical": 8958238.5,
+          "high": 17916477.0
         },
         "baseline": {
           "low": 5747331.0,
@@ -1225,17 +1225,17 @@
           "high": 17241993.0
         },
         "variance": {
-          "low": 200373.0,
-          "typical": 300559.5,
-          "high": 601119.0
+          "low": 224828.0,
+          "typical": 337242.0,
+          "high": 674484.0
         }
       }
     },
     "total": {
       "scenario": {
-        "low": 13696973.0,
-        "typical": 17949507.0,
-        "high": 29309979.0
+        "low": 13747558.0,
+        "typical": 18015669.5,
+        "high": 29416174.0
       },
       "baseline": {
         "low": 13297575.0,
@@ -1243,9 +1243,9 @@
         "high": 28384786.0
       },
       "variance": {
-        "low": 399398.0,
-        "typical": 543792.5,
-        "high": 925193.0
+        "low": 449983.0,
+        "typical": 609955.0,
+        "high": 1031388.0
       }
     }
   },
