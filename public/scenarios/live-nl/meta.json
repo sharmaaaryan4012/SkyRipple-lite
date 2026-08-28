@@ -1,8 +1,0 @@
-{
-  "scenarioId": "live-nl",
-  "label": "CLOSE_RUNWAY: ORD capacity reduced 60% 08:00\u201310:00",
-  "day": "2025-12-15",
-  "disruptionSummary": "CLOSE_RUNWAY: ORD capacity reduced 60% 08:00\u201310:00",
-  "sourceRunId": "live",
-  "generatedAt": "2026-08-21T18:46:12.946922+00:00"
-}

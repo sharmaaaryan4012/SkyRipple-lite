@@ -30,7 +30,7 @@ const STAGES: { delayMs: number; text: string }[] = [
 // to load a real disruption cascade here.
 const STARTER_PROMPTS: { label: string; id: string }[] = [
   { label: "ORD Runway Closure", id: "ord-runway-closure" },
-  { label: "Live NL Example", id: "live-nl" },
+  { label: "Multi-Disruption Cascade", id: "multi-disruption-cascade" },
 ];
 
 /**
