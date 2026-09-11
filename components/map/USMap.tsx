@@ -17,7 +17,6 @@ import { MapHoverBox } from "./MapHoverBox";
 import { MapDetailPanel } from "./MapDetailPanel";
 import { AirportHoverBox } from "./AirportHoverBox";
 import { AirportDetailPanel } from "./AirportDetailPanel";
-import { useInspectorMode } from "@/lib/inspectorMode";
 import type { RecoveryAction } from "@/lib/backendClient";
 import type { FlightLeg, DisruptionMarker, AirportMeta, ImpactSummary, AirportDaily } from "@/lib/types";
 
@@ -143,7 +142,6 @@ export function USMap({
 }) {
   const { currentMinute } = useTimeCursor();
   const { multiDay, window: viewWindow } = useViewWindow();
-  const { enabled: inspectorMode } = useInspectorMode();
   const [hovered, setHovered] = useState<{ x: number; y: number; flight: InAirFlight } | null>(null);
   const [focusedLegId, setFocusedLegId] = useState<string | null>(null);
   const [hoveredAirport, setHoveredAirport] = useState<{ x: number; y: number; airport: AirportMeta } | null>(null);
