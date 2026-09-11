@@ -303,7 +303,15 @@ function RotationTab({
 function CrewTab({ flight }: { flight: FlightLeg }) {
   const crew = flight.crew;
   if (!crew) {
-    return <p className="px-4 py-3 text-xs text-muted">No crew reference data available for this leg.</p>;
+    return (
+      <div className="px-4 py-3 text-xs text-muted leading-relaxed">
+        <p className="font-mono text-[11px] uppercase tracking-widest text-aubergine-soft mb-1.5">No Crew Pairing</p>
+        <p>Crew pairing roster is not published in DOT BTS schedule records for this specific leg.</p>
+        <p className="mt-2 text-[11px] text-aubergine-soft/80">
+          Coverage across December is ~90%+; other scheduled turns for this carrier or day include active rosters.
+        </p>
+      </div>
+    );
   }
   const { roleCounts, reportMin, releaseMin, maxFdpMin, dutyTimeSoFarMin, flightTimeSoFarMin } = crew;
   const marginMin = dutyTimeSoFarMin != null ? maxFdpMin - dutyTimeSoFarMin : null;

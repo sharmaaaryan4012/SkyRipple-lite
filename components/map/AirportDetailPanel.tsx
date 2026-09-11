@@ -33,7 +33,6 @@ export function AirportDetailPanel({
   perDayRows,
   departures,
   arrivals,
-  flightsDetailDay,
   onSelectFlight,
   onClose,
 }: {
