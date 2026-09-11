@@ -8,6 +8,7 @@ import { formatUsd } from "@/lib/format";
 import { useViewWindow } from "@/lib/viewWindowContext";
 import { windowedCumulative, bucketByHour, bucketByDay, markersInWindow, clusterMarkersByDay } from "@/lib/timeAggregation";
 import { formatWindowTick } from "@/lib/viewScale";
+import { useRadarSyncDelay } from "@/lib/radarSync";
 
 /**
  * Simulated minutes-since-day-start -> "D0 HH:MM" / "D1 HH:MM". The
@@ -283,14 +284,35 @@ function DisruptionDot({
 }) {
   const cx = viewBox?.x;
   const cy = viewBox?.y;
+  const syncDelay = useRadarSyncDelay();
   if (cx === undefined || cy === undefined) return null;
   return (
     <g onMouseEnter={onEnter} onMouseLeave={onLeave} style={{ cursor: "pointer" }}>
-      <circle cx={cx} cy={cy} r={9} fill="#EF4444" opacity={0.35}>
-        <animate attributeName="r" values="6;11;6" dur="2.2s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0.35;0;0.35" dur="2.2s" repeatCount="indefinite" />
+      {/* Expanding Radar Wave */}
+      <circle cx={cx} cy={cy} r={4.5} fill="#EF4444" opacity={0.85}>
+        <animate
+          attributeName="r"
+          values="4.5;13"
+          dur="2.2s"
+          begin={syncDelay}
+          repeatCount="indefinite"
+          calcMode="spline"
+          keySplines="0.1 0.2 0.3 1"
+          keyTimes="0;1"
+        />
+        <animate
+          attributeName="opacity"
+          values="0.85;0"
+          dur="2.2s"
+          begin={syncDelay}
+          repeatCount="indefinite"
+          calcMode="spline"
+          keySplines="0.1 0.2 0.3 1"
+          keyTimes="0;1"
+        />
       </circle>
-      <circle cx={cx} cy={cy} r={5} fill="#EF4444" stroke="#0A1128" strokeWidth={1.5} />
+      {/* Solid Radar Core */}
+      <circle cx={cx} cy={cy} r={4.5} fill="#EF4444" stroke="#0A1128" strokeWidth={1.5} />
     </g>
   );
 }

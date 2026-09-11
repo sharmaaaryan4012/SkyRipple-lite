@@ -119,3 +119,7 @@ export function useViewWindow(): ViewWindowContextValue {
   if (!ctx) throw new Error("useViewWindow must be called within a ViewWindowProvider");
   return ctx;
 }
+
+export function useOptionalViewWindow(): ViewWindowContextValue | null {
+  return useContext(ViewWindowContext);
+}

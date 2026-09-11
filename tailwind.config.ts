@@ -50,6 +50,15 @@ const config: Config = {
         DEFAULT: "ease-out", 
         spring: "cubic-bezier(0.34, 1.56, 0.64, 1)",
       },
+      animation: {
+        "radar-ping": "radar-ping 2.2s cubic-bezier(0.1, 0.2, 0.3, 1) infinite",
+      },
+      keyframes: {
+        "radar-ping": {
+          "0%": { transform: "scale(1)", opacity: "0.85" },
+          "100%": { transform: "scale(2.6)", opacity: "0" },
+        },
+      },
     },
   },
   plugins: [],

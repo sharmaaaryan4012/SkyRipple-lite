@@ -446,14 +446,16 @@ export function USMap({
   const affectedAirports = useMemo(() => airportsWithCoords.filter((a) => affectedIatas.has(a.iata)), [airportsWithCoords, affectedIatas]);
   const affectedAirportLayers = affectedAirports.flatMap((a) => {
     const dimmed = anyFocusActive && a.iata !== focusedAirportIata;
-    const pulseAlpha = dimmed ? 20 : Math.round(90 * (1 - pulsePhase));
+    // Smooth ease-out matching CSS cubic-bezier(0.1, 0.2, 0.3, 1)
+    const easedPhase = 1 - Math.pow(1 - pulsePhase, 3);
+    const pulseAlpha = dimmed ? 20 : Math.round(90 * (1 - easedPhase));
     const coreAlpha = dimmed ? 90 : 255;
     return [
       new ScatterplotLayer({
         id: `airport-pulse-${a.iata}`,
         data: [a],
         getPosition: () => [a.lon as number, a.lat as number],
-        getRadius: 18000 + pulsePhase * 34000,
+        getRadius: 18000 + easedPhase * 34000,
         getFillColor: [...RED_RGB, pulseAlpha],
         radiusUnits: "meters",
         stroked: false,

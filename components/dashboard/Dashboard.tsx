@@ -6,65 +6,66 @@ import { RecoverySavingsChart } from "./RecoverySavingsChart";
 import { ImpactSummaryCards } from "./ImpactSummaryCards";
 import { CarrierBreakdownTable } from "./CarrierBreakdownTable";
 import { ExportPanel } from "./ExportPanel";
+import { DataProvenanceLine } from "@/components/controls/DataProvenanceLine";
 import { useViewWindow } from "@/lib/viewWindowContext";
 import type { RecoveryView } from "@/lib/recoveryView";
 import type { FlightLeg, ScenarioData } from "@/lib/types";
 
 /**
- * The full ledger/dashboard column: pure presentation now. Task 5c
- * removed this component's own independent loadScenario(scenarioId)
- * fetch,  it duplicated SimulationProvider's own load (both would fire
- * for the same scenario) and, worse, a LIVE result has no scenarioId to
- * re-fetch by (its data only ever exists in memory,  see
- * lib/activeResult.ts). `scenario` now comes straight from
- * SimulationProvider's already-loaded data, exactly like MapPanel and
- * TimeControlPanel already receive their data as props instead of
- * fetching it themselves.
- *
- * `recovery` (the before/after finale) is optional/null until a
- * "Compute recovery" run has finished,  the grand-total gold savings
- * overlay is a SEPARATE Panel block, added after the existing per-carrier
- * chart rather than folded into it (a gold band per carrier, up to 14 of
- * them, would be unreadable,  see RecoverySavingsChart.tsx's own
- * docstring), so this stays additive, not a layout rebuild.
+ * The Financial & Operational Impact Ledger column.
+ * Organizes complex simulation telemetry into an executive 4-tier hierarchy:
+ * 1. Scenario Context Header & Executive Summary
+ * 2. High-Impact Headline KPI Scorecard (Damage Assessment)
+ * 3. Cumulative Cost Progression Chart (Time-correlated)
+ * 4. Autonomous Recovery & Mitigated Value (Solution Layer)
+ * 5. Airline Carrier Contagion Distribution
+ * 6. Ledger Export & Data Provenance
  */
-export function Dashboard({ scenario, flights, recovery }: { scenario: ScenarioData; flights: FlightLeg[]; recovery?: RecoveryView | null }) {
-  // The day/week/month toggle itself now lives in the controls rail (see
-  // components/controls/ScenarioScopePanel.tsx) -- this chart card only
-  // ECHOES the currently selected scope in its own title, rather than
-  // offering the control that sets it, so scope reads as one decision
-  // made in one place. (Verified before this move: the toggle re-slices
-  // this ALREADY-LOADED costTimeseries entirely client-side --
-  // lib/viewWindowContext.tsx has zero fetch/network calls of its own --
-  // it never re-runs the simulation, so relocating it changes nothing
-  // about what data this chart renders.)
+export function Dashboard({
+  scenario,
+  flights,
+  recovery,
+}: {
+  scenario: ScenarioData;
+  flights: FlightLeg[];
+  recovery?: RecoveryView | null;
+}) {
   const { multiDay, scale, window } = useViewWindow();
   const chartTitle = multiDay ? `${window.label} (${scale}), by carrier` : "Cost over the day, by carrier";
 
   return (
-    <div className="flex flex-col gap-4">
-      <Panel eyebrow={scenario.meta.day} title={scenario.meta.label}>
-        <p className="text-xs text-muted">{scenario.meta.disruptionSummary}</p>
+    <div className="flex flex-col gap-3.5">
+      {/* Tier 1: Context & Incident Hook */}
+      <Panel eyebrow="Impact Assessment" title={scenario.meta.label}>
+        <p className="text-xs text-muted leading-relaxed">{scenario.meta.disruptionSummary}</p>
       </Panel>
 
+      {/* Tier 2: Headline KPI Scorecard */}
       <ImpactSummaryCards summary={scenario.impactSummary} />
 
-      <Panel eyebrow="Cumulative cost" title={chartTitle} testId="cost-chart-panel">
+      {/* Tier 3: Time-Correlated Cumulative Cost Curve */}
+      <Panel eyebrow="Cumulative Impact" title={chartTitle} testId="cost-chart-panel">
         <CostTimeseriesChart data={scenario.costTimeseries} markers={scenario.disruptionMarkers} />
       </Panel>
 
+      {/* Tier 4: Autonomous AI Recovery Savings (When active) */}
       {recovery && (
-        <Panel eyebrow="Recovery savings" title="No-recovery vs. recovered cost">
+        <Panel eyebrow="OCC Recovery Mitigation" title="Unmitigated Cascade vs. Recovered Operations">
           <RecoverySavingsChart recoveredCostTimeseries={recovery.data.scenario.costTimeseries} revealed />
         </Panel>
       )}
 
-      <Panel eyebrow="Per carrier" title="Cost above normal, by carrier">
+      {/* Tier 5: Carrier Contagion Distribution Matrix */}
+      <Panel eyebrow="Airline Exposure" title="Cost Above Normal by Carrier">
         <CarrierBreakdownTable rows={scenario.ledgerByCarrier} />
       </Panel>
 
-      <Panel eyebrow="Export" title="Download the current view">
+      {/* Tier 6: Export & Provenance */}
+      <Panel eyebrow="Data Export" title="Download View Data">
         <ExportPanel scenario={scenario} flights={flights} />
+        <div className="mt-3 pt-2.5 border-t border-border/60">
+          <DataProvenanceLine meta={scenario.meta} />
+        </div>
       </Panel>
     </div>
   );
