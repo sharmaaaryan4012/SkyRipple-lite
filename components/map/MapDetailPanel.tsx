@@ -210,7 +210,7 @@ function OverviewTab({
       <div className="px-4 py-3">
         <p className="font-mono text-xs uppercase tracking-widest text-aubergine-soft mb-2">Direct cost</p>
         {s.directCostUsd ? (
-          <RangeValue low={s.directCostUsd.low} typical={s.directCostUsd.typical} high={s.directCostUsd.high} tone="red" size="base" />
+          <RangeValue low={s.directCostUsd.low} typical={s.directCostUsd.typical} high={s.directCostUsd.high} tone="neutral" size="base" />
         ) : (
           <p className="text-xs text-muted">Not tracked for this flight.</p>
         )}

@@ -7,6 +7,7 @@ const config: Config = {
       colors: {
         page: "#0A1128",
         surface: "#0A1128", 
+        navy: "#0A1128",
         elevated: "rgba(255, 255, 255, 0.03)", 
         border: "rgba(255, 255, 255, 0.10)", 
         "border-strong": "rgba(197, 160, 89, 0.20)", 
@@ -27,6 +28,7 @@ const config: Config = {
         },
       },
       fontFamily: {
+        sans: ["var(--font-geist-sans)", "sans-serif"],
         display: ["var(--font-geist-sans)", "sans-serif"], 
         body: ["var(--font-geist-sans)", "sans-serif"], 
         mono: ["var(--font-geist-mono)", "monospace"], 
