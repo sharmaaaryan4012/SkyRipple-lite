@@ -4,35 +4,37 @@ import { useMemo, useState } from "react";
 import { useTimeCursor } from "@/lib/timeCursor";
 import { useViewWindow } from "@/lib/viewWindowContext";
 import { buildCostSparkline } from "@/lib/costSparkline";
-import { windowedCumulative, bucketByHour, bucketByDay, markersInWindow, clusterMarkersByDay } from "@/lib/timeAggregation";
+import {
+  windowedCumulative,
+  bucketByHour,
+  bucketByDay,
+  markersInWindow,
+  clusterMarkersByDay,
+} from "@/lib/timeAggregation";
 import { formatWindowTick } from "@/lib/viewScale";
 import { formatUsd } from "@/lib/format";
+import { RadarDot } from "@/components/ui/RadarDot";
 import type { CostTimeseries, DisruptionMarker, ClusteredDisruptionMarker } from "@/lib/types";
 
 const VIEW_W = 300;
-const VIEW_H = 78;
-const SPARK_TOP = 4;
-const SPARK_BOTTOM = 40;
-const TRACK_Y = 50;
-const TRACK_H = 7;
-const TICK_TOP = 4;
-const TICK_BOTTOM = TRACK_Y + TRACK_H;
+const VIEW_H = 46;
+const SPARK_TOP = 2;
+const SPARK_BOTTOM = 28;
+const TRACK_Y = 32;
+const TRACK_H = 6;
+const TICK_TOP = 2;
+const TICK_BOTTOM = 38;
 
 /**
- * The rich timeline: a muted sparkline (system-wide cumulative cost,
- * derived client-side from the already-loaded cost_timeseries,  see
- * lib/costSparkline.ts, no new export) showing the cascade's shape,
- * disruption markers you can hover/click, a D0/D1 midnight-rollover
- * divider, and the scrub handle,  all driving the SAME useTimeCursor()
- * cursor USMap already consumes.
+ * Modern High-Precision Timeline Scrubber:
+ * Combines cumulative cost sparkline, track progress, day boundaries,
+ * and disruption marker pins.
  *
- * Interaction layering: a native <input type="range"> handles drag
- * (reliable, keyboard-accessible, no hand-rolled pointer math) and sits
- * BEHIND the SVG; the SVG's own pointer-events are off by default so
- * drags pass through to the range input everywhere EXCEPT the disruption
- * markers' own hit-circles, which explicitly re-enable pointer-events so
- * they're independently hoverable/clickable ("jump to this disruption")
- * without blocking scrubbing anywhere else on the track.
+ * Typography & Aspect Ratio Fix:
+ * All text labels (e.g. day boundaries like "Dec 2") and marker dots are
+ * rendered as pure HTML absolute elements outside the SVG, eliminating
+ * the horizontal font glyph distortion caused by SVG preserveAspectRatio="none".
+ * Vector strokes use vectorEffect="non-scaling-stroke" for razor-sharp rendering.
  */
 export function TimelineScrubber({
   costTimeseries: rawCostTimeseries,
@@ -46,11 +48,6 @@ export function TimelineScrubber({
   const [hoveredMarkerId, setHoveredMarkerId] = useState<string | null>(null);
   const [hoveredClusterDay, setHoveredClusterDay] = useState<number | null>(null);
 
-  // Task 8b: same aggregation CostTimeseriesChart applies, so the graph
-  // and scrubber always agree on exactly what the current scale shows --
-  // useTimeCursor()'s own minMinute/maxMinute ALREADY equal the current
-  // view window's bounds (see SimulationProvider.tsx's TimeCursorBridge),
-  // so no separate window lookup is needed here.
   const costTimeseries = useMemo(() => {
     if (!multiDay) return rawCostTimeseries;
     if (scale === "week") return bucketByHour(rawCostTimeseries, minMinute, maxMinute);
@@ -58,7 +55,10 @@ export function TimelineScrubber({
     return windowedCumulative(rawCostTimeseries, minMinute, maxMinute);
   }, [rawCostTimeseries, multiDay, scale, minMinute, maxMinute]);
 
-  const disruptionMarkers = useMemo(() => (multiDay ? markersInWindow(rawMarkers, minMinute, maxMinute) : rawMarkers), [rawMarkers, multiDay, minMinute, maxMinute]);
+  const disruptionMarkers = useMemo(
+    () => (multiDay ? markersInWindow(rawMarkers, minMinute, maxMinute) : rawMarkers),
+    [rawMarkers, multiDay, minMinute, maxMinute]
+  );
   const clusters = useMemo(
     () => (multiDay && scale === "month" ? clusterMarkersByDay(rawMarkers, minMinute, maxMinute) : []),
     [rawMarkers, multiDay, scale, minMinute, maxMinute]
@@ -73,16 +73,12 @@ export function TimelineScrubber({
 
   const areaPath = useMemo(() => {
     if (sparkline.bucketStartMin.length === 0) return "";
-    const points = sparkline.bucketStartMin.map((min, i) => `${xFor(min).toFixed(1)},${sparkYFor(sparkline.values[i] ?? 0).toFixed(1)}`);
+    const points = sparkline.bucketStartMin.map(
+      (min, i) => `${xFor(min).toFixed(1)},${sparkYFor(sparkline.values[i] ?? 0).toFixed(1)}`
+    );
     return `M0,${SPARK_BOTTOM} L${points.join(" L")} L${VIEW_W},${SPARK_BOTTOM} Z`;
   }, [sparkline, minMinute, maxMinute]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Midnight boundaries within the playable range -- DAY view (either the
-  // original single-day span, or Task 8b's 3-day window) shows every one
-  // crossed, labelled with a real date once multi-day (formatShort); the
-  // original single-day case keeps its own "D1"-style label unchanged.
-  // Week/month skip this entirely (too many boundaries at that scale to
-  // stay quiet furniture -- see this component's own docstring).
   const showBoundaries = !multiDay || scale === "day";
   const dayBoundaries = useMemo(() => {
     if (!showBoundaries) return [];
@@ -97,8 +93,9 @@ export function TimelineScrubber({
   const hoveredCluster = clusters.find((c) => c.dayStartMin === hoveredClusterDay) ?? null;
 
   return (
-    <div>
-      <div className="relative" style={{ height: VIEW_H }}>
+    <div className="w-full">
+      <div className="relative w-full" style={{ height: VIEW_H }}>
+        {/* Transparent native range input for accessible drag & scrub */}
         <input
           type="range"
           min={minMinute}
@@ -107,113 +104,243 @@ export function TimelineScrubber({
           value={currentMinute}
           onChange={(e) => setMinute(Number(e.target.value))}
           aria-label="Simulated time"
-          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer m-0"
+          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer m-0 z-10"
         />
 
-        <svg viewBox={`0 0 ${VIEW_W} ${VIEW_H}`} preserveAspectRatio="none" className="absolute inset-0 w-full h-full pointer-events-none">
-          {/* Sparkline */}
-          <path d={areaPath} fill="rgba(255, 255, 255, 0.05)" stroke="none" />
+        {/* Scalable SVG for continuous geometry and lines */}
+        <svg
+          viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
+          preserveAspectRatio="none"
+          className="absolute inset-0 w-full h-full pointer-events-none"
+        >
+          <defs>
+            <linearGradient id="scrubberCostGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#C5A059" stopOpacity="0.25" />
+              <stop offset="100%" stopColor="#C5A059" stopOpacity="0.01" />
+            </linearGradient>
+          </defs>
+
+          {/* Cost Sparkline Area & Stroke */}
+          <path d={areaPath} fill="url(#scrubberCostGrad)" stroke="none" />
           <polyline
-            points={sparkline.bucketStartMin.map((min, i) => `${xFor(min).toFixed(1)},${sparkYFor(sparkline.values[i] ?? 0).toFixed(1)}`).join(" ")}
+            points={sparkline.bucketStartMin
+              .map((min, i) => `${xFor(min).toFixed(1)},${sparkYFor(sparkline.values[i] ?? 0).toFixed(1)}`)
+              .join(" ")}
             fill="none"
-            stroke="#94a3b8"
-            strokeWidth={1}
+            stroke="#C5A059"
+            strokeOpacity={0.65}
+            strokeWidth={1.2}
+            vectorEffect="non-scaling-stroke"
           />
 
-          {/* Track background. */}
-          <rect x={0} y={TRACK_Y} width={VIEW_W} height={TRACK_H} rx={3.5} fill="rgba(255, 255, 255, 0.1)" />
-          {/* Elapsed portion */}
-          <rect x={0} y={TRACK_Y} width={Math.max(0, cursorX)} height={TRACK_H} rx={3.5} fill="#C5A059" fillOpacity={0.8} />
+          {/* Track Background */}
+          <rect
+            x={0}
+            y={TRACK_Y}
+            width={VIEW_W}
+            height={TRACK_H}
+            rx={3}
+            fill="rgba(255, 255, 255, 0.08)"
+          />
 
+          {/* Elapsed Progress Track */}
+          <rect
+            x={0}
+            y={TRACK_Y}
+            width={Math.max(0, cursorX)}
+            height={TRACK_H}
+            rx={3}
+            fill="#C5A059"
+            fillOpacity={0.9}
+          />
+
+          {/* Day Boundary Vertical Dashed Lines */}
           {dayBoundaries.map((boundaryMin) => (
-            <g key={boundaryMin}>
-              <line x1={xFor(boundaryMin)} y1={TICK_TOP} x2={xFor(boundaryMin)} y2={TICK_BOTTOM} stroke="#94a3b8" strokeWidth={1} strokeDasharray="2 2" />
-              <text x={xFor(boundaryMin) + 3} y={SPARK_TOP + 7} fill="#94a3b8" fontSize={7} fontFamily="var(--font-mono)">
-                {multiDay ? formatWindowTick(coverage.startDay, boundaryMin) : `D${boundaryMin / 1440}`}
-              </text>
-            </g>
+            <line
+              key={boundaryMin}
+              x1={xFor(boundaryMin)}
+              y1={TICK_TOP}
+              x2={xFor(boundaryMin)}
+              y2={TICK_BOTTOM}
+              stroke="#64748b"
+              strokeWidth={1}
+              strokeDasharray="2 2"
+              vectorEffect="non-scaling-stroke"
+            />
           ))}
 
+          {/* Disruption Marker Vertical Tick Lines */}
           {scale === "month" && multiDay
             ? clusters.map((c) => (
-                <g key={c.dayStartMin} data-testid="scrubber-cluster-marker" data-count={c.markers.length}>
-                  <line x1={xFor(c.dayStartMin)} y1={TICK_TOP} x2={xFor(c.dayStartMin)} y2={TICK_BOTTOM} stroke="#EF4444" strokeWidth={hoveredClusterDay === c.dayStartMin ? 2 : 1.4} />
-                  <circle
-                    cx={xFor(c.dayStartMin)}
-                    cy={TICK_TOP}
-                    r={7}
-                    fill="transparent"
-                    style={{ pointerEvents: "auto", cursor: "pointer" }}
-                    onMouseEnter={() => setHoveredClusterDay(c.dayStartMin)}
-                    onMouseLeave={() => setHoveredClusterDay((d) => (d === c.dayStartMin ? null : d))}
-                    onClick={() => setMinute(c.dayStartMin)}
-                  />
-                  <circle cx={xFor(c.dayStartMin)} cy={TICK_TOP} r={2.5} fill="#EF4444" style={{ pointerEvents: "none" }} />
-                  {c.markers.length > 1 && (
-                    <text x={xFor(c.dayStartMin)} y={TICK_TOP - 3} textAnchor="middle" fontSize={6} fontFamily="var(--font-mono)" fill="#EF4444" fontWeight={600}>
-                      {c.markers.length}
-                    </text>
-                  )}
-                </g>
+                <line
+                  key={c.dayStartMin}
+                  x1={xFor(c.dayStartMin)}
+                  y1={TICK_TOP}
+                  x2={xFor(c.dayStartMin)}
+                  y2={TICK_BOTTOM}
+                  stroke="#EF4444"
+                  strokeWidth={hoveredClusterDay === c.dayStartMin ? 2 : 1}
+                  vectorEffect="non-scaling-stroke"
+                />
               ))
             : disruptionMarkers.map((m) => (
-                <g key={m.id}>
-                  <line x1={xFor(m.simMin)} y1={TICK_TOP} x2={xFor(m.simMin)} y2={TICK_BOTTOM} stroke="#EF4444" strokeWidth={hoveredMarkerId === m.id ? 2 : 1.4} />
-                  <circle
-                    cx={xFor(m.simMin)}
-                    cy={TICK_TOP}
-                    r={7}
-                    fill="transparent"
-                    style={{ pointerEvents: "auto", cursor: "pointer" }}
-                    onMouseEnter={() => setHoveredMarkerId(m.id)}
-                    onMouseLeave={() => setHoveredMarkerId((id) => (id === m.id ? null : id))}
-                    onClick={() => setMinute(m.simMin)}
-                  />
-                  <circle cx={xFor(m.simMin)} cy={TICK_TOP} r={2.5} fill="#EF4444" style={{ pointerEvents: "none" }} />
-                </g>
+                <line
+                  key={m.id}
+                  x1={xFor(m.simMin)}
+                  y1={TICK_TOP}
+                  x2={xFor(m.simMin)}
+                  y2={TICK_BOTTOM}
+                  stroke="#EF4444"
+                  strokeWidth={hoveredMarkerId === m.id ? 2 : 1}
+                  vectorEffect="non-scaling-stroke"
+                />
               ))}
 
-          {/* The scrub handle */}
-          <line x1={cursorX} y1={TICK_TOP} x2={cursorX} y2={TICK_BOTTOM} stroke="#ffffff" strokeWidth={1.5} />
-          <circle cx={cursorX} cy={TRACK_Y + TRACK_H / 2} r={4.5} fill="#ffffff" style={{ pointerEvents: "none" }} />
+          {/* Scrub Needle Line */}
+          <line
+            x1={cursorX}
+            y1={TICK_TOP}
+            x2={cursorX}
+            y2={TICK_BOTTOM}
+            stroke="#ffffff"
+            strokeWidth={1.5}
+            vectorEffect="non-scaling-stroke"
+          />
         </svg>
 
-        {hoveredMarker && <MarkerBubble marker={hoveredMarker} leftPct={(xFor(hoveredMarker.simMin) / VIEW_W) * 100} />}
-        {hoveredCluster && <ClusterBubble cluster={hoveredCluster} leftPct={(xFor(hoveredCluster.dayStartMin) / VIEW_W) * 100} />}
+        {/* HTML Day Boundary Labels (natural typography, zero SVG stretching) */}
+        {dayBoundaries.map((boundaryMin) => (
+          <div
+            key={boundaryMin}
+            className="absolute pointer-events-none -translate-x-1/2 z-10 select-none"
+            style={{
+              left: `${(xFor(boundaryMin) / VIEW_W) * 100}%`,
+              top: "1px",
+            }}
+          >
+            <span className="font-mono text-[9px] text-slate-300 bg-[#0B132B]/90 px-1 py-0.5 rounded border border-white/10 whitespace-nowrap shadow-sm">
+              {multiDay ? formatWindowTick(coverage.startDay, boundaryMin) : `D${boundaryMin / 1440}`}
+            </span>
+          </div>
+        ))}
+
+        {/* The Scrub Handle Circle (1:1 circular aspect ratio, centered on the track) */}
+        <div
+          className="absolute pointer-events-none -translate-x-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-white shadow-[0_0_10px_rgba(197,160,89,0.85)] border-2 border-[#0B132B] z-20"
+          style={{
+            left: `${(cursorX / VIEW_W) * 100}%`,
+            top: `${TRACK_Y + TRACK_H / 2}px`,
+          }}
+        />
+
+        {/* Disruption Marker Pin Dots in HTML (crisp 1:1 circles directly on track) */}
+        {scale === "month" && multiDay
+          ? clusters.map((c) => (
+              <div
+                key={c.dayStartMin}
+                data-testid="scrubber-cluster-marker"
+                data-count={c.markers.length}
+                className="absolute -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-auto"
+                style={{
+                  left: `${(xFor(c.dayStartMin) / VIEW_W) * 100}%`,
+                  top: `${TRACK_Y + TRACK_H / 2}px`,
+                }}
+              >
+                <button
+                  type="button"
+                  onClick={() => setMinute(c.dayStartMin)}
+                  onMouseEnter={() => setHoveredClusterDay(c.dayStartMin)}
+                  onMouseLeave={() => setHoveredClusterDay((d) => (d === c.dayStartMin ? null : d))}
+                  className="flex flex-col items-center justify-center cursor-pointer group p-0 m-0 border-0 bg-transparent"
+                >
+                  {c.markers.length > 1 && (
+                    <span className="text-[8px] font-mono text-[#EF4444] font-bold -mb-0.5 pointer-events-none bg-[#0B132B]/90 px-0.5 rounded">
+                      {c.markers.length}
+                    </span>
+                  )}
+                  {hoveredClusterDay === c.dayStartMin ? (
+                    <span className="w-3 h-3 rounded-full bg-white ring-2 ring-[#EF4444] scale-125 shadow-md transition-all" />
+                  ) : (
+                    <RadarDot size="sm" />
+                  )}
+                </button>
+              </div>
+            ))
+          : disruptionMarkers.map((m) => (
+              <div
+                key={m.id}
+                className="absolute -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-auto"
+                style={{
+                  left: `${(xFor(m.simMin) / VIEW_W) * 100}%`,
+                  top: `${TRACK_Y + TRACK_H / 2}px`,
+                }}
+              >
+                <button
+                  type="button"
+                  onClick={() => setMinute(m.simMin)}
+                  onMouseEnter={() => setHoveredMarkerId(m.id)}
+                  onMouseLeave={() => setHoveredMarkerId((id) => (id === m.id ? null : id))}
+                  className="w-4 h-4 flex items-center justify-center cursor-pointer group p-0 m-0 border-0 bg-transparent"
+                >
+                  {hoveredMarkerId === m.id ? (
+                    <span className="w-3 h-3 rounded-full bg-white ring-2 ring-[#EF4444] scale-125 shadow-md transition-all" />
+                  ) : (
+                    <RadarDot size="sm" />
+                  )}
+                </button>
+              </div>
+            ))}
+
+        {/* Disruption Popups */}
+        {hoveredMarker && (
+          <MarkerBubble marker={hoveredMarker} leftPct={(xFor(hoveredMarker.simMin) / VIEW_W) * 100} />
+        )}
+        {hoveredCluster && (
+          <ClusterBubble
+            cluster={hoveredCluster}
+            leftPct={(xFor(hoveredCluster.dayStartMin) / VIEW_W) * 100}
+          />
+        )}
       </div>
     </div>
   );
 }
 
-/** Same FT-style restraint as the dashboard's own disruption-marker
- * bubble: one number (marginal cost), one line of context (label). */
 function MarkerBubble({ marker, leftPct }: { marker: DisruptionMarker; leftPct: number }) {
-  const clampedLeft = Math.min(78, Math.max(0, leftPct));
+  const clampedLeft = Math.min(80, Math.max(0, leftPct));
   return (
     <div
-      className="absolute z-10 bg-elevated border border-border rounded-md px-2.5 py-1.5 pointer-events-none max-w-[220px]"
-      style={{ left: `${clampedLeft}%`, top: 0 }}
+      className="absolute z-30 bg-[#0F172A]/95 backdrop-blur-md border border-white/15 shadow-xl rounded-md px-2.5 py-1.5 pointer-events-none max-w-[220px] -translate-y-full -top-1"
+      style={{ left: `${clampedLeft}%` }}
     >
-      <p className="font-mono tabular-nums text-sm text-white font-medium">{formatUsd(marker.marginalCost.typical)}</p>
-      <p className="text-xs text-muted mt-0.5">{marker.label}</p>
+      <p className="font-mono tabular-nums text-xs text-white font-semibold">
+        {formatUsd(marker.marginalCost.typical)}
+      </p>
+      <p className="text-[11px] text-slate-300 mt-0.5 leading-tight">{marker.label}</p>
     </div>
   );
 }
 
-/** MONTH view: hover-reveal for a clustered day -- every marker that day
- * had, stacked, same restraint as MarkerBubble above. */
-function ClusterBubble({ cluster, leftPct }: { cluster: ClusteredDisruptionMarker; leftPct: number }) {
-  const clampedLeft = Math.min(78, Math.max(0, leftPct));
+function ClusterBubble({
+  cluster,
+  leftPct,
+}: {
+  cluster: ClusteredDisruptionMarker;
+  leftPct: number;
+}) {
+  const clampedLeft = Math.min(80, Math.max(0, leftPct));
   return (
     <div
-      className="absolute z-10 bg-elevated border border-border rounded-md px-2.5 py-1.5 pointer-events-none max-w-[220px]"
-      style={{ left: `${clampedLeft}%`, top: 0 }}
+      className="absolute z-30 bg-[#0F172A]/95 backdrop-blur-md border border-white/15 shadow-xl rounded-md px-2.5 py-1.5 pointer-events-none max-w-[220px] -translate-y-full -top-1"
+      style={{ left: `${clampedLeft}%` }}
       data-testid="scrubber-cluster-bubble"
     >
       {cluster.markers.map((marker, i) => (
-        <div key={marker.id} className={i > 0 ? "mt-1.5 pt-1.5 border-t border-border" : ""}>
-          <p className="font-mono tabular-nums text-sm text-white font-medium">{formatUsd(marker.marginalCost.typical)}</p>
-          <p className="text-xs text-muted mt-0.5">{marker.label}</p>
+        <div key={marker.id} className={i > 0 ? "mt-1.5 pt-1.5 border-t border-white/10" : ""}>
+          <p className="font-mono tabular-nums text-xs text-white font-semibold">
+            {formatUsd(marker.marginalCost.typical)}
+          </p>
+          <p className="text-[11px] text-slate-300 mt-0.5 leading-tight">{marker.label}</p>
         </div>
       ))}
     </div>
