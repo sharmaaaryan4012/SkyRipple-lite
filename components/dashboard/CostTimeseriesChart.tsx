@@ -299,7 +299,7 @@ function DisruptionDot({
 function MarkerBubble({ marker }: { marker: DisruptionMarker }) {
   return (
     <div className="absolute top-1 left-1/2 -translate-x-1/2 z-10 bg-elevated border border-border rounded-md px-3 py-2 shadow-none max-w-xs pointer-events-none">
-      <p className="font-mono tabular-nums text-base text-red-soft font-medium">{formatUsd(marker.marginalCost.typical)}</p>
+      <p className="font-mono tabular-nums text-base text-white font-medium">{formatUsd(marker.marginalCost.typical)}</p>
       <p className="text-xs text-muted mt-0.5">{marker.label}</p>
       <p className="font-mono text-[11px] text-muted mt-1">
         range {formatUsd(marker.marginalCost.low)} &ndash; {formatUsd(marker.marginalCost.high)}
@@ -352,7 +352,7 @@ function ClusterBubble({ cluster }: { cluster: ClusteredDisruptionMarker }) {
     >
       {cluster.markers.map((marker, i) => (
         <div key={marker.id} className={i > 0 ? "mt-2 pt-2 border-t border-border" : ""}>
-          <p className="font-mono tabular-nums text-base text-red-soft font-medium">{formatUsd(marker.marginalCost.typical)}</p>
+          <p className="font-mono tabular-nums text-base text-white font-medium">{formatUsd(marker.marginalCost.typical)}</p>
           <p className="text-xs text-muted mt-0.5">{marker.label}</p>
         </div>
       ))}

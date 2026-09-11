@@ -12,8 +12,8 @@ import { formatWindowTick } from "@/lib/viewScale";
 /**
  * The before/after recovery view's "money shot": the grand-total (summed
  * across every carrier) cumulative-cost curve --
- *   no recovery   solid, red    -- the disrupted cascade, nothing done
- *   recovered     solid, gold   -- what it actually cost after the OCC acted
+ *   no recovery   dashed, slate -- the unmitigated disrupted cascade
+ *   recovered     solid, white  -- what it actually cost after the OCC acted
  * -- with the GAP between them shaded gold: that shaded area geometrically
  * IS the saving, growing as the day's recovery actions take effect.
  *
@@ -145,13 +145,13 @@ export function RecoverySavingsChart({
             style={{ transition: "fill-opacity 700ms cubic-bezier(0.34, 1.56, 0.64, 1)" }}
           />
 
-          <Line type="monotone" dataKey="noRecovery" stroke="#EF4444" strokeWidth={2} dot={false} isAnimationActive={false} />
+          <Line type="monotone" dataKey="noRecovery" stroke="#94A3B8" strokeWidth={2} strokeDasharray="4 4" dot={false} isAnimationActive={false} />
           <Line type="monotone" dataKey="recovered" stroke="#ffffff" strokeWidth={2} dot={false} isAnimationActive={false} />
         </ComposedChart>
       </ResponsiveContainer>
 
       <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1 px-2 font-mono text-xs text-muted">
-        <Legend swatch="#EF4444" label="No recovery" />
+        <Legend swatch="#94A3B8" label="No recovery" />
         <Legend swatch="#ffffff" label="Recovered" />
         <span className="flex items-center gap-1.5">
           <span className="inline-block w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: "#C5A059", opacity: 0.6 }} />

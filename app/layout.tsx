@@ -98,7 +98,7 @@ export const dynamic = 'force-static';
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
-      <body className="bg-page text-aubergine font-body text-sm antialiased" suppressHydrationWarning>
+      <body className="bg-page text-aubergine font-sans text-sm antialiased" suppressHydrationWarning>
         {/* A plain <script> (not next/script) so this is baked into the
             static HTML at build time -- next/script's default strategy
             injects client-side after hydration, which JSON-LD crawlers

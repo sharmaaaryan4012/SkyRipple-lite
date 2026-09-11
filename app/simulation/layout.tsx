@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     canonical: '/simulation',
   },
   openGraph: {
-    title: "Control Room | SkyRipple",
+    title: "Simulation | SkyRipple",
     description: "Pick a disruption, watch it cascade through a real day of US domestic air traffic, and see the network-wide cost in real time.",
     url: "https://skyripple.saaryan.com/simulation",
     images: [{ url: "https://skyripple.saaryan.com/og-image.jpg", width: 1200, height: 630, alt: "SkyRipple - Agentic Airtraffic Simulator" }],

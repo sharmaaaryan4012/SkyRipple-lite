@@ -1,20 +1,18 @@
 import { formatUsd } from "@/lib/format";
 
-export type ValueTone = "red" | "gold" | "aubergine" | "muted";
+export type ValueTone = "neutral" | "gold" | "negative" | "muted" | "aubergine" | "red";
 
 const TONE_CLASS: Record<ValueTone, string> = {
-  // red = disrupted/cost, gold = recovered/value,  see the design
-  // system's semantic-color rule. This task only ever renders cost
-  // figures, so "gold" is unused today but kept for when the later
-  // with/without-recovery comparison introduces recovered-value numbers.
-  // Uses `gold-deep`, NOT `gold` -- the v2 reference is explicit that
-  // plain gold (#C5A059) is for fills/CTAs only and fails contrast as
-  // text on the new white/off-white surfaces; gold-deep (#ffffff) is
-  // its documented text-safe exception.
-  red: "text-red-soft",
-  gold: "text-gold-deep",
+  // Financial UI Principle: General ledger figures and operational costs are
+  // neutral data values (text-white/slate-100), not errors or alerts.
+  // "gold" is reserved for recovered value / savings / highlights (#C5A059).
+  // "negative" / "red" is reserved strictly for net loss / critical failure.
+  neutral: "text-white",
+  gold: "text-gold",
+  negative: "text-red-soft",
   aubergine: "text-aubergine",
   muted: "text-muted",
+  red: "text-red-soft", // backward-compatible alias for explicit alerts
 };
 
 /**
@@ -28,7 +26,7 @@ export function RangeValue({
   low,
   typical,
   high,
-  tone = "aubergine",
+  tone = "neutral",
   size = "lg",
 }: {
   low: number;

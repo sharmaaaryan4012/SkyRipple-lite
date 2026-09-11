@@ -194,7 +194,7 @@ function MarkerBubble({ marker, leftPct }: { marker: DisruptionMarker; leftPct: 
       className="absolute z-10 bg-elevated border border-border rounded-md px-2.5 py-1.5 pointer-events-none max-w-[220px]"
       style={{ left: `${clampedLeft}%`, top: 0 }}
     >
-      <p className="font-mono tabular-nums text-sm text-red-soft font-medium">{formatUsd(marker.marginalCost.typical)}</p>
+      <p className="font-mono tabular-nums text-sm text-white font-medium">{formatUsd(marker.marginalCost.typical)}</p>
       <p className="text-xs text-muted mt-0.5">{marker.label}</p>
     </div>
   );
@@ -212,7 +212,7 @@ function ClusterBubble({ cluster, leftPct }: { cluster: ClusteredDisruptionMarke
     >
       {cluster.markers.map((marker, i) => (
         <div key={marker.id} className={i > 0 ? "mt-1.5 pt-1.5 border-t border-border" : ""}>
-          <p className="font-mono tabular-nums text-sm text-red-soft font-medium">{formatUsd(marker.marginalCost.typical)}</p>
+          <p className="font-mono tabular-nums text-sm text-white font-medium">{formatUsd(marker.marginalCost.typical)}</p>
           <p className="text-xs text-muted mt-0.5">{marker.label}</p>
         </div>
       ))}

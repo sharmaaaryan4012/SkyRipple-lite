@@ -170,7 +170,7 @@ export function AirportDetailPanel({
 
           <div className="px-4 py-3 border-b border-border">
             <p className="font-mono text-xs uppercase tracking-widest text-aubergine-soft mb-2">Cost overrun</p>
-            <RangeValue low={stats.costUsd.low} typical={stats.costUsd.typical} high={stats.costUsd.high} tone="red" size="base" />
+            <RangeValue low={stats.costUsd.low} typical={stats.costUsd.typical} high={stats.costUsd.high} tone="neutral" size="base" />
             <p className="text-[11px] text-muted mt-1.5">Scenario cost at this airport minus expected-normal baseline cost, same attribution the ledger uses.</p>
           </div>
 
