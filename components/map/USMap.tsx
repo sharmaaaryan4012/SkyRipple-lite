@@ -20,10 +20,13 @@ import { AirportDetailPanel } from "./AirportDetailPanel";
 import type { RecoveryAction } from "@/lib/backendClient";
 import type { FlightLeg, DisruptionMarker, AirportMeta, ImpactSummary, AirportDaily } from "@/lib/types";
 
+const DESKTOP_ZOOM = 3.6;
+const MOBILE_ZOOM_DELTA = 1.1;
+
 const INITIAL_VIEW_STATE = {
   longitude: -96,
   latitude: 38.8,
-  zoom: 3.6,
+  zoom: DESKTOP_ZOOM,
   pitch: 0, // Task B: planes-as-icons don't need ArcLayer's depth pitch -- flat is the FlightRadar convention, and it keeps icon billboards legible
   bearing: 0,
 };
@@ -148,6 +151,17 @@ export function USMap({
   const [focusedAirportIata, setFocusedAirportIata] = useState<string | null>(null);
   const pulsePhase = usePulse(2200);
   const deckRef = useRef<DeckGLRef>(null);
+
+  const [initialViewState, setInitialViewState] = useState(INITIAL_VIEW_STATE);
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.innerWidth < 768) {
+      setInitialViewState({
+        ...INITIAL_VIEW_STATE,
+        zoom: DESKTOP_ZOOM - MOBILE_ZOOM_DELTA,
+      });
+    }
+  }, []);
 
   // Task 8c: the current view window's own days (Task 8b) -- multi-day
   // airport stats are summed over exactly these, matching "download/show
@@ -483,8 +497,14 @@ export function USMap({
     <div className="relative w-full h-full">
       <DeckGL
         ref={deckRef}
-        initialViewState={INITIAL_VIEW_STATE}
-        controller={true}
+        initialViewState={initialViewState}
+        controller={{
+          touchRotate: true,
+          touchZoom: true,
+          dragPan: true,
+          inertia: 300,
+          doubleClickZoom: true,
+        }}
         layers={[statesLayer, unaffectedAirportsLayer, planesLayer, routeLayer, ...affectedAirportLayers]}
         style={{ position: "absolute", inset: "0" }}
         onClick={(info: PickingInfo<InAirFlight | AirportMeta>) => {
@@ -492,16 +512,22 @@ export function USMap({
           if (!obj) {
             setFocusedLegId(null);
             setFocusedAirportIata(null);
+            setHovered(null);
+            setHoveredAirport(null);
             return;
           }
           if ("iata" in obj && obj.iata) {
-            // Airport clicked -- last-click-wins: clears any plane focus.
+            // Airport clicked -- pin airport detail & tooltip on touch
             setFocusedAirportIata(obj.iata);
             setFocusedLegId(null);
+            setHovered(null);
+            setHoveredAirport({ x: info.x, y: info.y, airport: obj });
           } else if ("legId" in obj && obj.legId) {
-            // Plane clicked -- clears any airport focus.
+            // Plane clicked -- pin plane detail & tooltip on touch
             setFocusedLegId(obj.legId);
             setFocusedAirportIata(null);
+            setHoveredAirport(null);
+            setHovered({ x: info.x, y: info.y, flight: obj });
           }
         }}
       />
