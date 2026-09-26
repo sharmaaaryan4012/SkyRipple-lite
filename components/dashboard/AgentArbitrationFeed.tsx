@@ -339,16 +339,16 @@ export function AgentArbitrationFeed({
   }
 
   return (
-    <div className="bg-surface border border-border rounded-lg p-3 space-y-2.5 shadow-sm select-none">
+    <div className="bg-slate-900/90 backdrop-blur-md border border-slate-800 rounded-xl p-3.5 space-y-3 shadow-xl select-none">
       {/* Executive Header */}
-      <div className="flex items-center justify-between gap-2 border-b border-border/60 pb-2">
+      <div className="flex items-center justify-between gap-2 border-b border-slate-800 pb-2">
         <div className="flex items-center gap-2 min-w-0">
           <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0" />
           <div className="min-w-0">
             <h3 className="text-xs font-semibold text-white tracking-tight truncate">
               {profile.title}
             </h3>
-            <p className="text-[10px] text-muted truncate font-mono">
+            <p className="text-[10px] text-slate-400 truncate font-mono">
               {profile.subtitle}
             </p>
           </div>
@@ -357,24 +357,24 @@ export function AgentArbitrationFeed({
         <button
           onClick={runSimulation}
           disabled={isSimulating}
-          className="px-2.5 py-1 rounded text-[11px] font-mono font-medium bg-elevated border border-border hover:border-gold hover:text-white transition disabled:opacity-50 shrink-0 text-muted"
+          className="px-2.5 py-1 rounded text-[11px] font-mono font-medium bg-slate-950/70 border border-slate-800 hover:border-blue-500 hover:text-white transition disabled:opacity-50 shrink-0 text-slate-400"
         >
           {isSimulating ? "Replaying..." : "Replay Consensus"}
         </button>
       </div>
 
       {/* Unified Segmented Agent Filter Control (No redundant cards or emojis) */}
-      <div className="flex items-center gap-1 p-1 bg-elevated/70 border border-border rounded-md overflow-x-auto scrollbar-none text-[11px] font-mono">
+      <div className="flex items-center gap-1 p-1 bg-slate-950/80 border border-slate-800 rounded-lg overflow-x-auto scrollbar-none text-[11px] font-mono">
         {ROLES.map((role) => {
           const isSelected = selectedRole === role.id;
           return (
             <button
               key={role.id}
               onClick={() => setSelectedRole(role.id as AgentRole)}
-              className={`px-2.5 py-1 rounded transition whitespace-nowrap text-center ${
+              className={`px-2.5 py-1 rounded-md transition whitespace-nowrap text-center ${
                 isSelected
-                  ? "bg-surface text-white font-semibold shadow-sm border border-border"
-                  : "text-muted hover:text-white hover:bg-surface/40"
+                  ? "bg-blue-600 text-white font-bold shadow-md"
+                  : "text-slate-400 hover:text-white hover:bg-slate-800/50"
               }`}
             >
               {role.label}
@@ -388,13 +388,13 @@ export function AgentArbitrationFeed({
         {filteredLogs.map((msg) => (
           <div
             key={msg.id}
-            className="p-2.5 rounded-md bg-elevated/40 border border-border/80 hover:border-border transition space-y-1.5"
+            className="p-2.5 rounded-lg bg-slate-950/70 border border-slate-800/80 hover:border-slate-700 transition space-y-1.5"
           >
             <div className="flex items-center justify-between gap-1 text-[10px] font-mono">
               <span className="font-semibold text-white tracking-wide uppercase">
                 {msg.title}
               </span>
-              <span className="text-muted">{msg.time}</span>
+              <span className="text-slate-400">{msg.time}</span>
             </div>
 
             <p className="text-[11px] text-slate-200 leading-relaxed font-sans">
@@ -402,18 +402,18 @@ export function AgentArbitrationFeed({
             </p>
 
             {msg.tradeoff && (
-              <div className="text-[10px] text-muted border-l-2 border-border pl-2 my-1 font-mono">
-                <span className="text-gold font-medium">Trade-off: </span>
+              <div className="text-[10px] text-slate-400 border-l-2 border-blue-500/60 pl-2 my-1 font-mono">
+                <span className="text-amber-400 font-medium">Trade-off: </span>
                 {msg.tradeoff}
               </div>
             )}
 
-            <div className="flex items-center justify-between gap-2 pt-1 border-t border-border/40 text-[10px] font-mono">
+            <div className="flex items-center justify-between gap-2 pt-1 border-t border-slate-800/60 text-[10px] font-mono">
               <span className="text-emerald-400 font-medium">
                 {msg.metric}
               </span>
               {msg.deltaCost !== undefined && (
-                <span className="text-gold font-semibold">
+                <span className="text-blue-400 font-semibold">
                   {msg.deltaCost < 0
                     ? `Saved: ${formatUsd(Math.abs(msg.deltaCost))}`
                     : msg.deltaCost === 0
@@ -427,21 +427,21 @@ export function AgentArbitrationFeed({
       </div>
 
       {/* Executive Consensus Footer */}
-      <div className="p-2.5 rounded-md bg-elevated/60 border border-border flex items-center justify-between gap-2 text-xs">
+      <div className="p-2.5 rounded-lg bg-slate-950/90 border border-slate-800 flex items-center justify-between gap-2 text-xs">
         <div>
-          <div className="font-mono text-[10px] uppercase tracking-wider text-muted font-semibold">
+          <div className="font-mono text-[10px] uppercase tracking-wider text-slate-400 font-semibold">
             {profile.consensusLabel}
           </div>
           <div className="text-[11px] text-slate-200 font-mono mt-0.5">
             {totalSaved > 0 ? (
-              <>Net Value Recovered: <span className="text-gold font-bold">{formatUsd(totalSaved)}</span></>
+              <>Net Value Recovered: <span className="text-emerald-400 font-bold">{formatUsd(totalSaved)}</span></>
             ) : (
               profile.consensusDetail
             )}
           </div>
         </div>
 
-        <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-800/40 shrink-0">
+        <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/50 px-2 py-0.5 rounded border border-emerald-800/50 shrink-0">
           {profile.statusBadge}
         </span>
       </div>

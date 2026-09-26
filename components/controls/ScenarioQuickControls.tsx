@@ -13,20 +13,26 @@ const SCENARIOS = [
   {
     id: "ord-runway-closure",
     label: "ORD Runway Closure",
-    meta: "Chicago O'Hare • 60% Capacity Reduction",
     tag: "Benchmark",
+    tagColor: "bg-blue-500/20 text-blue-400 border-blue-500/30",
+    desc: "Chicago O'Hare (ORD) • 60% runway capacity reduction from 08:00 to 10:00 CST",
+    impact: "$181K Gross Cascade • Single Hub",
   },
   {
     id: "multi-disruption-cascade",
     label: "Multi-Hub Cascade",
-    meta: "ORD + DEN Closures • Fleet Grounding",
-    tag: "Multi-Hub",
+    tag: "Compound",
+    tagColor: "bg-amber-500/20 text-amber-400 border-amber-500/30",
+    desc: "Concurrent ORD + DEN runway closures compounded by United Airlines fleet hold",
+    impact: "3 Concurrent Incidents • Cross-Hub",
   },
   {
     id: "baseline",
     label: "Nominal Operations",
-    meta: "Published Schedule • $0 Cost Variance",
     tag: "Baseline",
+    tagColor: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
+    desc: "Normal published schedule operations • $0 cost variance across 340 airports",
+    impact: "Steady-State Airspace • 0 Disruptions",
   },
 ];
 
@@ -39,25 +45,27 @@ export function ScenarioQuickControls({
   const isDisrupted = !isCleanBoot && scenario.disruptionMarkers && scenario.disruptionMarkers.length > 0;
 
   return (
-    <div className="p-3 rounded-lg bg-surface border border-border space-y-2.5 select-none">
-      <div className="flex items-center justify-between border-b border-border/60 pb-2">
+    <div className="p-3.5 rounded-xl bg-slate-900/90 backdrop-blur-md border border-slate-800 space-y-3 shadow-xl select-none">
+      {/* Header */}
+      <div className="flex items-center justify-between border-b border-slate-800 pb-2">
         <div className="flex items-center gap-2">
           <span
             className={`w-2 h-2 rounded-full shrink-0 ${
-              isDisrupted ? "bg-[#EF4444] animate-pulse" : "bg-emerald-400"
+              isDisrupted ? "bg-red-400 animate-pulse" : "bg-emerald-400"
             }`}
           />
-          <span className="text-[11px] font-mono uppercase tracking-wider text-muted font-semibold">
+          <h4 className="text-xs font-bold text-white uppercase tracking-wider font-mono">
             Operational Scenarios
-          </span>
+          </h4>
         </div>
 
-        <span className="text-[10px] font-mono text-muted bg-elevated px-2 py-0.5 rounded border border-border">
+        <span className="text-[10px] font-mono text-slate-400 bg-slate-950/70 px-2 py-0.5 rounded border border-slate-800">
           {isDisrupted ? `${scenario.disruptionMarkers.length} Active Events` : "Nominal"}
         </span>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-1.5">
+      {/* 3 Scenarios Listed Vertically for Full Readability */}
+      <div className="flex flex-col gap-2">
         {SCENARIOS.map((sc) => {
           const isActive =
             (sc.id === "baseline" && isCleanBoot) ||
@@ -66,30 +74,44 @@ export function ScenarioQuickControls({
           return (
             <button
               key={sc.id}
+              type="button"
               onClick={() => onSelectScenario(sc.id)}
-              className={`p-2.5 rounded-md border text-left transition-all flex flex-col justify-between min-h-[58px] ${
+              className={`p-3 rounded-lg border text-left transition-all relative flex flex-col gap-1.5 ${
                 isActive
-                  ? "bg-elevated border-gold shadow-sm ring-1 ring-gold/40"
-                  : "bg-surface border-border hover:border-muted hover:bg-elevated/50"
+                  ? "bg-slate-800/95 border-blue-500 shadow-lg ring-1 ring-blue-500/50"
+                  : "bg-slate-950/60 border-slate-800 hover:border-slate-700 hover:bg-slate-900/80"
               }`}
             >
-              <div className="flex items-center justify-between gap-1 w-full">
-                <span className="text-xs font-semibold text-white tracking-tight truncate">
-                  {sc.label}
-                </span>
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2 min-w-0">
+                  <span
+                    className={`w-2 h-2 rounded-full shrink-0 ${
+                      isActive ? "bg-blue-400 shadow-[0_0_8px_rgba(96,165,250,0.8)]" : "bg-slate-600"
+                    }`}
+                  />
+                  <span className="text-xs font-bold text-white font-mono tracking-tight truncate">
+                    {sc.label}
+                  </span>
+                </div>
+
                 <span
-                  className={`text-[9px] font-mono px-1.5 py-0.2 rounded border shrink-0 ${
-                    isActive
-                      ? "bg-gold/15 text-gold border-gold/30 font-medium"
-                      : "bg-elevated text-muted border-border"
-                  }`}
+                  className={`text-[9px] font-mono px-1.5 py-0.5 rounded border shrink-0 ${sc.tagColor}`}
                 >
                   {sc.tag}
                 </span>
               </div>
-              <p className="text-[10px] text-muted truncate mt-1">
-                {sc.meta}
+
+              {/* Full Description - Completely Readable */}
+              <p className="text-[11px] text-slate-300 leading-snug">
+                {sc.desc}
               </p>
+
+              <div className="text-[10px] font-mono text-slate-400 pt-0.5 border-t border-slate-800/60 flex items-center justify-between">
+                <span>{sc.impact}</span>
+                {isActive && (
+                  <span className="text-blue-400 font-semibold">Active Loaded</span>
+                )}
+              </div>
             </button>
           );
         })}

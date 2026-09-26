@@ -35,6 +35,7 @@ export function ChatDock({
   nlAvailable: _nlAvailable,
   onActivateLive: _onActivateLive,
   onActivatePrecomputed,
+  externalEvent,
 }: {
   scenario: ScenarioData;
   flights: FlightLeg[];
@@ -42,6 +43,7 @@ export function ChatDock({
   nlAvailable: boolean | null;
   onActivateLive: (data: SimulationData, disruptions: BackendDisruptionRequest[]) => void;
   onActivatePrecomputed: (scenarioId: string) => void;
+  externalEvent?: { scenarioId: string; timestamp: number } | null;
 }) {
   const [expanded, setExpanded] = useState(false);
   const [hasUnread, setHasUnread] = useState(false);
@@ -78,6 +80,29 @@ export function ChatDock({
   useEffect(() => {
     if (listRef.current) listRef.current.scrollTop = listRef.current.scrollHeight;
   }, [messages]);
+
+  const lastEventTimestampRef = useRef<number>(0);
+
+  useEffect(() => {
+    if (!externalEvent || externalEvent.timestamp <= lastEventTimestampRef.current) return;
+    lastEventTimestampRef.current = externalEvent.timestamp;
+
+    const id = externalEvent.scenarioId;
+    if (id === "ord-runway-closure") {
+      pushMessage("user", "Select ORD Runway Closure scenario");
+      pushMessage("assistant", "Injecting Chicago O'Hare (ORD) runway closure: 60% capacity cut from 08:00 to 10:00 CST. Calculating cascade...");
+      armSummary("ord-runway-closure");
+    } else if (id === "multi-disruption-cascade") {
+      pushMessage("user", "Select Multi-Hub Cascade scenario");
+      pushMessage("assistant", "Injecting multi-hub cascade: concurrent ORD + DEN runway closures with an evening United fleet grounding...");
+      armSummary("multi-disruption-cascade");
+    } else if (id === "baseline") {
+      pushMessage("user", "Reset to Nominal Baseline");
+      pushMessage("assistant", "Resetting airspace to nominal baseline operations ($0 cost variance)...");
+      armSummary("baseline");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [externalEvent]);
 
   function armSummary(scenarioId: string) {
     requestCounterRef.current += 1;
