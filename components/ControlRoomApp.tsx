@@ -45,6 +45,7 @@ export function ControlRoomApp({
   const [nlAvailable, setNlAvailable] = useState<boolean | null>(null);
   const [recovery, setRecovery] = useState<RecoveryView | null>(null);
   const [mapView, setMapView] = useState<MapView>("disrupted");
+  const [chatLogTrigger, setChatLogTrigger] = useState<{ scenarioId: string; timestamp: number } | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -176,6 +177,7 @@ export function ControlRoomApp({
                     nlAvailable={nlAvailable}
                     onActivateLive={activateLive}
                     onActivatePrecomputed={(slug) => activatePrecomputed(slug, true)}
+                    externalEvent={chatLogTrigger}
                   />
                 </div>
               }
@@ -230,7 +232,10 @@ export function ControlRoomApp({
                   scenario={data.scenario}
                   activeScenarioId={activeScenarioId}
                   isCleanBoot={isCleanBoot}
-                  onSelectScenario={(slug) => activatePrecomputed(slug, slug !== "baseline")}
+                  onSelectScenario={(slug) => {
+                    activatePrecomputed(slug, slug !== "baseline");
+                    setChatLogTrigger({ scenarioId: slug, timestamp: Date.now() });
+                  }}
                 />
               }
             />
