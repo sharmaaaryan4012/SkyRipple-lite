@@ -126,15 +126,23 @@ export function SimulationProvider({
     // the tree mounted throughout; only `error` resets up front, since a
     // fresh attempt should not keep showing a stale error either.
     setError(null);
-    Promise.all([loadFlights(scenarioId), loadScenario(scenarioId)])
-      .then(([flightsData, scenario]) => {
+    loadScenario(scenarioId)
+      .then((scenario) => {
         if (cancelled) return;
-        // `raw` (lib/activeResult.ts) decides the presentation: the app's
-        // own boot load stays cleaned (buildCleanBootState -- "normal day,
-        // nothing injected"), while a starter-chip activation shows the
-        // export's real, pre-cascaded disruption as-is. See lib/bootState.ts.
-        const merged: SimulationData = { flights: flightsData.flights, scenario };
-        setFetched(raw ? merged : buildCleanBootState(merged));
+        setFetched((prev) => {
+          const currentFlights = prev?.flights ?? [];
+          const interim: SimulationData = { flights: currentFlights, scenario };
+          return raw ? interim : buildCleanBootState(interim);
+        });
+
+        return loadFlights(scenarioId).then((flightsData) => {
+          if (cancelled) return;
+          setFetched((prev) => {
+            const currentScenario = prev?.scenario ?? scenario;
+            const merged: SimulationData = { flights: flightsData.flights, scenario: currentScenario };
+            return raw ? merged : buildCleanBootState(merged);
+          });
+        });
       })
       .catch((err: Error) => {
         if (!cancelled) setError(err.message);

@@ -19,7 +19,7 @@ import { ControlRoomApp } from "@/components/ControlRoomApp";
 // docstring). The clean boot still zeroes every disruption-driven figure
 // ($0, 0 min, "no disruption injected yet") -- only the underlying date
 // COVERAGE comes from this export, never its disruption/cost data.
-const BOOT_DATA_SOURCE_SCENARIO_ID = "december-full";
+const BOOT_DATA_SOURCE_SCENARIO_ID = "ord-runway-closure";
 
 /**
  * Task 8b verification affordance ONLY: `?scenario=<slug>` overrides which

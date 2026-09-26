@@ -7,17 +7,19 @@ import type { RecoveryView } from "@/lib/recoveryView";
 
 export function DeterministicValidationCard({
   scenario,
+  activeScenarioId,
   recovery,
   isCleanBoot,
 }: {
   scenario: ScenarioData;
+  activeScenarioId?: string;
   recovery?: RecoveryView | null;
   isCleanBoot?: boolean;
 }) {
   const summary = scenario.impactSummary;
-  const slug = scenario.meta?.scenarioId?.toLowerCase() ?? "";
+  const slug = (activeScenarioId || scenario.meta?.scenarioId || "").toLowerCase();
 
-  const isBaseline = isCleanBoot || slug === "baseline" || !scenario.disruptionMarkers || scenario.disruptionMarkers.length === 0;
+  const isBaseline = isCleanBoot || slug === "baseline" || slug === "nominal";
   const isMultiHub = slug.includes("multi");
 
   const validation = useMemo(() => {
