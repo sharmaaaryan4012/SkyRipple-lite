@@ -192,6 +192,7 @@ export function ControlRoomApp({
                   <AgentArbitrationFeed
                     scenario={data.scenario}
                     recovery={recovery}
+                    isCleanBoot={isCleanBoot}
                   />
                   <RecoveryPanel
                     key={activeKey}
@@ -215,6 +216,7 @@ export function ControlRoomApp({
                   <DeterministicValidationCard
                     scenario={data.scenario}
                     recovery={recovery}
+                    isCleanBoot={isCleanBoot}
                   />
                   <Dashboard
                     scenario={data.scenario}
