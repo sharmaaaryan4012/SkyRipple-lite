@@ -19,7 +19,6 @@ export function DeterministicValidationCard({
 
   const isBaseline = isCleanBoot || slug === "baseline" || !scenario.disruptionMarkers || scenario.disruptionMarkers.length === 0;
   const isMultiHub = slug.includes("multi");
-  const isDecember = slug.includes("december");
 
   const validation = useMemo(() => {
     if (isBaseline) {
@@ -55,24 +54,6 @@ export function DeterministicValidationCard({
       };
     }
 
-    if (isDecember) {
-      const saving = recovery?.recoverySaving?.typical ?? 1420000;
-      const low = recovery?.recoverySaving?.low ?? 1150000;
-      const high = recovery?.recoverySaving?.high ?? 1850000;
-      return {
-        saving,
-        low,
-        high,
-        latency: "< 20s",
-        latencyNote: "Measured: 18.2s rolling horizon",
-        status: "31-Day Rolling Consensus",
-        protectedPax: "Verified (2,840 Protected Network-wide)",
-        cancellations: "+118 Flights Kept across 14 Hubs",
-        unmitigated: summary.totalCostUsd.typical || 1950000,
-        after: Math.max(0, (summary.totalCostUsd.typical || 1950000) - saving),
-      };
-    }
-
     // Default ORD Runway Closure or Dynamic
     const saving = recovery?.recoverySaving?.typical ?? 172400;
     const low = recovery?.recoverySaving?.low ?? 144050;
@@ -89,56 +70,54 @@ export function DeterministicValidationCard({
       unmitigated: summary.totalCostUsd.typical || 181375,
       after: Math.max(0, (summary.totalCostUsd.typical || 181375) - saving),
     };
-  }, [isBaseline, isMultiHub, isDecember, recovery, summary]);
+  }, [isBaseline, isMultiHub, recovery, summary]);
 
   const totalFlights = scenario.meta.recordCounts?.flightLegCount ?? 582410;
 
   return (
-    <div className="bg-slate-900/90 backdrop-blur-md rounded-xl border border-slate-800 p-3.5 space-y-3 shadow-xl">
-      <div className="flex items-center justify-between border-b border-slate-800 pb-2">
+    <div className="bg-surface border border-border rounded-lg p-3 space-y-2.5 shadow-sm select-none">
+      <div className="flex items-center justify-between border-b border-border/60 pb-2">
         <div className="flex items-center gap-2">
-          <span className="p-1 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs">
-            ✓
-          </span>
+          <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0" />
           <div>
-            <h4 className="text-xs font-bold text-white uppercase tracking-wider font-mono">
+            <h4 className="text-xs font-semibold text-white tracking-tight">
               Deterministic Validation Engine
             </h4>
-            <p className="text-[10px] text-slate-400 font-mono">
+            <p className="text-[10px] text-muted font-mono">
               BTS Ground-Truth Baseline &bull; Invariant Mathematical Proof
             </p>
           </div>
         </div>
 
-        <span className="text-[10px] font-mono font-medium px-2 py-0.5 rounded bg-emerald-950/60 text-emerald-400 border border-emerald-800/80">
+        <span className="text-[10px] font-mono text-muted bg-elevated px-2 py-0.5 rounded border border-border">
           {validation.status}
         </span>
       </div>
 
       {/* Primary KPI Delta Grid */}
       <div className="grid grid-cols-2 gap-2">
-        <div className="p-2.5 rounded-lg bg-slate-950/60 border border-slate-800">
-          <span className="text-[10px] text-slate-400 font-mono uppercase tracking-wider block">
+        <div className="p-2.5 rounded-md bg-elevated/50 border border-border">
+          <span className="text-[10px] text-muted font-mono uppercase tracking-wider block">
             Net Recovery Delta
           </span>
-          <span className="text-xl font-bold font-mono text-gold-deep block mt-0.5">
+          <span className="text-lg font-bold font-mono text-gold block mt-0.5">
             {validation.saving > 0 ? formatUsd(validation.saving) : "$0 Δ"}
           </span>
-          <span className="text-[9px] text-slate-500 font-mono">
+          <span className="text-[9px] text-muted font-mono">
             {validation.saving > 0
               ? `Bounds: ${formatUsd(validation.low)} – ${formatUsd(validation.high)}`
               : "Baseline ($0 Variance)"}
           </span>
         </div>
 
-        <div className="p-2.5 rounded-lg bg-slate-950/60 border border-slate-800">
-          <span className="text-[10px] text-slate-400 font-mono uppercase tracking-wider block">
+        <div className="p-2.5 rounded-md bg-elevated/50 border border-border">
+          <span className="text-[10px] text-muted font-mono uppercase tracking-wider block">
             Resolution Latency
           </span>
-          <span className="text-xl font-bold font-mono text-emerald-400 block mt-0.5">
+          <span className="text-lg font-bold font-mono text-emerald-400 block mt-0.5">
             {validation.latency}
           </span>
-          <span className="text-[9px] text-slate-500 font-mono">
+          <span className="text-[9px] text-muted font-mono">
             {validation.latencyNote}
           </span>
         </div>
@@ -146,40 +125,40 @@ export function DeterministicValidationCard({
 
       {/* Mathematical Invariants Checklist */}
       <div className="space-y-1.5 pt-1">
-        <div className="text-[10px] font-mono text-slate-400 uppercase tracking-widest">
+        <div className="text-[10px] font-mono text-muted uppercase tracking-widest">
           Deterministic Invariants
         </div>
 
         <div className="space-y-1 text-[11px] font-mono">
-          <div className="flex items-center justify-between p-1.5 rounded bg-slate-950/40 border border-slate-800/60">
+          <div className="flex items-center justify-between p-1.5 rounded bg-elevated/30 border border-border/50">
             <span className="text-slate-300">Aircraft Rotation Conservation</span>
             <span className="text-emerald-400 font-medium">100% (0 Orphan Tails)</span>
           </div>
 
-          <div className="flex items-center justify-between p-1.5 rounded bg-slate-950/40 border border-slate-800/60">
+          <div className="flex items-center justify-between p-1.5 rounded bg-elevated/30 border border-border/50">
             <span className="text-slate-300">FAA Part 117 Duty Legalities</span>
             <span className="text-emerald-400 font-medium">0 Breaches (Rest Enforced)</span>
           </div>
 
-          <div className="flex items-center justify-between p-1.5 rounded bg-slate-950/40 border border-slate-800/60">
+          <div className="flex items-center justify-between p-1.5 rounded bg-elevated/30 border border-border/50">
             <span className="text-slate-300">Passenger Flow Conservation</span>
             <span className="text-emerald-400 font-medium">{validation.protectedPax}</span>
           </div>
 
-          <div className="flex items-center justify-between p-1.5 rounded bg-slate-950/40 border border-slate-800/60">
+          <div className="flex items-center justify-between p-1.5 rounded bg-elevated/30 border border-border/50">
             <span className="text-slate-300">Saved Flights / Cancellations</span>
             <span className="text-gold font-medium">{validation.cancellations}</span>
           </div>
 
-          <div className="flex items-center justify-between p-1.5 rounded bg-slate-950/40 border border-slate-800/60">
+          <div className="flex items-center justify-between p-1.5 rounded bg-elevated/30 border border-border/50">
             <span className="text-slate-300">Audited Schedule Scope</span>
-            <span className="text-slate-400">{formatCount(totalFlights)} Schedule Records</span>
+            <span className="text-muted">{formatCount(totalFlights)} Schedule Records</span>
           </div>
         </div>
       </div>
 
       {/* Disruption Baseline Reference */}
-      <div className="p-2 rounded bg-slate-950/80 border border-slate-800 text-[10px] font-mono text-slate-400 flex items-center justify-between">
+      <div className="p-2 rounded bg-elevated/60 border border-border text-[10px] font-mono text-muted flex items-center justify-between">
         <span>
           Unmitigated Cascade:{" "}
           <strong className={validation.unmitigated > 0 ? "text-red-400" : "text-emerald-400"}>
