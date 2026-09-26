@@ -93,7 +93,7 @@ export function TimelineScrubber({
   const hoveredCluster = clusters.find((c) => c.dayStartMin === hoveredClusterDay) ?? null;
 
   return (
-    <div className="w-full">
+    <div className="w-full" onTouchStart={(e) => e.stopPropagation()}>
       <div className="relative w-full" style={{ height: VIEW_H }}>
         {/* Transparent native range input for accessible drag & scrub */}
         <input
@@ -103,8 +103,9 @@ export function TimelineScrubber({
           step={1}
           value={currentMinute}
           onChange={(e) => setMinute(Number(e.target.value))}
+          onTouchStart={(e) => e.stopPropagation()}
           aria-label="Simulated time"
-          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer m-0 z-10"
+          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer m-0 z-10 touch-manipulation"
         />
 
         {/* Scalable SVG for continuous geometry and lines */}
@@ -226,12 +227,14 @@ export function TimelineScrubber({
 
         {/* The Scrub Handle Circle (1:1 circular aspect ratio, centered on the track) */}
         <div
-          className="absolute pointer-events-none -translate-x-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-white shadow-[0_0_10px_rgba(197,160,89,0.85)] border-2 border-[#0B132B] z-20"
+          className="absolute pointer-events-none -translate-x-1/2 -translate-y-1/2 w-4 h-4 sm:w-3.5 sm:h-3.5 rounded-full bg-white shadow-[0_0_12px_rgba(197,160,89,0.9)] border-2 border-[#0B132B] z-20 flex items-center justify-center"
           style={{
             left: `${(cursorX / VIEW_W) * 100}%`,
             top: `${TRACK_Y + TRACK_H / 2}px`,
           }}
-        />
+        >
+          <span className="w-8 h-8 rounded-full bg-gold/15 pointer-events-none absolute" />
+        </div>
 
         {/* Disruption Marker Pin Dots in HTML (crisp 1:1 circles directly on track) */}
         {scale === "month" && multiDay

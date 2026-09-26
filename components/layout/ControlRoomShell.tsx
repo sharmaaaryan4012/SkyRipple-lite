@@ -23,7 +23,7 @@ export function ControlRoomShell({
   // If modern OCC stage & header are provided:
   if (header || stage) {
     return (
-      <div className="h-screen flex flex-col bg-page text-aubergine font-sans overflow-hidden select-none">
+      <div className="h-[100dvh] w-screen flex flex-col bg-page text-aubergine font-sans overflow-hidden select-none overscroll-none">
         {header}
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-3 p-3 overflow-hidden">
           {/* Main Airspace Stage (Map + Flight Deck) */}
@@ -43,7 +43,7 @@ export function ControlRoomShell({
   // Fallback to legacy 3-column layout if old props used
   return (
     <div
-      className="h-screen grid gap-3 p-3"
+      className="h-[100dvh] w-screen grid gap-3 p-3 overflow-hidden overscroll-none"
       style={{
         gridTemplateColumns: "1fr 2.4fr 1.6fr",
         gridTemplateRows: "1fr",

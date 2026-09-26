@@ -63,7 +63,7 @@ export function FlightDeck({ scenario }: { scenario: ScenarioData }) {
   const statusTag = scale === "day" ? "single day view" : `${dayCount} days selected`;
 
   return (
-    <div className="bg-surface border border-border rounded-md px-3.5 py-2.5 flex flex-col gap-2 shrink-0 shadow-lg select-none">
+    <div className="bg-surface border border-border rounded-md px-3.5 py-2.5 flex flex-col gap-2 shrink-0 shadow-lg select-none" onTouchStart={(e) => e.stopPropagation()}>
       {/* Tier 1: Time Horizon & Scope Changing Menu */}
       <div className="flex flex-wrap items-center justify-between gap-2.5 w-full pb-2 border-b border-border/50">
         <div className="flex items-center gap-2 flex-wrap">
@@ -175,24 +175,24 @@ export function FlightDeck({ scenario }: { scenario: ScenarioData }) {
 
       {/* Tier 2: Playback Controls, Full-Width Scrubber, Clock Readout */}
       <div className="flex flex-col sm:flex-row items-center gap-3 w-full">
-        {/* Playback Controls */}
+        {/* Playback Controls with min 44px touch targets */}
         <div className="flex items-center gap-2 shrink-0">
           <button
             onClick={toggle}
             aria-label={isPlaying ? "Pause simulation" : "Play simulation"}
-            className={`w-8 h-8 flex items-center justify-center rounded-md border transition-all ${
+            className={`min-w-[44px] min-h-[44px] sm:min-w-[36px] sm:min-h-[36px] flex items-center justify-center rounded-md border transition-all ${
               isPlaying
                 ? "bg-gold text-page border-gold shadow-[0_0_12px_rgba(197,160,89,0.3)] font-bold"
                 : "bg-elevated border-border text-white hover:bg-white/10"
             }`}
           >
             {isPlaying ? (
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor">
+              <svg width="12" height="12" viewBox="0 0 10 10" fill="currentColor">
                 <rect x="1" y="0.5" width="3" height="9" rx="0.5" />
                 <rect x="6" y="0.5" width="3" height="9" rx="0.5" />
               </svg>
             ) : (
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor" className="ml-0.5">
+              <svg width="12" height="12" viewBox="0 0 10 10" fill="currentColor" className="ml-0.5">
                 <path d="M1 0.5L9.5 5L1 9.5V0.5Z" />
               </svg>
             )}
@@ -203,7 +203,7 @@ export function FlightDeck({ scenario }: { scenario: ScenarioData }) {
               <button
                 key={speed}
                 onClick={() => setSpeedMultiplier(speed)}
-                className={`font-mono tabular-nums text-xs px-2 py-0.5 rounded transition-colors ${
+                className={`font-mono tabular-nums text-xs px-2.5 py-1.5 sm:py-0.5 min-h-[36px] sm:min-h-0 rounded transition-colors ${
                   speedMultiplier === speed
                     ? "bg-white/15 text-white font-semibold shadow-sm"
                     : "text-muted hover:text-white"

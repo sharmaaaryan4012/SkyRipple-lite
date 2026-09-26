@@ -1,12 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { ResponsiveDashboardShell } from "@/components/layout/ResponsiveDashboardShell";
 import { ControlRoomShell } from "@/components/layout/ControlRoomShell";
 import { PlaceholderPanel } from "@/components/layout/PlaceholderPanel";
 import { TopCommandBar } from "@/components/controls/TopCommandBar";
 import { FlightDeck } from "@/components/controls/FlightDeck";
+import { FloatingTopHudPill } from "@/components/controls/FloatingTopHudPill";
+import { ScenarioQuickControls } from "@/components/controls/ScenarioQuickControls";
 import { Dashboard } from "@/components/dashboard/Dashboard";
 import { RecoveryPanel } from "@/components/dashboard/RecoveryPanel";
+import { AgentArbitrationFeed } from "@/components/dashboard/AgentArbitrationFeed";
+import { DeterministicValidationCard } from "@/components/dashboard/DeterministicValidationCard";
 import { MapPanel, type MapView } from "@/components/map/MapPanel";
 import { ChatDock } from "@/components/chat/ChatDock";
 import { SimulationProvider } from "./SimulationProvider";
@@ -149,40 +154,45 @@ export function ControlRoomApp({
           }
 
           return (
-            <ControlRoomShell
+            <ResponsiveDashboardShell
               header={topBar}
-              stage={
-                <div className="flex-1 flex flex-col gap-2.5 min-h-0 overflow-hidden">
-                  {/* Airspace Map Canvas with Floating Briefing */}
-                  <div className="flex-1 relative min-h-0 overflow-hidden rounded-md border border-border bg-map-canvas">
-                    <MapPanel
-                      flights={data.flights}
-                      disruptionMarkers={data.scenario.disruptionMarkers}
-                      recovery={recovery}
-                      mapView={mapView}
-                      onMapViewChange={setMapView}
-                      airports={data.scenario.airports}
-                      impactSummary={data.scenario.impactSummary}
-                      airportDaily={data.scenario.airportDaily}
-                      flightsDetailDay={data.scenario.meta.flightsDetailDay}
-                    />
-                    <ChatDock
-                      scenario={data.scenario}
-                      flights={data.flights}
-                      recovery={recovery}
-                      nlAvailable={nlAvailable}
-                      onActivateLive={activateLive}
-                      onActivatePrecomputed={(slug) => activatePrecomputed(slug, true)}
-                    />
-                  </div>
-
-                  {/* Integrated Full-Width Flight Deck Bar */}
-                  <FlightDeck scenario={data.scenario} />
+              mapSlot={
+                <div className="relative w-full h-full overflow-hidden">
+                  <MapPanel
+                    flights={data.flights}
+                    disruptionMarkers={data.scenario.disruptionMarkers}
+                    recovery={recovery}
+                    mapView={mapView}
+                    onMapViewChange={setMapView}
+                    airports={data.scenario.airports}
+                    impactSummary={data.scenario.impactSummary}
+                    airportDaily={data.scenario.airportDaily}
+                    flightsDetailDay={data.scenario.meta.flightsDetailDay}
+                  />
+                  <ChatDock
+                    scenario={data.scenario}
+                    flights={data.flights}
+                    recovery={recovery}
+                    nlAvailable={nlAvailable}
+                    onActivateLive={activateLive}
+                    onActivatePrecomputed={(slug) => activatePrecomputed(slug, true)}
+                  />
                 </div>
               }
-              ledger={
-                <div className="flex flex-col gap-3">
-                  <Dashboard scenario={data.scenario} flights={data.flights} recovery={recovery} />
+              timelineSlot={<FlightDeck scenario={data.scenario} />}
+              kpiSummarySlot={
+                <FloatingTopHudPill
+                  scenario={data.scenario}
+                  recovery={recovery}
+                  isCleanBoot={isCleanBoot}
+                />
+              }
+              agentsPanelSlot={
+                <div className="space-y-3.5">
+                  <AgentArbitrationFeed
+                    scenario={data.scenario}
+                    recovery={recovery}
+                  />
                   <RecoveryPanel
                     key={activeKey}
                     day={data.scenario.meta.day}
@@ -199,6 +209,27 @@ export function ControlRoomApp({
                     }
                   />
                 </div>
+              }
+              ledgerPanelSlot={
+                <div className="space-y-3.5">
+                  <DeterministicValidationCard
+                    scenario={data.scenario}
+                    recovery={recovery}
+                  />
+                  <Dashboard
+                    scenario={data.scenario}
+                    flights={data.flights}
+                    recovery={recovery}
+                  />
+                </div>
+              }
+              controlsSlot={
+                <ScenarioQuickControls
+                  scenario={data.scenario}
+                  activeScenarioId={activeScenarioId}
+                  isCleanBoot={isCleanBoot}
+                  onSelectScenario={(slug) => activatePrecomputed(slug, slug !== "baseline")}
+                />
               }
             />
           );
