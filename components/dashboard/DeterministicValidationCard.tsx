@@ -55,7 +55,7 @@ export function DeterministicValidationCard({
     }
 
     // Default ORD Runway Closure or Dynamic
-    const saving = recovery?.recoverySaving?.typical ?? 172400;
+    const saving = recovery?.recoverySaving?.typical ?? 145000;
     const low = recovery?.recoverySaving?.low ?? 144050;
     const high = recovery?.recoverySaving?.high ?? 269311;
     return {

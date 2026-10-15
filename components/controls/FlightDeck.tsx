@@ -174,59 +174,77 @@ export function FlightDeck({ scenario }: { scenario: ScenarioData }) {
       </div>
 
       {/* Tier 2: Playback Controls, Full-Width Scrubber, Clock Readout */}
-      <div className="flex flex-col sm:flex-row items-center gap-3 w-full">
-        {/* Playback Controls with min 44px touch targets */}
-        <div className="flex items-center gap-2 shrink-0">
-          <button
-            onClick={toggle}
-            aria-label={isPlaying ? "Pause simulation" : "Play simulation"}
-            className={`min-w-[44px] min-h-[44px] sm:min-w-[36px] sm:min-h-[36px] flex items-center justify-center rounded-md border transition-all ${
-              isPlaying
-                ? "bg-gold text-page border-gold shadow-[0_0_12px_rgba(197,160,89,0.3)] font-bold"
-                : "bg-elevated border-border text-white hover:bg-white/10"
-            }`}
-          >
-            {isPlaying ? (
-              <svg width="12" height="12" viewBox="0 0 10 10" fill="currentColor">
-                <rect x="1" y="0.5" width="3" height="9" rx="0.5" />
-                <rect x="6" y="0.5" width="3" height="9" rx="0.5" />
-              </svg>
-            ) : (
-              <svg width="12" height="12" viewBox="0 0 10 10" fill="currentColor" className="ml-0.5">
-                <path d="M1 0.5L9.5 5L1 9.5V0.5Z" />
-              </svg>
-            )}
-          </button>
+      <div className="flex flex-col sm:flex-row items-center gap-2.5 sm:gap-3 w-full">
+        {/* On Mobile: Top Bar combining Playback & Clock */}
+        <div className="flex sm:contents items-center justify-between w-full">
+          {/* Playback Controls with min 44px touch targets */}
+          <div className="flex items-center gap-2 shrink-0">
+            <button
+              onClick={toggle}
+              aria-label={isPlaying ? "Pause simulation" : "Play simulation"}
+              className={`min-w-[44px] min-h-[44px] sm:min-w-[36px] sm:min-h-[36px] flex items-center justify-center rounded-lg border transition-all ${
+                isPlaying
+                  ? "bg-gold text-page border-gold shadow-[0_0_12px_rgba(197,160,89,0.3)] font-bold"
+                  : "bg-elevated border-border text-white hover:bg-white/10"
+              }`}
+            >
+              {isPlaying ? (
+                <svg width="12" height="12" viewBox="0 0 10 10" fill="currentColor">
+                  <rect x="1" y="0.5" width="3" height="9" rx="0.5" />
+                  <rect x="6" y="0.5" width="3" height="9" rx="0.5" />
+                </svg>
+              ) : (
+                <svg width="12" height="12" viewBox="0 0 10 10" fill="currentColor" className="ml-0.5">
+                  <path d="M1 0.5L9.5 5L1 9.5V0.5Z" />
+                </svg>
+              )}
+            </button>
 
-          <div className="flex items-center bg-elevated border border-border rounded-md overflow-hidden p-0.5">
-            {SPEEDS.map((speed) => (
-              <button
-                key={speed}
-                onClick={() => setSpeedMultiplier(speed)}
-                className={`font-mono tabular-nums text-xs px-2.5 py-1.5 sm:py-0.5 min-h-[36px] sm:min-h-0 rounded transition-colors ${
-                  speedMultiplier === speed
-                    ? "bg-white/15 text-white font-semibold shadow-sm"
-                    : "text-muted hover:text-white"
-                }`}
-              >
-                {speed}&times;
-              </button>
-            ))}
+            <div className="flex items-center bg-elevated border border-border rounded-lg overflow-hidden p-0.5">
+              {SPEEDS.map((speed) => (
+                <button
+                  key={speed}
+                  onClick={() => setSpeedMultiplier(speed)}
+                  className={`font-mono tabular-nums text-xs px-2.5 py-1.5 sm:py-0.5 min-h-[36px] sm:min-h-0 rounded transition-colors ${
+                    speedMultiplier === speed
+                      ? "bg-white/15 text-white font-semibold shadow-sm"
+                      : "text-muted hover:text-white"
+                  }`}
+                >
+                  {speed}&times;
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* On Mobile: Clock is aligned right next to play controls */}
+          <div className="flex sm:hidden flex-col items-end shrink-0 pl-2">
+            <div className="flex items-baseline gap-1.5">
+              <span className="font-mono tabular-nums text-base font-bold text-white tracking-tight">
+                {formatSimClock(currentMinute)}
+              </span>
+              <span className="font-mono text-[10px] text-gold uppercase tracking-wider font-semibold">
+                {dayOffset > 0 ? `D+${dayOffset}` : "D0"}
+              </span>
+            </div>
+            <p className="font-mono text-[10px] text-muted">
+              {formatCalendarDate(displayDate)}
+            </p>
           </div>
         </div>
 
         {/* Center: Full-Width Scrubber with Cost Sparkline */}
-        <div className="flex-1 w-full min-w-0">
+        <div className="flex-1 w-full min-w-0 pt-0.5 sm:pt-0">
           <TimelineScrubber
             costTimeseries={scenario.costTimeseries}
             disruptionMarkers={scenario.disruptionMarkers}
           />
         </div>
 
-        {/* Right: Digital Sim Clock & Calendar Date */}
-        <div className="flex sm:flex-col items-center sm:items-end justify-between w-full sm:w-auto shrink-0 pl-0 sm:pl-3 border-t sm:border-t-0 sm:border-l border-border pt-1.5 sm:pt-0 min-w-[96px]">
+        {/* Desktop Clock & Calendar Date */}
+        <div className="hidden sm:flex sm:flex-col items-end justify-between shrink-0 pl-3 border-l border-border min-w-[96px]">
           <div className="flex items-baseline gap-1.5">
-            <span className="font-mono tabular-nums text-lg sm:text-xl font-semibold text-white tracking-tight">
+            <span className="font-mono tabular-nums text-xl font-semibold text-white tracking-tight">
               {formatSimClock(currentMinute)}
             </span>
             <span className="font-mono text-[10px] text-gold uppercase tracking-wider font-medium">

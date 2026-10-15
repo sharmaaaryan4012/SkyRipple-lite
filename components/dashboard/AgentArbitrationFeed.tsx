@@ -31,9 +31,9 @@ interface ScenarioArbitrationProfile {
 const ORD_PROFILE: ScenarioArbitrationProfile = {
   title: "OCC Arbitration Log",
   subtitle: "Chicago O'Hare (ORD) Capacity Reduction • Discrete Resolution <20s",
-  totalSaved: 172400,
+  totalSaved: 145000,
   consensusLabel: "Duty Manager Arbitrated Consensus",
-  consensusDetail: "Delta: +$172,400 net savings achieved vs. unmitigated cascade",
+  consensusDetail: "Delta: +$145,000 net savings achieved vs. unmitigated cascade",
   statusBadge: "Plan Approved • 0 Overrides",
   logs: [
     {
@@ -61,7 +61,7 @@ const ORD_PROFILE: ScenarioArbitrationProfile = {
       title: "Passenger Controller",
       time: "08:14 CST",
       content: "Detected 48 high-value passengers connecting to transatlantic flight UA-1184 (ORD → LHR). Authorizing 15-minute gate departure hold on UA-1184.",
-      deltaCost: -68400,
+      deltaCost: -74500,
       tradeoff: "Averts 48 international misconnections, hotel accommodation vouchers, and DOT delay compensation.",
       metric: "48 Passengers Protected",
     },
@@ -71,7 +71,7 @@ const ORD_PROFILE: ScenarioArbitrationProfile = {
       title: "Crew Controller",
       time: "08:14 CST",
       content: "FAR Part 117 Audit: 15m hold on UA-1184 pushes First Officer over the 14-hour maximum duty limit. Dispatching ORD Standby Reserve First Officer #4102.",
-      deltaCost: -18200,
+      deltaCost: -28000,
       tradeoff: "Incurs $1,800 reserve callout cost; avoids illegal crew duty fine ($20,000) and stranded aircraft.",
       metric: "FAR Part 117: Compliant",
     },
@@ -81,9 +81,9 @@ const ORD_PROFILE: ScenarioArbitrationProfile = {
       title: "Duty Manager",
       time: "08:14 CST",
       content: "Arbitration Complete (18.4s): Evaluated multi-agent proposals against macro cost objective function. Approved tail swap, Gate C08 reassignment, Reserve FO callout, and 15m connection hold.",
-      deltaCost: -172400,
+      deltaCost: -145000,
       tradeoff: "Zero flight cancellations, zero crew duty breaches, 48 protected passengers across network.",
-      metric: "Optimal Delta: +$172,400",
+      metric: "Optimal Delta: +$145,000",
     },
   ],
 };

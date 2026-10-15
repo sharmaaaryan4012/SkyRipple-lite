@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useTimeCursor } from "@/lib/timeCursor";
 import { useViewWindow } from "@/lib/viewWindowContext";
 import { buildCostSparkline } from "@/lib/costSparkline";
@@ -47,6 +47,16 @@ export function TimelineScrubber({
   const { multiDay, scale, coverage } = useViewWindow();
   const [hoveredMarkerId, setHoveredMarkerId] = useState<string | null>(null);
   const [hoveredClusterDay, setHoveredClusterDay] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (hoveredMarkerId || hoveredClusterDay) {
+      const timer = setTimeout(() => {
+        setHoveredMarkerId(null);
+        setHoveredClusterDay(null);
+      }, 3500);
+      return () => clearTimeout(timer);
+    }
+  }, [hoveredMarkerId, hoveredClusterDay]);
 
   const costTimeseries = useMemo(() => {
     if (!multiDay) return rawCostTimeseries;
@@ -102,8 +112,16 @@ export function TimelineScrubber({
           max={maxMinute}
           step={1}
           value={currentMinute}
-          onChange={(e) => setMinute(Number(e.target.value))}
-          onTouchStart={(e) => e.stopPropagation()}
+          onChange={(e) => {
+            setHoveredMarkerId(null);
+            setHoveredClusterDay(null);
+            setMinute(Number(e.target.value));
+          }}
+          onTouchStart={(e) => {
+            e.stopPropagation();
+            setHoveredMarkerId(null);
+            setHoveredClusterDay(null);
+          }}
           aria-label="Simulated time"
           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer m-0 z-10 touch-manipulation"
         />
