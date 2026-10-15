@@ -22,6 +22,10 @@ import type { FlightLeg, DisruptionMarker, AirportMeta, ImpactSummary, AirportDa
 
 const DESKTOP_ZOOM = 3.6;
 const MOBILE_ZOOM_DELTA = 1.1;
+const MIN_ZOOM = 2.4;
+const MAX_ZOOM = 8.5;
+const BOUNDS_LON: [number, number] = [-130, -65];
+const BOUNDS_LAT: [number, number] = [22, 52];
 
 const INITIAL_VIEW_STATE = {
   longitude: -96,
@@ -29,6 +33,10 @@ const INITIAL_VIEW_STATE = {
   zoom: DESKTOP_ZOOM,
   pitch: 0, // Task B: planes-as-icons don't need ArcLayer's depth pitch -- flat is the FlightRadar convention, and it keeps icon billboards legible
   bearing: 0,
+  minZoom: MIN_ZOOM,
+  maxZoom: MAX_ZOOM,
+  minPitch: 0,
+  maxPitch: 0,
 };
 
 // Design-token colors as [r,g,b] (deck.gl doesn't take CSS strings).
@@ -515,11 +523,28 @@ export function USMap({
         initialViewState={initialViewState}
         pickingRadius={isTouchDevice ? 32 : 12}
         controller={{
-          touchRotate: true,
+          touchRotate: false,
+          dragRotate: false,
           touchZoom: true,
           dragPan: true,
-          inertia: 300,
+          inertia: 120,
           doubleClickZoom: true,
+          maxBounds: [
+            [BOUNDS_LON[0], BOUNDS_LAT[0]],
+            [BOUNDS_LON[1], BOUNDS_LAT[1]],
+          ],
+        }}
+        onViewStateChange={({ viewState }) => {
+          // Strictly lock bearing to 0 (North-Up) and pitch to 0 (Flat radar projection)
+          viewState.bearing = 0;
+          viewState.pitch = 0;
+          if (viewState.zoom < MIN_ZOOM) viewState.zoom = MIN_ZOOM;
+          if (viewState.zoom > MAX_ZOOM) viewState.zoom = MAX_ZOOM;
+          if (viewState.longitude < BOUNDS_LON[0]) viewState.longitude = BOUNDS_LON[0];
+          if (viewState.longitude > BOUNDS_LON[1]) viewState.longitude = BOUNDS_LON[1];
+          if (viewState.latitude < BOUNDS_LAT[0]) viewState.latitude = BOUNDS_LAT[0];
+          if (viewState.latitude > BOUNDS_LAT[1]) viewState.latitude = BOUNDS_LAT[1];
+          return viewState;
         }}
         layers={[statesLayer, unaffectedAirportsLayer, planesLayer, routeLayer, ...affectedAirportLayers]}
         style={{ position: "absolute", inset: "0" }}
@@ -551,6 +576,27 @@ export function USMap({
           }
         }}
       />
+      {/* Quick Airspace Recenter Button on touch devices */}
+      {isTouchDevice && (
+        <button
+          type="button"
+          onClick={() => {
+            setInitialViewState({
+              ...INITIAL_VIEW_STATE,
+              zoom: DESKTOP_ZOOM - MOBILE_ZOOM_DELTA,
+            });
+          }}
+          aria-label="Recenter Nationwide Airspace"
+          title="Recenter Map"
+          className="absolute top-20 right-3 z-20 w-10 h-10 rounded-xl bg-slate-900/90 hover:bg-slate-800 active:bg-slate-700 backdrop-blur-md border border-slate-700/80 shadow-2xl flex items-center justify-center text-slate-300 hover:text-white transition active:scale-95"
+          onTouchStart={(e) => e.stopPropagation()}
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <polygon points="12 2 16 10 12 8 8 10 12 2" fill="currentColor" />
+          </svg>
+        </button>
+      )}
       {/* Suppressed for the flight currently focused (its own panel
           already shows everything the hover box would, more fully) --
           hover still works normally for every OTHER plane while focus
