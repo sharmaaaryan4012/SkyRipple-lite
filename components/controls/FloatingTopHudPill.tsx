@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { formatUsd, formatCount } from "@/lib/format";
 import { RadarDot } from "@/components/ui/RadarDot";
+import { useInspectorMode } from "@/lib/inspectorMode";
 import type { ScenarioData } from "@/lib/types";
 import type { RecoveryView } from "@/lib/recoveryView";
 
@@ -16,6 +17,7 @@ export function FloatingTopHudPill({
   isCleanBoot?: boolean;
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const { enabled: inspectorMode, setEnabled: setInspectorMode } = useInspectorMode();
 
   const slug = scenario.meta?.scenarioId?.toLowerCase() ?? "";
   const isDisrupted = !isCleanBoot && scenario.disruptionMarkers && scenario.disruptionMarkers.length > 0;
@@ -63,6 +65,12 @@ export function FloatingTopHudPill({
 
         {/* Center / Right: Headline KPI Badges */}
         <div className="flex items-center gap-1.5 shrink-0 font-mono text-[11px]">
+          {inspectorMode && (
+            <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">
+              DEV
+            </span>
+          )}
+
           <span
             className={`px-2 py-0.5 rounded-full font-bold whitespace-nowrap ${
               totalSaved > 0
@@ -170,6 +178,38 @@ export function FloatingTopHudPill({
                 <div className="text-[10px] text-slate-400">Resolution</div>
                 <div className="text-xs font-bold text-emerald-400 mt-0.5">{isDisrupted ? "18.4s" : "0.0s"}</div>
               </div>
+            </div>
+
+            {/* Dev Mode Inspector Toggle */}
+            <div className="p-3 rounded-xl bg-slate-950/80 border border-slate-800 flex items-center justify-between gap-3">
+              <div className="min-w-0">
+                <div className="flex items-center gap-2">
+                  <span className={`w-2 h-2 rounded-full ${inspectorMode ? "bg-amber-400" : "bg-slate-600"}`} />
+                  <span className="text-xs font-mono font-bold text-white uppercase tracking-wider">
+                    Developer Inspector Mode
+                  </span>
+                </div>
+                <p className="text-[10px] text-slate-400 mt-0.5 leading-snug">
+                  Exposes GPS coordinates, aircraft rotation telemetry, and live dispatcher logs.
+                </p>
+              </div>
+
+              <button
+                type="button"
+                role="switch"
+                aria-checked={inspectorMode}
+                onClick={() => setInspectorMode(!inspectorMode)}
+                aria-label="Toggle Developer Inspector Mode"
+                className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
+                  inspectorMode ? "bg-amber-500" : "bg-slate-700"
+                }`}
+              >
+                <span
+                  className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-md transition duration-200 ease-in-out ${
+                    inspectorMode ? "translate-x-5" : "translate-x-0"
+                  }`}
+                />
+              </button>
             </div>
 
             <div className="pt-1 text-[11px] text-slate-400 text-center font-mono">

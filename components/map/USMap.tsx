@@ -17,6 +17,7 @@ import { MapHoverBox } from "./MapHoverBox";
 import { MapDetailPanel } from "./MapDetailPanel";
 import { AirportHoverBox } from "./AirportHoverBox";
 import { AirportDetailPanel } from "./AirportDetailPanel";
+import { useInspectorMode } from "@/lib/inspectorMode";
 import type { RecoveryAction } from "@/lib/backendClient";
 import type { FlightLeg, DisruptionMarker, AirportMeta, ImpactSummary, AirportDaily } from "@/lib/types";
 
@@ -160,7 +161,13 @@ export function USMap({
   const pulsePhase = usePulse(2200);
   const deckRef = useRef<DeckGLRef>(null);
 
+  const { enabled: inspectorMode } = useInspectorMode();
   const [initialViewState, setInitialViewState] = useState(INITIAL_VIEW_STATE);
+  const [currentPos, setCurrentPos] = useState({
+    zoom: DESKTOP_ZOOM,
+    lat: INITIAL_VIEW_STATE.latitude,
+    lon: INITIAL_VIEW_STATE.longitude,
+  });
   const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   useEffect(() => {
@@ -544,6 +551,11 @@ export function USMap({
           if (viewState.longitude > BOUNDS_LON[1]) viewState.longitude = BOUNDS_LON[1];
           if (viewState.latitude < BOUNDS_LAT[0]) viewState.latitude = BOUNDS_LAT[0];
           if (viewState.latitude > BOUNDS_LAT[1]) viewState.latitude = BOUNDS_LAT[1];
+          setCurrentPos({
+            zoom: viewState.zoom,
+            lat: viewState.latitude,
+            lon: viewState.longitude,
+          });
           return viewState;
         }}
         layers={[statesLayer, unaffectedAirportsLayer, planesLayer, routeLayer, ...affectedAirportLayers]}
@@ -576,6 +588,30 @@ export function USMap({
           }
         }}
       />
+      {/* Dev Mode Real-Time Telemetry HUD Overlay */}
+      {inspectorMode && (
+        <div
+          className="absolute top-16 lg:top-3 left-3 z-20 px-3 py-2 rounded-xl bg-slate-950/92 backdrop-blur-md border border-amber-500/40 shadow-2xl font-mono text-xs select-none pointer-events-none flex flex-col gap-1 max-w-[270px] animate-in fade-in duration-200"
+          onTouchStart={(e) => e.stopPropagation()}
+        >
+          <div className="flex items-center justify-between gap-2 border-b border-slate-800 pb-1">
+            <div className="flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+              <span className="text-amber-400 font-bold tracking-wider text-[11px]">DEV MODE ACTIVE</span>
+            </div>
+            <span className="text-[10px] text-slate-400 font-medium">RADAR HUD</span>
+          </div>
+          <div className="grid grid-cols-2 gap-x-2 gap-y-0.5 text-[10px] text-slate-300 pt-0.5">
+            <div>In-Air: <span className="text-white font-bold">{inAirFlights.length}</span></div>
+            <div>Fleet: <span className="text-white font-bold">{flights.length}</span></div>
+            <div>Zoom: <span className="text-amber-300 font-bold">{currentPos.zoom.toFixed(2)}</span></div>
+            <div>Pick Rad: <span className="text-emerald-400 font-bold">{isTouchDevice ? "32px" : "12px"}</span></div>
+            <div className="col-span-2 truncate text-slate-400 text-[9px] mt-0.5">
+              Airspace: [{currentPos.lat.toFixed(2)}°N, {Math.abs(currentPos.lon).toFixed(2)}°W]
+            </div>
+          </div>
+        </div>
+      )}
       {/* Quick Airspace Recenter Button on touch devices */}
       {isTouchDevice && (
         <button
