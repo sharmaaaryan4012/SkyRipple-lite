@@ -8,19 +8,17 @@ import type { RecoveryView } from "@/lib/recoveryView";
 
 export function FloatingTopHudPill({
   scenario,
-  activeScenarioId,
   recovery,
   isCleanBoot,
 }: {
   scenario: ScenarioData;
-  activeScenarioId?: string;
   recovery?: RecoveryView | null;
   isCleanBoot?: boolean;
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const slug = (activeScenarioId || scenario.meta?.scenarioId || "").toLowerCase();
-  const isDisrupted = !isCleanBoot && slug !== "baseline" && slug !== "nominal" && scenario.disruptionMarkers && scenario.disruptionMarkers.length > 0;
+  const slug = scenario.meta?.scenarioId?.toLowerCase() ?? "";
+  const isDisrupted = !isCleanBoot && scenario.disruptionMarkers && scenario.disruptionMarkers.length > 0;
 
   const totalSaved = useMemo(() => {
     if (!isDisrupted) return 0;

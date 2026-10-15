@@ -211,13 +211,12 @@ const BASELINE_PROFILE: ScenarioArbitrationProfile = {
 
 function resolveProfile(
   scenario?: ScenarioData,
-  isCleanBoot?: boolean,
-  activeScenarioId?: string
+  isCleanBoot?: boolean
 ): ScenarioArbitrationProfile {
-  if (isCleanBoot || activeScenarioId === "baseline") return BASELINE_PROFILE;
-  const slug = (activeScenarioId || scenario?.meta?.scenarioId || "").toLowerCase();
+  if (isCleanBoot) return BASELINE_PROFILE;
+  const slug = scenario?.meta?.scenarioId?.toLowerCase() ?? "";
 
-  if (slug === "baseline" || slug === "nominal") return BASELINE_PROFILE;
+  if (slug === "baseline") return BASELINE_PROFILE;
   if (slug.includes("multi")) return MULTI_HUB_PROFILE;
   if (slug.includes("ord") || slug.includes("runway")) return ORD_PROFILE;
 
@@ -296,12 +295,10 @@ const ROLES = [
 
 export function AgentArbitrationFeed({
   scenario,
-  activeScenarioId,
   recovery,
   isCleanBoot,
 }: {
   scenario?: ScenarioData;
-  activeScenarioId?: string;
   recovery?: RecoveryView | null;
   isCleanBoot?: boolean;
 }) {
@@ -309,8 +306,8 @@ export function AgentArbitrationFeed({
   const [isSimulating, setIsSimulating] = useState(false);
 
   const profile = useMemo(
-    () => resolveProfile(scenario, isCleanBoot, activeScenarioId),
-    [scenario, isCleanBoot, activeScenarioId]
+    () => resolveProfile(scenario, isCleanBoot),
+    [scenario, isCleanBoot]
   );
 
   const [activeStep, setActiveStep] = useState<number>(profile.logs.length);

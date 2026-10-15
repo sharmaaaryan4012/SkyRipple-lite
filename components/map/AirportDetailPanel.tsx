@@ -86,23 +86,33 @@ export function AirportDetailPanel({
   const activeTab: AirportTab = hasFlightTabs ? tab : "overview";
 
   return (
-    <div className="absolute top-0 right-0 h-full w-[340px] bg-surface border-l border-border overflow-y-auto state-transition" data-testid="airport-detail-panel">
-      <div className="flex items-start justify-between px-4 py-3 border-b border-border">
+    <div
+      className="fixed inset-x-0 bottom-0 z-50 max-h-[85dvh] w-full rounded-t-3xl border-t border-slate-700/80 shadow-[0_-16px_48px_rgba(0,0,0,0.95)] bg-slate-900/98 backdrop-blur-2xl flex flex-col overflow-hidden lg:absolute lg:inset-x-auto lg:bottom-auto lg:top-0 lg:right-0 lg:h-full lg:w-[380px] lg:rounded-none lg:border-t-0 lg:border-l lg:border-slate-800 lg:z-30 lg:max-h-full state-transition select-none"
+      data-testid="airport-detail-panel"
+      onTouchStart={(e) => e.stopPropagation()}
+    >
+      {/* Mobile Touch Drag Pill */}
+      <div className="lg:hidden pt-2.5 pb-1 flex justify-center shrink-0">
+        <div className="w-12 h-1.5 bg-slate-700/80 rounded-full" />
+      </div>
+
+      <div className="flex items-start justify-between px-4 py-3 border-b border-slate-800 bg-slate-950/60 shrink-0">
         <div>
-          <p className="font-display text-lg font-semibold text-aubergine">{airport.iata}</p>
-          <p className="text-xs text-muted mt-0.5">{airport.name}</p>
-          {/* cityName already carries ", ST" (aviation.db's own
-              convention, e.g. "Chicago, IL") -- see AirportHoverBox.tsx's
-              own comment on the same field. */}
-          <p className="font-mono text-xs text-muted mt-0.5">{airport.cityName}</p>
+          <p className="font-mono text-lg font-bold text-white tracking-tight">{airport.iata}</p>
+          <p className="text-xs text-slate-400 mt-0.5">{airport.name}</p>
+          <p className="font-mono text-xs text-blue-400 font-semibold mt-0.5">{airport.cityName}</p>
         </div>
-        <button onClick={onClose} className="text-muted hover:text-aubergine state-transition text-lg leading-none px-1" aria-label="Close">
+        <button
+          onClick={onClose}
+          className="min-w-[40px] min-h-[40px] flex items-center justify-center rounded-full text-slate-400 hover:text-white hover:bg-slate-800/80 border border-slate-700/60 transition text-xl leading-none"
+          aria-label="Close"
+        >
           &times;
         </button>
       </div>
 
       {hasFlightTabs && (
-        <div className="flex border-b border-border" role="tablist" aria-label="Airport detail tabs">
+        <div className="flex border-b border-slate-800 bg-slate-950/80 shrink-0 p-1.5 gap-1.5" role="tablist" aria-label="Airport detail tabs">
           {(
             [
               ["overview", "Overview"],
@@ -117,8 +127,10 @@ export function AirportDetailPanel({
               aria-selected={activeTab === t}
               data-testid={`airport-tab-${t}`}
               onClick={() => setTab(t)}
-              className={`flex-1 font-mono text-[11px] uppercase tracking-widest px-2 py-2 state-transition ${
-                activeTab === t ? "bg-aubergine text-page" : "bg-surface text-aubergine-soft hover:text-aubergine"
+              className={`flex-1 font-mono text-xs uppercase tracking-wider py-2 rounded-lg transition min-h-[40px] flex items-center justify-center font-bold ${
+                activeTab === t
+                  ? "bg-blue-600 text-white shadow-md"
+                  : "text-slate-400 hover:text-white bg-slate-900/60 hover:bg-slate-800"
               }`}
             >
               {label}
@@ -127,103 +139,107 @@ export function AirportDetailPanel({
         </div>
       )}
 
-      {activeTab === "departures" && departures ? (
-        <FlightList
-          title="Departures"
-          rows={departures}
-          timeLabel="Dep"
-          showAll={showAllDep}
-          forceShowAll={inspectorMode}
-          onToggleShowAll={() => setShowAllDep((v) => !v)}
-          onSelectFlight={onSelectFlight}
-        />
-      ) : activeTab === "arrivals" && arrivals ? (
-        <FlightList
-          title="Arrivals"
-          rows={arrivals}
-          timeLabel="Arr"
-          showAll={showAllArr}
-          forceShowAll={inspectorMode}
-          onToggleShowAll={() => setShowAllArr((v) => !v)}
-          onSelectFlight={onSelectFlight}
-        />
-      ) : (
-        <>
-          <div className="px-4 py-3 border-b border-border">
-            <p className="font-mono text-xs uppercase tracking-widest text-aubergine-soft mb-2">Disruption status</p>
-            {disruptions.length > 0 ? (
-              <div className="flex flex-col gap-2">
-                {disruptions.map((d) => (
-                  <div key={d.id}>
-                    <p className="text-xs text-red-soft font-medium">{d.label}</p>
-                    <p className="font-mono text-[11px] text-muted mt-0.5">
-                      marginal cost {formatUsd(d.marginalCost.typical)} (range {formatUsd(d.marginalCost.low)}&ndash;{formatUsd(d.marginalCost.high)})
-                    </p>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p className="text-xs text-muted">No disruption injected at this airport.</p>
-            )}
-          </div>
-
-          <div className="px-4 py-3 border-b border-border">
-            <p className="font-mono text-xs uppercase tracking-widest text-aubergine-soft mb-2">Cost overrun</p>
-            <RangeValue low={stats.costUsd.low} typical={stats.costUsd.typical} high={stats.costUsd.high} tone="neutral" size="base" />
-            <p className="text-[11px] text-muted mt-1.5">Scenario cost at this airport minus expected-normal baseline cost, same attribution the ledger uses.</p>
-          </div>
-
-          <div className="px-4 py-3 border-b border-border">
-            <p className="font-mono text-xs uppercase tracking-widest text-aubergine-soft mb-2">Flights delayed</p>
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <p className="font-mono tabular-nums text-xl text-aubergine font-medium">
-                  {formatCount(stats.flightsDelayedDeparting)} <span className="text-sm text-muted">/ {formatCount(stats.flightsScheduledDeparting)}</span>
-                </p>
-                <p className="text-xs text-muted mt-0.5">departing ({depPct}%)</p>
-              </div>
-              <div>
-                <p className="font-mono tabular-nums text-xl text-aubergine font-medium">
-                  {formatCount(stats.flightsDelayedArriving)} <span className="text-sm text-muted">/ {formatCount(stats.flightsScheduledArriving)}</span>
-                </p>
-                <p className="text-xs text-muted mt-0.5">arriving ({arrPct}%)</p>
-              </div>
-            </div>
-          </div>
-
-          <div className={`px-4 py-3 ${(perDayRows && perDayRows.length > 0) ? "border-b border-border" : ""}`}>
-            <p className="font-mono text-xs uppercase tracking-widest text-aubergine-soft mb-2">Passengers affected</p>
-            <p className="font-mono tabular-nums text-xl text-aubergine font-medium">{formatCount(stats.passengersAffected)}</p>
-            <p className="text-xs text-muted mt-0.5">itineraries touched by a delay, cancellation, or misconnect at this airport</p>
-          </div>
-
-          {perDayRows && perDayRows.length > 0 && (
-            <div className="px-4 py-3" data-testid="airport-per-day-breakdown">
-              <p className="font-mono text-xs uppercase tracking-widest text-aubergine-soft mb-2">Per-day breakdown</p>
-              <table className="w-full font-mono tabular-nums text-xs">
-                <thead>
-                  <tr className="text-muted text-left">
-                    <th className="font-normal pb-1">Day</th>
-                    <th className="font-normal pb-1 text-right">Cost</th>
-                    <th className="font-normal pb-1 text-right">Delay</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {perDayRows.map((row) => (
-                    <tr key={row.day} data-testid={`airport-day-row-${row.day}`}>
-                      <td className="text-aubergine py-0.5">{row.day.slice(5)}</td>
-                      <td className="text-aubergine py-0.5 text-right" data-testid={`airport-day-cost-${row.day}`}>
-                        {formatUsd(row.stats.costTypical)}
-                      </td>
-                      <td className="text-aubergine py-0.5 text-right">{formatCount(row.stats.delayMin)}m</td>
-                    </tr>
+      <div className="flex-1 overflow-y-auto overscroll-contain pb-[max(1.5rem,env(safe-area-inset-bottom))]">
+        {activeTab === "departures" && departures ? (
+          <FlightList
+            title="Departures"
+            rows={departures}
+            timeLabel="Dep"
+            showAll={showAllDep}
+            forceShowAll={inspectorMode}
+            onToggleShowAll={() => setShowAllDep((v) => !v)}
+            onSelectFlight={onSelectFlight}
+          />
+        ) : activeTab === "arrivals" && arrivals ? (
+          <FlightList
+            title="Arrivals"
+            rows={arrivals}
+            timeLabel="Arr"
+            showAll={showAllArr}
+            forceShowAll={inspectorMode}
+            onToggleShowAll={() => setShowAllArr((v) => !v)}
+            onSelectFlight={onSelectFlight}
+          />
+        ) : (
+          <>
+            <div className="px-4 py-3 border-b border-slate-800">
+              <p className="font-mono text-xs uppercase tracking-widest text-slate-400 mb-2">Disruption status</p>
+              {disruptions.length > 0 ? (
+                <div className="flex flex-col gap-2">
+                  {disruptions.map((d) => (
+                    <div key={d.id} className="p-2.5 rounded-lg bg-slate-950/70 border border-slate-800">
+                      <p className="text-xs text-red-400 font-semibold">{d.label}</p>
+                      <p className="font-mono text-[11px] text-slate-400 mt-0.5">
+                        marginal cost {formatUsd(d.marginalCost.typical)} (range {formatUsd(d.marginalCost.low)}&ndash;{formatUsd(d.marginalCost.high)})
+                      </p>
+                    </div>
                   ))}
-                </tbody>
-              </table>
+                </div>
+              ) : (
+                <p className="text-xs text-slate-400">No disruption injected at this airport.</p>
+              )}
             </div>
-          )}
-        </>
-      )}
+
+            <div className="px-4 py-3 border-b border-slate-800">
+              <p className="font-mono text-xs uppercase tracking-widest text-slate-400 mb-2">Cost overrun</p>
+              <RangeValue low={stats.costUsd.low} typical={stats.costUsd.typical} high={stats.costUsd.high} tone="neutral" size="base" />
+              <p className="text-[11px] text-slate-400 mt-1.5">Scenario cost at this airport minus expected-normal baseline cost, same attribution the ledger uses.</p>
+            </div>
+
+            <div className="px-4 py-3 border-b border-slate-800">
+              <p className="font-mono text-xs uppercase tracking-widest text-slate-400 mb-2">Flights delayed</p>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="p-2.5 rounded-lg bg-slate-950/70 border border-slate-800">
+                  <p className="font-mono tabular-nums text-xl text-white font-bold">
+                    {formatCount(stats.flightsDelayedDeparting)} <span className="text-sm text-slate-400 font-normal">/ {formatCount(stats.flightsScheduledDeparting)}</span>
+                  </p>
+                  <p className="text-xs text-slate-400 mt-0.5">departing ({depPct}%)</p>
+                </div>
+                <div className="p-2.5 rounded-lg bg-slate-950/70 border border-slate-800">
+                  <p className="font-mono tabular-nums text-xl text-white font-bold">
+                    {formatCount(stats.flightsDelayedArriving)} <span className="text-sm text-slate-400 font-normal">/ {formatCount(stats.flightsScheduledArriving)}</span>
+                  </p>
+                  <p className="text-xs text-slate-400 mt-0.5">arriving ({arrPct}%)</p>
+                </div>
+              </div>
+            </div>
+
+            <div className={`px-4 py-3 ${(perDayRows && perDayRows.length > 0) ? "border-b border-slate-800" : ""}`}>
+              <p className="font-mono text-xs uppercase tracking-widest text-slate-400 mb-2">Passengers affected</p>
+              <div className="p-2.5 rounded-lg bg-slate-950/70 border border-slate-800">
+                <p className="font-mono tabular-nums text-xl text-white font-bold">{formatCount(stats.passengersAffected)}</p>
+                <p className="text-xs text-slate-400 mt-0.5">itineraries touched by a delay, cancellation, or misconnect at this airport</p>
+              </div>
+            </div>
+
+            {perDayRows && perDayRows.length > 0 && (
+              <div className="px-4 py-3" data-testid="airport-per-day-breakdown">
+                <p className="font-mono text-xs uppercase tracking-widest text-slate-400 mb-2">Per-day breakdown</p>
+                <table className="w-full font-mono tabular-nums text-xs">
+                  <thead>
+                    <tr className="text-slate-400 text-left border-b border-slate-800">
+                      <th className="font-normal pb-1.5">Day</th>
+                      <th className="font-normal pb-1.5 text-right">Cost</th>
+                      <th className="font-normal pb-1.5 text-right">Delay</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-800/60">
+                    {perDayRows.map((row) => (
+                      <tr key={row.day} data-testid={`airport-day-row-${row.day}`}>
+                        <td className="text-slate-200 py-1.5">{row.day.slice(5)}</td>
+                        <td className="text-slate-200 py-1.5 text-right" data-testid={`airport-day-cost-${row.day}`}>
+                          {formatUsd(row.stats.costTypical)}
+                        </td>
+                        <td className="text-slate-200 py-1.5 text-right">{formatCount(row.stats.delayMin)}m</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 }
@@ -258,17 +274,17 @@ function FlightList({
   return (
     <div className="px-4 py-3" data-testid={`airport-flights-${title.toLowerCase()}`}>
       <div className="flex items-center justify-between mb-2">
-        <p className="font-mono text-xs uppercase tracking-widest text-aubergine-soft">
-          {title} <span className="text-muted normal-case tracking-normal">({rows.length})</span>
+        <p className="font-mono text-xs uppercase tracking-widest text-slate-400">
+          {title} <span className="text-slate-500 normal-case tracking-normal">({rows.length})</span>
         </p>
         {!forceShowAll && rows.length > DEFAULT_SHOWN_FLIGHTS && (
-          <button onClick={onToggleShowAll} className="font-mono text-[11px] text-aubergine-soft hover:text-aubergine state-transition">
+          <button onClick={onToggleShowAll} className="font-mono text-[11px] text-blue-400 hover:text-blue-300 transition">
             {showAll ? "Show fewer" : `Show all ${rows.length}`}
           </button>
         )}
       </div>
       {rows.length === 0 ? (
-        <p className="text-xs text-muted">None scheduled.</p>
+        <p className="text-xs text-slate-500">None scheduled.</p>
       ) : (
         <div className="flex flex-col gap-1">
           {shown.map((r) => {
@@ -278,15 +294,15 @@ function FlightList({
                 key={r.legId}
                 onClick={onSelectFlight ? () => onSelectFlight(r.legId) : undefined}
                 data-testid={`airport-flight-row-${r.legId}`}
-                className={`flex items-center gap-2 text-xs py-1 px-1.5 -mx-1.5 rounded text-left ${onSelectFlight ? "hover:bg-elevated state-transition cursor-pointer" : ""}`}
+                className={`flex items-center gap-2 text-xs py-2 px-2.5 rounded-lg text-left ${onSelectFlight ? "hover:bg-slate-800/80 active:bg-slate-800 transition cursor-pointer" : ""}`}
               >
-                <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ backgroundColor: SEVERITY_COLORS[r.severity] }} />
-                <span className="font-mono text-aubergine w-16 shrink-0 truncate">{r.flightNumber ?? r.legId}</span>
-                <span className="font-mono text-muted w-10 shrink-0">{r.otherIata}</span>
-                <span className="font-mono tabular-nums text-muted w-20 shrink-0">
-                  {timeLabel} {r.scheduledMin != null ? formatSimClock(r.scheduledMin) : ", "}
+                <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: SEVERITY_COLORS[r.severity] }} />
+                <span className="font-mono font-bold text-white w-16 shrink-0 truncate">{r.flightNumber ?? r.legId}</span>
+                <span className="font-mono text-slate-400 w-10 shrink-0">{r.otherIata}</span>
+                <span className="font-mono tabular-nums text-slate-400 w-20 shrink-0">
+                  {timeLabel} {r.scheduledMin != null ? formatSimClock(r.scheduledMin) : "—"}
                 </span>
-                <span className="font-mono tabular-nums text-aubergine ml-auto shrink-0">
+                <span className="font-mono tabular-nums text-white ml-auto shrink-0 font-medium">
                   {r.cancelled ? "Cancelled" : r.delayMin != null && r.delayMin > 0 ? `+${Math.round(r.delayMin)}m` : "On-time"}
                 </span>
               </Row>

@@ -153,13 +153,18 @@ export function USMap({
   const deckRef = useRef<DeckGLRef>(null);
 
   const [initialViewState, setInitialViewState] = useState(INITIAL_VIEW_STATE);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   useEffect(() => {
-    if (typeof window !== "undefined" && window.innerWidth < 768) {
-      setInitialViewState({
-        ...INITIAL_VIEW_STATE,
-        zoom: DESKTOP_ZOOM - MOBILE_ZOOM_DELTA,
-      });
+    if (typeof window !== "undefined") {
+      const isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0 || window.innerWidth < 1024;
+      setIsTouchDevice(isTouch);
+      if (window.innerWidth < 768) {
+        setInitialViewState({
+          ...INITIAL_VIEW_STATE,
+          zoom: DESKTOP_ZOOM - MOBILE_ZOOM_DELTA,
+        });
+      }
     }
   }, []);
 
@@ -355,13 +360,20 @@ export function USMap({
     getIcon: () => PLANE_ICON,
     getAngle: (d) => -d.bearing, // icon points "up" (north) at angle 0 -- see lib/planeIcon.ts's own convention note
     getColor: (d) => colorFor(d, focusedLegId, improvedLegIds, focusedAirportIata !== null),
-    getSize: (d) => (d.legId === focusedLegId ? 26 : d.legId === hoveredLegId ? 22 : 15),
+    getSize: (d) => {
+      const isFocused = d.legId === focusedLegId;
+      const isHovered = d.legId === hoveredLegId;
+      if (isTouchDevice) {
+        return isFocused ? 36 : isHovered ? 30 : 24;
+      }
+      return isFocused ? 26 : isHovered ? 22 : 15;
+    },
     sizeUnits: "pixels",
-    sizeMinPixels: 8,
-    sizeMaxPixels: 32,
+    sizeMinPixels: isTouchDevice ? 18 : 8,
+    sizeMaxPixels: isTouchDevice ? 44 : 32,
     updateTriggers: {
       getColor: [focusedLegId, improvedLegIds, focusedAirportIata],
-      getSize: [focusedLegId, hoveredLegId],
+      getSize: [focusedLegId, hoveredLegId, isTouchDevice],
       getAngle: [],
     },
     transitions: {
@@ -369,6 +381,7 @@ export function USMap({
       getColor: 200,
     },
     onHover: (info: PickingInfo<InAirFlight>) => {
+      if (isTouchDevice) return; // Touch devices open the full detail sheet on tap, never offset tooltips
       if (info.object) setHovered({ x: info.x, y: info.y, flight: info.object });
       else setHovered(null);
     },
@@ -442,6 +455,7 @@ export function USMap({
       getRadius: [focusedAirportIata, hoveredAirport],
     },
     onHover: (info: PickingInfo<AirportMeta>) => {
+      if (isTouchDevice) return;
       if (info.object) setHoveredAirport({ x: info.x, y: info.y, airport: info.object });
       else setHoveredAirport((h) => (h && unaffectedAirports.some((a) => a.iata === h.airport.iata) ? null : h));
     },
@@ -484,6 +498,7 @@ export function USMap({
         getLineColor: [...MAP_CANVAS_RGB, 255],
         lineWidthMinPixels: 1.5,
         onHover: (info: PickingInfo<AirportMeta>) => {
+          if (isTouchDevice) return;
           if (info.object) setHoveredAirport({ x: info.x, y: info.y, airport: info.object });
           else setHoveredAirport((h) => (h?.airport.iata === a.iata ? null : h));
         },
@@ -498,6 +513,7 @@ export function USMap({
       <DeckGL
         ref={deckRef}
         initialViewState={initialViewState}
+        pickingRadius={isTouchDevice ? 32 : 12}
         controller={{
           touchRotate: true,
           touchZoom: true,
@@ -521,22 +537,28 @@ export function USMap({
             setFocusedAirportIata(obj.iata);
             setFocusedLegId(null);
             setHovered(null);
-            setHoveredAirport({ x: info.x, y: info.y, airport: obj });
+            if (!isTouchDevice) {
+              setHoveredAirport({ x: info.x, y: info.y, airport: obj });
+            }
           } else if ("legId" in obj && obj.legId) {
             // Plane clicked -- pin plane detail & tooltip on touch
             setFocusedLegId(obj.legId);
             setFocusedAirportIata(null);
             setHoveredAirport(null);
-            setHovered({ x: info.x, y: info.y, flight: obj });
+            if (!isTouchDevice) {
+              setHovered({ x: info.x, y: info.y, flight: obj });
+            }
           }
         }}
       />
       {/* Suppressed for the flight currently focused (its own panel
           already shows everything the hover box would, more fully) --
           hover still works normally for every OTHER plane while focus
-          mode is open. */}
-      {hovered && hovered.flight.legId !== focusedLegId && <MapHoverBox x={hovered.x} y={hovered.y} flight={hovered.flight} />}
-      {hoveredAirport && hoveredAirport.airport.iata !== focusedAirportIata && (
+          mode is open. Suppressed entirely on touch devices so no offset tooltips appear. */}
+      {!isTouchDevice && hovered && hovered.flight.legId !== focusedLegId && (
+        <MapHoverBox x={hovered.x} y={hovered.y} flight={hovered.flight} />
+      )}
+      {!isTouchDevice && hoveredAirport && hoveredAirport.airport.iata !== focusedAirportIata && (
         <AirportHoverBox x={hoveredAirport.x} y={hoveredAirport.y} airport={hoveredAirport.airport} disruptions={hoveredAirportDisruptions} />
       )}
       {focusedFlight && (
