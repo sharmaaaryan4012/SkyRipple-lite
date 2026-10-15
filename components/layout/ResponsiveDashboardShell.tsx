@@ -9,7 +9,7 @@ export interface ResponsiveDashboardShellProps {
   header?: React.ReactNode;          // Desktop top command bar
   mapSlot: React.ReactNode;          // deck.gl FlightRadar map component
   timelineSlot: React.ReactNode;     // Scrubbable timeline bar with 44px touch targets
-  kpiSummarySlot: React.ReactNode;   // Compact $172K delta & <20s ticker (HUD pill)
+  kpiSummarySlot: React.ReactNode;   // Compact $145K delta & <20s ticker (HUD pill)
   agentsPanelSlot: React.ReactNode;  // 5-Agent arbitration feed (Aircraft, Crew, Pax, Gate, Duty Mgr)
   ledgerPanelSlot: React.ReactNode;  // Full deterministic cost validation ledger
   controlsSlot: React.ReactNode;     // Scenario selector & simulation triggers
@@ -44,9 +44,9 @@ export function ResponsiveDashboardShell({
   }, []);
 
   const snapHeightClass: Record<DrawerSnap, string> = {
-    peek: "h-[16dvh]",
-    half: "h-[46dvh]",
-    full: "h-[82dvh]",
+    peek: "h-[195px]",
+    half: "h-[50dvh]",
+    full: "h-[85dvh]",
   };
 
   const cycleDrawerSnap = () => {
@@ -199,7 +199,7 @@ export function ResponsiveDashboardShell({
                       : "bg-slate-900 text-slate-400 hover:text-slate-200"
                   }`}
                 >
-                  $172K Ledger
+                  $145K Ledger
                 </button>
                 <button
                   type="button"

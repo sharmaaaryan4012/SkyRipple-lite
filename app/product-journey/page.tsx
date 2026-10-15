@@ -188,7 +188,7 @@ export default function ProductJourney() {
                   SkyRipple vs. SkyRipple Lite
                 </div>
                 <p className="text-aubergine text-sm mb-4">
-                  The full 5-Agent OCC simulation is computationally heavy. Running parallel financial simulations for a continuous month takes several minutes. While an airline enterprise will gladly wait 5 minutes for a calculation that saves them $172,000, a recruiter, portfolio visitor, or prospective buyer looking for immediate Time-to-Value (TTV) will bounce if forced to wait.
+                  The full 5-Agent OCC simulation is computationally heavy. Running parallel financial simulations for a continuous month takes several minutes. While an airline enterprise will gladly wait 5 minutes for a calculation that saves them $145,000, a recruiter, portfolio visitor, or prospective buyer looking for immediate Time-to-Value (TTV) will bounce if forced to wait.
                 </p>
                 <div className="p-4 rounded-lg bg-page border border-gold/30">
                   <h5 className="text-white font-bold text-sm mb-2">The Decision</h5>
