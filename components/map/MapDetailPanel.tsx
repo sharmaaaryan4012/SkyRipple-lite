@@ -3,7 +3,6 @@ import { SEVERITY_COLORS_RGB, SEVERITY_LABELS } from "@/lib/severity";
 import { formatSimClock, formatCount, humanizeActionType } from "@/lib/format";
 import { CARRIER_NAMES } from "@/lib/carrierNames";
 import { RangeValue } from "@/components/ui/RangeValue";
-import { useInspectorMode } from "@/lib/inspectorMode";
 import { buildRotation } from "@/lib/rotation";
 import type { RecoveryAction } from "@/lib/backendClient";
 import type { FlightLeg } from "@/lib/types";
@@ -55,53 +54,66 @@ export function MapDetailPanel({
   const severityColor = `rgb(${SEVERITY_COLORS_RGB[s.severity].join(",")})`;
   const delayLabel = s.delayMin == null ? ", " : s.delayMin <= 0 ? "On-time" : `+${Math.round(s.delayMin)} min`;
 
-  const { enabled: inspectorMode } = useInspectorMode();
   const [tab, setTab] = useState<PanelTab>("overview");
-  const showTabs = inspectorMode && !!flights;
-  const activeTab: PanelTab = showTabs ? tab : "overview";
+  const activeTab: PanelTab = tab;
 
   return (
-    <div className="absolute top-0 right-0 h-full w-[340px] bg-surface border-l border-border overflow-y-auto state-transition" data-testid="flight-detail-panel">
-      <div className="flex items-start justify-between px-4 py-3 border-b border-border">
+    <div
+      className="fixed inset-x-0 bottom-0 z-50 max-h-[85dvh] w-full rounded-t-3xl border-t border-slate-700/80 shadow-[0_-16px_48px_rgba(0,0,0,0.95)] bg-slate-900/98 backdrop-blur-2xl flex flex-col overflow-hidden lg:absolute lg:inset-x-auto lg:bottom-auto lg:top-0 lg:right-0 lg:h-full lg:w-[380px] lg:rounded-none lg:border-t-0 lg:border-l lg:border-slate-800 lg:z-30 lg:max-h-full state-transition select-none"
+      data-testid="flight-detail-panel"
+      onTouchStart={(e) => e.stopPropagation()}
+    >
+      {/* Mobile Touch Drag Pill */}
+      <div className="lg:hidden pt-2.5 pb-1 flex justify-center shrink-0">
+        <div className="w-12 h-1.5 bg-slate-700/80 rounded-full" />
+      </div>
+
+      <div className="flex items-start justify-between px-4 py-3 border-b border-slate-800 bg-slate-950/60 shrink-0">
         <div>
-          <p className="font-display text-lg font-semibold text-aubergine">{flight.flightNumber ?? flight.legId}</p>
-          <p className="text-xs text-muted mt-0.5">
+          <p className="font-mono text-lg font-bold text-white tracking-tight">{flight.flightNumber ?? flight.legId}</p>
+          <p className="text-xs text-slate-400 mt-0.5">
             {airline} &middot; {flight.aircraftType ?? "Aircraft type unknown"}
           </p>
-          {flight.tailNumber && <p className="font-mono text-xs text-muted mt-0.5">{flight.tailNumber}</p>}
+          {flight.tailNumber && <p className="font-mono text-xs text-blue-400 font-semibold mt-0.5">{flight.tailNumber}</p>}
         </div>
-        <button onClick={onClose} className="text-muted hover:text-aubergine state-transition text-lg leading-none px-1" aria-label="Close">
+        <button
+          onClick={onClose}
+          className="min-w-[40px] min-h-[40px] flex items-center justify-center rounded-full text-slate-400 hover:text-white hover:bg-slate-800/80 border border-slate-700/60 transition text-xl leading-none"
+          aria-label="Close"
+        >
           &times;
         </button>
       </div>
 
-      {showTabs && (
-        <div className="flex border-b border-border" role="tablist" aria-label="Flight detail tabs">
-          {(["overview", "rotation", "crew"] as PanelTab[]).map((t) => (
-            <button
-              key={t}
-              type="button"
-              role="tab"
-              aria-selected={activeTab === t}
-              data-testid={`flight-tab-${t}`}
-              onClick={() => setTab(t)}
-              className={`flex-1 font-mono text-[11px] uppercase tracking-widest px-2 py-2 state-transition ${
-                activeTab === t ? "bg-aubergine text-page" : "bg-surface text-aubergine-soft hover:text-aubergine"
-              }`}
-            >
-              {t}
-            </button>
-          ))}
-        </div>
-      )}
+      <div className="flex border-b border-slate-800 bg-slate-950/80 shrink-0 p-1.5 gap-1.5" role="tablist" aria-label="Flight detail tabs">
+        {(["overview", "rotation", "crew"] as PanelTab[]).map((t) => (
+          <button
+            key={t}
+            type="button"
+            role="tab"
+            aria-selected={activeTab === t}
+            data-testid={`flight-tab-${t}`}
+            onClick={() => setTab(t)}
+            className={`flex-1 font-mono text-xs uppercase tracking-wider py-2 rounded-lg transition min-h-[40px] flex items-center justify-center font-bold ${
+              activeTab === t
+                ? "bg-blue-600 text-white shadow-md"
+                : "text-slate-400 hover:text-white bg-slate-900/60 hover:bg-slate-800"
+            }`}
+          >
+            {t}
+          </button>
+        ))}
+      </div>
 
-      {activeTab === "rotation" && flights ? (
-        <RotationTab flight={flight} flights={flights} onSelectFlight={onSelectFlight} />
-      ) : activeTab === "crew" ? (
-        <CrewTab flight={flight} />
-      ) : (
-        <OverviewTab flight={flight} s={s} b={b} severityColor={severityColor} delayLabel={delayLabel} recoveryAction={recoveryAction} />
-      )}
+      <div className="flex-1 overflow-y-auto overscroll-contain pb-[max(1.5rem,env(safe-area-inset-bottom))]">
+        {activeTab === "rotation" && flights ? (
+          <RotationTab flight={flight} flights={flights} onSelectFlight={onSelectFlight} />
+        ) : activeTab === "crew" ? (
+          <CrewTab flight={flight} />
+        ) : (
+          <OverviewTab flight={flight} s={s} b={b} severityColor={severityColor} delayLabel={delayLabel} recoveryAction={recoveryAction} />
+        )}
+      </div>
     </div>
   );
 }
@@ -124,80 +136,79 @@ function OverviewTab({
   return (
     <>
 
-      <div className="px-4 py-3 border-b border-border">
-        <p className="font-mono text-base text-aubergine">
-          {flight.originIata} <span className="text-muted">&rarr;</span> {flight.destIata}
+      <div className="px-4 py-3 border-b border-slate-800">
+        <p className="font-mono text-base font-bold text-white">
+          {flight.originIata} <span className="text-blue-400">&rarr;</span> {flight.destIata}
         </p>
         <div className="grid grid-cols-2 gap-2 mt-2 font-mono tabular-nums text-xs">
           <div>
-            <p className="text-muted">Scheduled dep</p>
-            <p className="text-aubergine">{flight.scheduledDepMin != null ? formatSimClock(flight.scheduledDepMin) : ", "}</p>
+            <p className="text-slate-400">Scheduled dep</p>
+            <p className="text-white font-semibold">{flight.scheduledDepMin != null ? formatSimClock(flight.scheduledDepMin) : "—"}</p>
           </div>
           <div>
-            <p className="text-muted">Simulated dep</p>
-            <p className="text-aubergine">{s.simDepMin != null ? formatSimClock(s.simDepMin) : ", "}</p>
+            <p className="text-slate-400">Simulated dep</p>
+            <p className="text-white font-semibold">{s.simDepMin != null ? formatSimClock(s.simDepMin) : "—"}</p>
           </div>
           <div>
-            <p className="text-muted">Scheduled arr</p>
-            <p className="text-aubergine">{flight.scheduledArrMin != null ? formatSimClock(flight.scheduledArrMin) : ", "}</p>
+            <p className="text-slate-400">Scheduled arr</p>
+            <p className="text-white font-semibold">{flight.scheduledArrMin != null ? formatSimClock(flight.scheduledArrMin) : "—"}</p>
           </div>
           <div>
-            <p className="text-muted">Simulated arr</p>
-            <p className="text-aubergine">{s.simArrMin != null ? formatSimClock(s.simArrMin) : ", "}</p>
+            <p className="text-slate-400">Simulated arr</p>
+            <p className="text-white font-semibold">{s.simArrMin != null ? formatSimClock(s.simArrMin) : "—"}</p>
           </div>
         </div>
         <div className="mt-3 flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: severityColor }} />
-          <span className="font-mono tabular-nums text-lg font-medium" style={{ color: severityColor }}>
+          <span className="w-2.5 h-2.5 rounded-full shrink-0 shadow-[0_0_8px_rgba(255,255,255,0.4)]" style={{ backgroundColor: severityColor }} />
+          <span className="font-mono tabular-nums text-lg font-bold" style={{ color: severityColor }}>
             {delayLabel}
           </span>
-          <span className="text-xs text-muted">{SEVERITY_LABELS[s.severity]}</span>
+          <span className="text-xs text-slate-400 font-mono">({SEVERITY_LABELS[s.severity]})</span>
         </div>
       </div>
 
       {recoveryAction && (
-        <div className="px-4 py-3 border-b border-border">
-          <p className="font-mono text-xs uppercase tracking-widest text-gold-deep mb-2">Recovery action</p>
-          <p className="text-xs text-aubergine">
-            <span className="font-mono text-gold-deep font-medium">{humanizeActionType(recoveryAction.actionType)}</span>
-            {recoveryAction.affectedIds.length > 1 && <span className="font-mono text-muted"> &middot; {recoveryAction.affectedIds.slice(1).join(", ")}</span>}
+        <div className="px-4 py-3 border-b border-slate-800 bg-slate-950/40">
+          <p className="font-mono text-xs uppercase tracking-widest text-amber-400 font-semibold mb-1">Recovery Action</p>
+          <p className="text-xs text-slate-200 font-sans">
+            <span className="font-mono text-amber-300 font-bold">{humanizeActionType(recoveryAction.actionType)}</span>
+            {recoveryAction.affectedIds.length > 1 && <span className="font-mono text-slate-400"> &middot; {recoveryAction.affectedIds.slice(1).join(", ")}</span>}
           </p>
-          {recoveryAction.rationale && <p className="text-xs text-muted mt-1">{recoveryAction.rationale}</p>}
+          {recoveryAction.rationale && <p className="text-xs text-slate-300 mt-1 font-sans">{recoveryAction.rationale}</p>}
         </div>
       )}
 
-      <div className="px-4 py-3 border-b border-border">
-        <p className="font-mono text-xs uppercase tracking-widest text-aubergine-soft mb-2">Passenger impact</p>
+      <div className="px-4 py-3 border-b border-slate-800">
+        <p className="font-mono text-xs uppercase tracking-widest text-slate-400 font-semibold mb-2">Passenger Impact</p>
         <div className="grid grid-cols-2 gap-3">
-          <div>
-            <p className="font-mono tabular-nums text-xl text-aubergine font-medium">{formatCount(flight.passengersOnBoard)}</p>
-            <p className="text-xs text-muted mt-0.5">passengers on board</p>
+          <div className="p-2.5 rounded-lg bg-slate-950/70 border border-slate-800">
+            <p className="font-mono tabular-nums text-xl text-white font-bold">{formatCount(flight.passengersOnBoard)}</p>
+            <p className="text-[11px] text-slate-400 mt-0.5">passengers on board</p>
           </div>
-          <div>
-            <p className="font-mono tabular-nums text-xl text-aubergine font-medium">{formatCount(flight.connectingPassengers)}</p>
-            <p className="text-xs text-muted mt-0.5">connecting onward</p>
+          <div className="p-2.5 rounded-lg bg-slate-950/70 border border-slate-800">
+            <p className="font-mono tabular-nums text-xl text-blue-400 font-bold">{formatCount(flight.connectingPassengers)}</p>
+            <p className="text-[11px] text-slate-400 mt-0.5">connecting onward</p>
           </div>
         </div>
 
         {flight.connectingPassengers > 0 && (
-          <div className="mt-3 pt-3 border-t border-border">
+          <div className="mt-3 pt-3 border-t border-slate-800/80">
             {b && s.misconnectionsCaused !== b.misconnectionsCaused ? (
               <>
-                <p className="text-xs text-aubergine">
+                <p className="text-xs text-slate-200">
                   This flight&rsquo;s delay caused{" "}
-                  <span className="font-mono tabular-nums text-red-soft font-medium">
+                  <span className="font-mono tabular-nums text-red-400 font-bold">
                     {formatCount(s.misconnectionsCaused)} of {formatCount(flight.connectingPassengers)}
                   </span>{" "}
                   connecting passenger(s) ({s.misconnectCausedPct ?? 0}%) to miss their connection.
                 </p>
-                <p className="text-xs text-muted mt-1.5">
-                  Without this disruption: <span className="font-mono tabular-nums">{formatCount(b.misconnectionsCaused)}</span> would have
-                  misconnected ({b.misconnectCausedPct ?? 0}%).
+                <p className="text-xs text-slate-400 mt-1.5 font-mono">
+                  Without disruption: <span className="font-mono tabular-nums text-slate-300">{formatCount(b.misconnectionsCaused)}</span> would misconnect ({b.misconnectCausedPct ?? 0}%).
                 </p>
               </>
             ) : (
-              <p className="text-xs text-aubergine">
-                <span className="font-mono tabular-nums text-red-soft font-medium">
+              <p className="text-xs text-slate-200">
+                <span className="font-mono tabular-nums text-red-400 font-bold">
                   {formatCount(s.misconnectionsCaused)} of {formatCount(flight.connectingPassengers)}
                 </span>{" "}
                 connecting passenger(s) ({s.misconnectCausedPct ?? 0}%) missed their connection because of this flight.
@@ -208,30 +219,20 @@ function OverviewTab({
       </div>
 
       <div className="px-4 py-3">
-        <p className="font-mono text-xs uppercase tracking-widest text-aubergine-soft mb-2">Direct cost</p>
+        <p className="font-mono text-xs uppercase tracking-widest text-slate-400 font-semibold mb-2">Direct Cost Impact</p>
         {s.directCostUsd ? (
           <RangeValue low={s.directCostUsd.low} typical={s.directCostUsd.typical} high={s.directCostUsd.high} tone="neutral" size="base" />
         ) : (
-          <p className="text-xs text-muted">Not tracked for this flight.</p>
+          <p className="text-xs text-slate-400 font-mono">Not tracked for this flight.</p>
         )}
-        <p className="text-[11px] text-muted mt-1.5">
-          This flight&rsquo;s own operating/cancellation/crew/delay cost,  a PARTIAL figure. Excludes misconnect-driven rebooking and
-          misconnected-passenger delay costs, which can&rsquo;t be cleanly attributed to one leg.
+        <p className="text-[11px] text-slate-400 mt-1.5">
+          This flight&rsquo;s own operating/cancellation/crew/delay cost. Excludes downstream hotel accommodations and cross-carrier passenger rebooking.
         </p>
       </div>
     </>
   );
 }
 
-/**
- * Inspector Mode, Rotation tab: this tail's own chronological leg
- * timeline for the loaded day (see lib/rotation.ts). Highlights the
- * currently-focused leg and shows each leg's delay INHERITANCE --
- * `reactionaryDelayMin` (never `primaryDelayMin`, which is always 0 in
- * this app's clean-mode exports -- see FlightLegSide's own doc comment)
- * is the number that tells the "delay carried in from the previous leg"
- * story a rotation timeline exists to show.
- */
 function RotationTab({
   flight,
   flights,
@@ -242,13 +243,13 @@ function RotationTab({
   onSelectFlight?: (legId: string) => void;
 }) {
   if (!flight.tailNumber) {
-    return <p className="px-4 py-3 text-xs text-muted">No tail number recorded for this leg -- rotation unavailable.</p>;
+    return <p className="px-4 py-3 text-xs text-slate-400 font-mono">No tail number recorded for this leg &mdash; rotation unavailable.</p>;
   }
   const rotation = buildRotation(flights, flight.tailNumber);
 
   return (
     <div className="px-4 py-3">
-      <p className="font-mono text-xs uppercase tracking-widest text-aubergine-soft mb-2">
+      <p className="font-mono text-xs uppercase tracking-widest text-slate-400 font-semibold mb-2">
         {flight.tailNumber} &middot; {rotation.length} leg{rotation.length === 1 ? "" : "s"} today
       </p>
       <ul className="flex flex-col gap-2">
@@ -263,22 +264,24 @@ function RotationTab({
                 onClick={() => onSelectFlight?.(leg.legId)}
                 disabled={isCurrent}
                 data-testid="rotation-leg-row"
-                className={`w-full text-left rounded border px-2.5 py-2 state-transition ${
-                  isCurrent ? "border-gold bg-elevated cursor-default" : "border-border hover:border-aubergine-soft"
+                className={`w-full text-left rounded-lg border px-3 py-2.5 transition ${
+                  isCurrent
+                    ? "border-blue-500 bg-blue-950/40 shadow-sm ring-1 ring-blue-500/50 cursor-default"
+                    : "border-slate-800 bg-slate-950/60 hover:border-slate-700 hover:bg-slate-900"
                 }`}
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs text-aubergine">
-                    {i + 1}. {leg.originIata}&rarr;{leg.destIata}
+                  <span className="font-mono text-xs font-bold text-white">
+                    {i + 1}. {leg.originIata} &rarr; {leg.destIata}
                   </span>
-                  <span className="font-mono text-[11px] text-muted">
-                    {leg.scheduledDepMin != null ? formatSimClock(leg.scheduledDepMin) : ", "}
+                  <span className="font-mono text-[11px] text-slate-400">
+                    {leg.scheduledDepMin != null ? formatSimClock(leg.scheduledDepMin) : "—"}
                   </span>
                 </div>
                 <div className="flex items-center justify-between mt-1">
-                  <span className="text-[11px] text-muted">{SEVERITY_LABELS[rs.severity]}</span>
+                  <span className="text-[11px] font-mono text-slate-300">{SEVERITY_LABELS[rs.severity]}</span>
                   {reactionary != null && reactionary > 0 && (
-                    <span className="font-mono text-[11px] text-red-soft">+{Math.round(reactionary)} min inherited</span>
+                    <span className="font-mono text-[11px] text-red-400 font-medium">+{Math.round(reactionary)}m inherited</span>
                   )}
                 </div>
               </button>
@@ -290,24 +293,14 @@ function RotationTab({
   );
 }
 
-/**
- * Inspector Mode, Crew tab: composition + legality-clock facts, read
- * straight off `flight.crew` (static reference facts + this leg's own
- * computed duty/flight-time-so-far clocks -- see
- * scripts/scenario_reshape.py's load_crew_reference/_compute_crew_clocks).
- * "AT RISK" is a purely presentational threshold on the ALREADY-COMPUTED
- * remaining margin (maxFdpMin - dutyTimeSoFarMin) -- no new legality
- * logic invented here, this just surfaces the same cliff
- * engine/crew_legality.py itself checks at simulation time.
- */
 function CrewTab({ flight }: { flight: FlightLeg }) {
   const crew = flight.crew;
   if (!crew) {
     return (
-      <div className="px-4 py-3 text-xs text-muted leading-relaxed">
-        <p className="font-mono text-[11px] uppercase tracking-widest text-aubergine-soft mb-1.5">No Crew Pairing</p>
+      <div className="px-4 py-3 text-xs text-slate-400 leading-relaxed font-sans">
+        <p className="font-mono text-[11px] uppercase tracking-widest text-slate-300 font-semibold mb-1.5">No Crew Pairing</p>
         <p>Crew pairing roster is not published in DOT BTS schedule records for this specific leg.</p>
-        <p className="mt-2 text-[11px] text-aubergine-soft/80">
+        <p className="mt-2 text-[11px] text-slate-400">
           Coverage across December is ~90%+; other scheduled turns for this carrier or day include active rosters.
         </p>
       </div>
@@ -321,65 +314,65 @@ function CrewTab({ flight }: { flight: FlightLeg }) {
   return (
     <div className="px-4 py-3 flex flex-col gap-4">
       <div>
-        <p className="font-mono text-xs uppercase tracking-widest text-aubergine-soft mb-2">Crew composition</p>
+        <p className="font-mono text-xs uppercase tracking-widest text-slate-400 font-semibold mb-2">Crew Composition</p>
         <div className="grid grid-cols-3 gap-2 font-mono tabular-nums text-xs">
-          <div>
-            <p className="text-aubergine text-base">{roleCounts.captain}</p>
-            <p className="text-muted">Captain</p>
+          <div className="p-2 rounded-lg bg-slate-950/70 border border-slate-800 text-center">
+            <p className="text-white text-base font-bold">{roleCounts.captain}</p>
+            <p className="text-[10px] text-slate-400">Captain</p>
           </div>
-          <div>
-            <p className="text-aubergine text-base">{roleCounts.firstOfficer}</p>
-            <p className="text-muted">First officer</p>
+          <div className="p-2 rounded-lg bg-slate-950/70 border border-slate-800 text-center">
+            <p className="text-white text-base font-bold">{roleCounts.firstOfficer}</p>
+            <p className="text-[10px] text-slate-400">First Officer</p>
           </div>
-          <div>
-            <p className="text-aubergine text-base">{roleCounts.flightAttendant}</p>
-            <p className="text-muted">Flight attendant</p>
+          <div className="p-2 rounded-lg bg-slate-950/70 border border-slate-800 text-center">
+            <p className="text-white text-base font-bold">{roleCounts.flightAttendant}</p>
+            <p className="text-[10px] text-slate-400">Flight Attendant</p>
           </div>
         </div>
       </div>
 
       <div>
-        <p className="font-mono text-xs uppercase tracking-widest text-aubergine-soft mb-2">Duty clock</p>
+        <p className="font-mono text-xs uppercase tracking-widest text-slate-400 font-semibold mb-2">FAR Part 117 Duty Clock</p>
         <div className="grid grid-cols-2 gap-2 font-mono tabular-nums text-xs">
-          <div>
-            <p className="text-muted">On duty since</p>
-            <p className="text-aubergine">{formatSimClock(reportMin)}</p>
+          <div className="p-2 rounded-lg bg-slate-950/70 border border-slate-800">
+            <p className="text-slate-400 text-[10px]">On duty since</p>
+            <p className="text-white font-semibold">{formatSimClock(reportMin)}</p>
           </div>
-          <div>
-            <p className="text-muted">Scheduled release</p>
-            <p className="text-aubergine">{formatSimClock(releaseMin)}</p>
+          <div className="p-2 rounded-lg bg-slate-950/70 border border-slate-800">
+            <p className="text-slate-400 text-[10px]">Scheduled release</p>
+            <p className="text-white font-semibold">{formatSimClock(releaseMin)}</p>
           </div>
-          <div>
-            <p className="text-muted">Duty time so far</p>
-            <p className="text-aubergine">{dutyTimeSoFarMin != null ? `${Math.round(dutyTimeSoFarMin)} min` : ", "}</p>
+          <div className="p-2 rounded-lg bg-slate-950/70 border border-slate-800">
+            <p className="text-slate-400 text-[10px]">Duty time so far</p>
+            <p className="text-white font-semibold">{dutyTimeSoFarMin != null ? `${Math.round(dutyTimeSoFarMin)} min` : "—"}</p>
           </div>
-          <div>
-            <p className="text-muted">Flight time so far</p>
-            <p className="text-aubergine">{flightTimeSoFarMin != null ? `${Math.round(flightTimeSoFarMin)} min` : ", "}</p>
+          <div className="p-2 rounded-lg bg-slate-950/70 border border-slate-800">
+            <p className="text-slate-400 text-[10px]">Flight time so far</p>
+            <p className="text-white font-semibold">{flightTimeSoFarMin != null ? `${Math.round(flightTimeSoFarMin)} min` : "—"}</p>
           </div>
-          <div>
-            <p className="text-muted">Max FDP (legal limit)</p>
-            <p className="text-aubergine">{maxFdpMin} min</p>
+          <div className="p-2 rounded-lg bg-slate-950/70 border border-slate-800">
+            <p className="text-slate-400 text-[10px]">Max FDP (legal limit)</p>
+            <p className="text-white font-semibold">{maxFdpMin} min</p>
           </div>
-          <div>
-            <p className="text-muted">Remaining margin</p>
-            <p className={marginMin != null && marginMin <= 60 ? "text-red-soft" : "text-aubergine"}>
-              {marginMin != null ? `${Math.round(marginMin)} min` : ", "}
+          <div className="p-2 rounded-lg bg-slate-950/70 border border-slate-800">
+            <p className="text-slate-400 text-[10px]">Remaining margin</p>
+            <p className={`font-bold ${marginMin != null && marginMin <= 60 ? "text-red-400" : "text-emerald-400"}`}>
+              {marginMin != null ? `${Math.round(marginMin)} min` : "—"}
             </p>
           </div>
         </div>
       </div>
 
       {(atRisk || cliffTriggered) && (
-        <div className="pt-3 border-t border-border flex flex-col gap-1.5">
+        <div className="pt-2 border-t border-slate-800 flex flex-col gap-1.5 font-mono text-xs">
           {atRisk && (
-            <p className="text-xs text-red-soft font-medium" data-testid="crew-at-risk">
-              AT RISK &middot; crew is within 60 minutes of its legal duty-time limit.
+            <p className="text-amber-400 font-semibold" data-testid="crew-at-risk">
+              &bull; AT RISK: Crew is within 60 minutes of FAR Part 117 duty limit.
             </p>
           )}
           {cliffTriggered && (
-            <p className="text-xs text-red-soft font-medium" data-testid="crew-cliff-triggered">
-              Legality cliff triggered &middot; resolution: {flight.scenario.crewResolution}
+            <p className="text-red-400 font-semibold" data-testid="crew-cliff-triggered">
+              &bull; Legality Cliff: Resolution: {flight.scenario.crewResolution}
             </p>
           )}
         </div>

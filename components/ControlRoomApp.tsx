@@ -185,7 +185,6 @@ export function ControlRoomApp({
               kpiSummarySlot={
                 <FloatingTopHudPill
                   scenario={data.scenario}
-                  activeScenarioId={activeScenarioId}
                   recovery={recovery}
                   isCleanBoot={isCleanBoot}
                 />
@@ -194,7 +193,6 @@ export function ControlRoomApp({
                 <div className="space-y-3.5">
                   <AgentArbitrationFeed
                     scenario={data.scenario}
-                    activeScenarioId={activeScenarioId}
                     recovery={recovery}
                     isCleanBoot={isCleanBoot}
                   />
@@ -219,7 +217,6 @@ export function ControlRoomApp({
                 <div className="space-y-3.5">
                   <DeterministicValidationCard
                     scenario={data.scenario}
-                    activeScenarioId={activeScenarioId}
                     recovery={recovery}
                     isCleanBoot={isCleanBoot}
                   />
