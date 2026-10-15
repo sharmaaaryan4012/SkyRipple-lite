@@ -4,10 +4,11 @@ import { formatSimClock, formatCount, humanizeActionType } from "@/lib/format";
 import { CARRIER_NAMES } from "@/lib/carrierNames";
 import { RangeValue } from "@/components/ui/RangeValue";
 import { buildRotation } from "@/lib/rotation";
+import { useInspectorMode } from "@/lib/inspectorMode";
 import type { RecoveryAction } from "@/lib/backendClient";
 import type { FlightLeg } from "@/lib/types";
 
-type PanelTab = "overview" | "rotation" | "crew";
+type PanelTab = "overview" | "rotation" | "crew" | "telemetry";
 
 /**
  * Task B: the rich, interactive click-detail panel,  the "fun" surface
@@ -54,8 +55,12 @@ export function MapDetailPanel({
   const severityColor = `rgb(${SEVERITY_COLORS_RGB[s.severity].join(",")})`;
   const delayLabel = s.delayMin == null ? ", " : s.delayMin <= 0 ? "On-time" : `+${Math.round(s.delayMin)} min`;
 
+  const { enabled: inspectorMode } = useInspectorMode();
   const [tab, setTab] = useState<PanelTab>("overview");
-  const activeTab: PanelTab = tab;
+  const availableTabs: PanelTab[] = inspectorMode
+    ? ["overview", "rotation", "crew", "telemetry"]
+    : ["overview", "rotation", "crew"];
+  const activeTab: PanelTab = availableTabs.includes(tab) ? tab : "overview";
 
   return (
     <div
@@ -70,11 +75,25 @@ export function MapDetailPanel({
 
       <div className="flex items-start justify-between px-4 py-3 border-b border-slate-800 bg-slate-950/60 shrink-0">
         <div>
-          <p className="font-mono text-lg font-bold text-white tracking-tight">{flight.flightNumber ?? flight.legId}</p>
+          <div className="flex items-center gap-2">
+            <p className="font-mono text-lg font-bold text-white tracking-tight">{flight.flightNumber ?? flight.legId}</p>
+            {inspectorMode && (
+              <span className="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">
+                DEV INSPECTOR
+              </span>
+            )}
+          </div>
           <p className="text-xs text-slate-400 mt-0.5">
             {airline} &middot; {flight.aircraftType ?? "Aircraft type unknown"}
           </p>
-          {flight.tailNumber && <p className="font-mono text-xs text-blue-400 font-semibold mt-0.5">{flight.tailNumber}</p>}
+          <div className="flex items-center gap-2 mt-0.5">
+            {flight.tailNumber && <p className="font-mono text-xs text-blue-400 font-semibold">{flight.tailNumber}</p>}
+            {inspectorMode && (
+              <span className="font-mono text-[10px] text-amber-400/80 truncate">
+                leg: {flight.legId}
+              </span>
+            )}
+          </div>
         </div>
         <button
           onClick={onClose}
@@ -86,7 +105,7 @@ export function MapDetailPanel({
       </div>
 
       <div className="flex border-b border-slate-800 bg-slate-950/80 shrink-0 p-1.5 gap-1.5" role="tablist" aria-label="Flight detail tabs">
-        {(["overview", "rotation", "crew"] as PanelTab[]).map((t) => (
+        {availableTabs.map((t) => (
           <button
             key={t}
             type="button"
@@ -96,11 +115,13 @@ export function MapDetailPanel({
             onClick={() => setTab(t)}
             className={`flex-1 font-mono text-xs uppercase tracking-wider py-2 rounded-lg transition min-h-[40px] flex items-center justify-center font-bold ${
               activeTab === t
-                ? "bg-blue-600 text-white shadow-md"
+                ? t === "telemetry"
+                  ? "bg-amber-600 text-white shadow-md"
+                  : "bg-blue-600 text-white shadow-md"
                 : "text-slate-400 hover:text-white bg-slate-900/60 hover:bg-slate-800"
             }`}
           >
-            {t}
+            {t === "telemetry" ? "Dev" : t}
           </button>
         ))}
       </div>
@@ -110,8 +131,18 @@ export function MapDetailPanel({
           <RotationTab flight={flight} flights={flights} onSelectFlight={onSelectFlight} />
         ) : activeTab === "crew" ? (
           <CrewTab flight={flight} />
+        ) : activeTab === "telemetry" ? (
+          <TelemetryTab flight={flight} />
         ) : (
-          <OverviewTab flight={flight} s={s} b={b} severityColor={severityColor} delayLabel={delayLabel} recoveryAction={recoveryAction} />
+          <OverviewTab
+            flight={flight}
+            s={s}
+            b={b}
+            severityColor={severityColor}
+            delayLabel={delayLabel}
+            recoveryAction={recoveryAction}
+            inspectorMode={inspectorMode}
+          />
         )}
       </div>
     </div>
@@ -125,6 +156,7 @@ function OverviewTab({
   severityColor,
   delayLabel,
   recoveryAction,
+  inspectorMode,
 }: {
   flight: FlightLeg;
   s: FlightLeg["scenario"];
@@ -132,9 +164,21 @@ function OverviewTab({
   severityColor: string;
   delayLabel: string;
   recoveryAction?: RecoveryAction | null;
+  inspectorMode?: boolean;
 }) {
   return (
     <>
+      {inspectorMode && (
+        <div className="mx-4 mt-3 p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-between font-mono text-xs">
+          <div className="flex items-center gap-1.5">
+            <span className="w-2 h-2 rounded-full bg-amber-400" />
+            <span className="text-amber-300 font-bold uppercase tracking-wide text-[10px]">Dev Diagnostics</span>
+          </div>
+          <span className="text-[10px] text-amber-200/90 truncate">
+            Reactionary: +{s.reactionaryDelayMin ?? 0}m &bull; Gate: {s.gateWaitMin ?? 0}m
+          </span>
+        </div>
+      )}
 
       <div className="px-4 py-3 border-b border-slate-800">
         <p className="font-mono text-base font-bold text-white">
@@ -230,6 +274,103 @@ function OverviewTab({
         </p>
       </div>
     </>
+  );
+}
+
+function TelemetryTab({ flight }: { flight: FlightLeg }) {
+  const [copied, setCopied] = useState(false);
+  const s = flight.scenario;
+
+  const copyJson = () => {
+    try {
+      navigator.clipboard.writeText(JSON.stringify(flight, null, 2));
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // fallback
+    }
+  };
+
+  return (
+    <div className="px-4 py-3 flex flex-col gap-4 font-mono text-xs">
+      <div>
+        <p className="text-[11px] uppercase tracking-widest text-amber-400 font-semibold mb-2">
+          Dispatch Diagnostics & Delay Attribution
+        </p>
+        <div className="grid grid-cols-2 gap-2 text-xs">
+          <div className="p-2.5 rounded-lg bg-slate-950/70 border border-slate-800">
+            <span className="text-[10px] text-slate-400 block">Primary Delay</span>
+            <span className="text-white font-bold text-sm">
+              {s.primaryDelayMin != null ? `${s.primaryDelayMin} min` : "0 min"}
+            </span>
+            <span className="text-[9px] text-slate-500 block">Initial incident</span>
+          </div>
+          <div className="p-2.5 rounded-lg bg-slate-950/70 border border-slate-800">
+            <span className="text-[10px] text-amber-400 block">Reactionary Delay</span>
+            <span className="text-amber-300 font-bold text-sm">
+              {s.reactionaryDelayMin != null ? `${s.reactionaryDelayMin} min` : "0 min"}
+            </span>
+            <span className="text-[9px] text-slate-500 block">Propagated turn lag</span>
+          </div>
+          <div className="p-2.5 rounded-lg bg-slate-950/70 border border-slate-800">
+            <span className="text-[10px] text-slate-400 block">Gate Wait</span>
+            <span className="text-white font-bold text-sm">
+              {s.gateWaitMin != null ? `${s.gateWaitMin} min` : "0 min"}
+            </span>
+            <span className="text-[9px] text-slate-500 block">Ramp / Stand holding</span>
+          </div>
+          <div className="p-2.5 rounded-lg bg-slate-950/70 border border-slate-800">
+            <span className="text-[10px] text-slate-400 block">Crew Legality Status</span>
+            <span className={`font-bold text-sm ${s.crewIllegal ? "text-red-400" : "text-emerald-400"}`}>
+              {s.crewIllegal ? "ILLEGAL" : "COMPLIANT"}
+            </span>
+            <span className="text-[9px] text-slate-500 block">FAR Part 117</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <p className="text-[11px] uppercase tracking-widest text-amber-400 font-semibold mb-2">
+          GPS Geodetic Coordinates
+        </p>
+        <div className="p-2.5 rounded-lg bg-slate-950/70 border border-slate-800 space-y-1.5 text-[11px]">
+          <div className="flex justify-between">
+            <span className="text-slate-400">Origin ({flight.originIata}):</span>
+            <span className="text-white font-bold">[{flight.originLat.toFixed(4)}, {flight.originLon.toFixed(4)}]</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-slate-400">Destination ({flight.destIata}):</span>
+            <span className="text-white font-bold">[{flight.destLat.toFixed(4)}, {flight.destLon.toFixed(4)}]</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-slate-400">Carrier / Flight Code:</span>
+            <span className="text-white font-bold">{flight.carrierCode} &middot; {flight.flightNumber ?? "N/A"}</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-slate-400">Tail Number:</span>
+            <span className="text-blue-400 font-bold">{flight.tailNumber ?? "N/A"}</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div className="flex items-center justify-between mb-2">
+          <p className="text-[11px] uppercase tracking-widest text-amber-400 font-semibold">
+            Raw In-Memory Flight JSON
+          </p>
+          <button
+            type="button"
+            onClick={copyJson}
+            className="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-[10px] text-slate-300 transition"
+          >
+            {copied ? "✓ Copied" : "Copy JSON"}
+          </button>
+        </div>
+        <pre className="p-2.5 rounded-lg bg-slate-950 border border-slate-800 text-[10px] text-slate-300 overflow-x-auto max-h-48 leading-tight">
+          {JSON.stringify(flight, null, 2)}
+        </pre>
+      </div>
+    </div>
   );
 }
 

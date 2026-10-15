@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 
 export interface InspectorModeContextValue {
@@ -27,8 +27,26 @@ const InspectorModeContext = createContext<InspectorModeContextValue | null>(nul
 export function InspectorModeProvider({ children }: { children: React.ReactNode }) {
   const [enabled, setEnabledState] = useState(false);
 
+  // Initialize from localStorage safely after mount to avoid hydration mismatch
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem("skydrop_dev_mode") ?? localStorage.getItem("skydrop_inspector_mode");
+      if (stored === "true") {
+        setEnabledState(true);
+      }
+    } catch {
+      // localStorage may fail in restricted/private contexts; fallback to false
+    }
+  }, []);
+
   function setEnabled(next: boolean) {
     setEnabledState(next);
+    try {
+      localStorage.setItem("skydrop_dev_mode", String(next));
+      localStorage.setItem("skydrop_inspector_mode", String(next));
+    } catch {
+      // ignore storage failure
+    }
   }
 
   return <InspectorModeContext.Provider value={{ enabled, setEnabled }}>{children}</InspectorModeContext.Provider>;

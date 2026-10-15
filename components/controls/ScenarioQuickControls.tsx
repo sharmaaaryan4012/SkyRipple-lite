@@ -1,5 +1,6 @@
 "use client";
 
+import { useInspectorMode } from "@/lib/inspectorMode";
 import type { ScenarioData } from "@/lib/types";
 
 interface ScenarioQuickControlsProps {
@@ -43,6 +44,7 @@ export function ScenarioQuickControls({
   onSelectScenario,
 }: ScenarioQuickControlsProps) {
   const isDisrupted = !isCleanBoot && scenario.disruptionMarkers && scenario.disruptionMarkers.length > 0;
+  const { enabled: inspectorMode, setEnabled: setInspectorMode } = useInspectorMode();
 
   return (
     <div className="p-3.5 rounded-xl bg-slate-900/90 backdrop-blur-md border border-slate-800 space-y-3 shadow-xl select-none">
@@ -115,6 +117,46 @@ export function ScenarioQuickControls({
             </button>
           );
         })}
+      </div>
+
+      {/* Developer Inspector Mode Card */}
+      <div className="pt-2 border-t border-slate-800/80">
+        <div className="p-3 rounded-lg bg-slate-950/70 border border-slate-800 flex items-center justify-between gap-3">
+          <div className="min-w-0">
+            <div className="flex items-center gap-2">
+              <span className={`w-2 h-2 rounded-full shrink-0 ${inspectorMode ? "bg-amber-400" : "bg-slate-600"}`} />
+              <span className="text-xs font-mono font-bold text-white uppercase tracking-wider">
+                Dev Mode Inspector
+              </span>
+              {inspectorMode && (
+                <span className="px-1.5 py-0.2 rounded text-[9px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">
+                  ACTIVE
+                </span>
+              )}
+            </div>
+            <p className="text-[11px] text-slate-400 mt-0.5 leading-snug">
+              Expose raw GPS coordinates, flight telemetry, and unthrottled airport rosters.
+            </p>
+          </div>
+
+          <button
+            type="button"
+            role="switch"
+            aria-checked={inspectorMode}
+            onClick={() => setInspectorMode(!inspectorMode)}
+            data-testid="inspector-mode-toggle"
+            aria-label="Toggle Developer Inspector Mode"
+            className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
+              inspectorMode ? "bg-amber-500" : "bg-slate-700"
+            }`}
+          >
+            <span
+              className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-md transition duration-200 ease-in-out ${
+                inspectorMode ? "translate-x-5" : "translate-x-0"
+              }`}
+            />
+          </button>
+        </div>
       </div>
     </div>
   );

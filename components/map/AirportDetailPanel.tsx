@@ -98,9 +98,23 @@ export function AirportDetailPanel({
 
       <div className="flex items-start justify-between px-4 py-3 border-b border-slate-800 bg-slate-950/60 shrink-0">
         <div>
-          <p className="font-mono text-lg font-bold text-white tracking-tight">{airport.iata}</p>
+          <div className="flex items-center gap-2">
+            <p className="font-mono text-lg font-bold text-white tracking-tight">{airport.iata}</p>
+            {inspectorMode && (
+              <span className="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">
+                DEV INSPECTOR
+              </span>
+            )}
+          </div>
           <p className="text-xs text-slate-400 mt-0.5">{airport.name}</p>
-          <p className="font-mono text-xs text-blue-400 font-semibold mt-0.5">{airport.cityName}</p>
+          <div className="flex items-center gap-2 mt-0.5">
+            <span className="font-mono text-xs text-blue-400 font-semibold">{airport.cityName}</span>
+            {inspectorMode && airport.lat != null && airport.lon != null && (
+              <span className="font-mono text-[10px] text-amber-400/80">
+                [{airport.lat.toFixed(3)}, {airport.lon.toFixed(3)}]
+              </span>
+            )}
+          </div>
         </div>
         <button
           onClick={onClose}
@@ -277,11 +291,15 @@ function FlightList({
         <p className="font-mono text-xs uppercase tracking-widest text-slate-400">
           {title} <span className="text-slate-500 normal-case tracking-normal">({rows.length})</span>
         </p>
-        {!forceShowAll && rows.length > DEFAULT_SHOWN_FLIGHTS && (
+        {forceShowAll ? (
+          <span className="font-mono text-[10px] text-amber-400 font-semibold bg-amber-500/10 px-1.5 py-0.5 rounded border border-amber-500/30">
+            Dev: All {rows.length}
+          </span>
+        ) : rows.length > DEFAULT_SHOWN_FLIGHTS ? (
           <button onClick={onToggleShowAll} className="font-mono text-[11px] text-blue-400 hover:text-blue-300 transition">
             {showAll ? "Show fewer" : `Show all ${rows.length}`}
           </button>
-        )}
+        ) : null}
       </div>
       {rows.length === 0 ? (
         <p className="text-xs text-slate-500">None scheduled.</p>
