@@ -5,6 +5,24 @@ import React, { useState, useEffect } from "react";
 export type MobileTab = "agents" | "ledger" | "controls";
 export type DrawerSnap = "peek" | "half" | "full";
 
+export interface DrawerContextValue {
+  drawerSnap: DrawerSnap;
+  setDrawerSnap: (snap: DrawerSnap) => void;
+  cycleDrawerSnap: () => void;
+  isLandscapeMobile: boolean;
+}
+
+export const DrawerContext = React.createContext<DrawerContextValue>({
+  drawerSnap: "half",
+  setDrawerSnap: () => {},
+  cycleDrawerSnap: () => {},
+  isLandscapeMobile: false,
+});
+
+export function useDrawer() {
+  return React.useContext(DrawerContext);
+}
+
 export interface ResponsiveDashboardShellProps {
   header?: React.ReactNode;          // Desktop top command bar
   mapSlot: React.ReactNode;          // deck.gl FlightRadar map component
@@ -49,6 +67,12 @@ export function ResponsiveDashboardShell({
     full: "h-[85dvh]",
   };
 
+  const mapBottomClass: Record<DrawerSnap, string> = {
+    peek: "bottom-[195px]",
+    half: "bottom-[50dvh]",
+    full: "bottom-[85dvh]",
+  };
+
   const cycleDrawerSnap = () => {
     setDrawerSnap((prev) =>
       prev === "peek" ? "half" : prev === "half" ? "full" : "peek"
@@ -56,7 +80,8 @@ export function ResponsiveDashboardShell({
   };
 
   return (
-    <div className="relative h-[100dvh] w-screen overflow-hidden bg-page text-aubergine select-none overscroll-none font-sans">
+    <DrawerContext.Provider value={{ drawerSnap, setDrawerSnap, cycleDrawerSnap, isLandscapeMobile }}>
+      <div className="relative h-[100dvh] w-screen overflow-hidden bg-page text-aubergine select-none overscroll-none font-sans">
       {/* =========================================================
           1. DESKTOP LAYOUT (lg: >= 1024px, full multi-panel)
          ========================================================= */}
@@ -140,8 +165,10 @@ export function ResponsiveDashboardShell({
         ) : (
           /* --- MOBILE PORTRAIT: FULL-BLEED MAP + BOTTOM SHEET --- */
           <div className="relative h-[100dvh] w-screen overflow-hidden">
-            {/* Background Map Layer */}
-            <div className="fixed inset-0 z-0">
+            {/* Dynamic Map Layer adjusting with control panel height */}
+            <div
+              className={`fixed inset-x-0 top-0 z-0 transition-all duration-300 ease-out ${mapBottomClass[drawerSnap]}`}
+            >
               {mapSlot}
             </div>
 
@@ -228,7 +255,8 @@ export function ResponsiveDashboardShell({
         )}
       </div>
     </div>
-  );
+  </DrawerContext.Provider>
+);
 }
 export default ResponsiveDashboardShell;
 

@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import DeckGL from "@deck.gl/react";
 import { GeoJsonLayer, IconLayer, LineLayer, ScatterplotLayer } from "@deck.gl/layers";
-import type { PickingInfo } from "@deck.gl/core";
+import { FlyToInterpolator, type MapViewState, type PickingInfo } from "@deck.gl/core";
 import type { DeckGLRef } from "@deck.gl/react";
 import { US_STATES_GEOJSON } from "@/lib/usStatesGeoJson";
 import { SEVERITY_COLORS_RGB } from "@/lib/severity";
@@ -18,27 +18,82 @@ import { MapDetailPanel } from "./MapDetailPanel";
 import { AirportHoverBox } from "./AirportHoverBox";
 import { AirportDetailPanel } from "./AirportDetailPanel";
 import { useInspectorMode } from "@/lib/inspectorMode";
+import { useDrawer, type DrawerSnap } from "@/components/layout/ResponsiveDashboardShell";
 import type { RecoveryAction } from "@/lib/backendClient";
 import type { FlightLeg, DisruptionMarker, AirportMeta, ImpactSummary, AirportDaily } from "@/lib/types";
 
 const DESKTOP_ZOOM = 3.6;
-const MOBILE_ZOOM_DELTA = 1.1;
-const MIN_ZOOM = 2.4;
+const MIN_ZOOM = 1.8;
 const MAX_ZOOM = 8.5;
-const BOUNDS_LON: [number, number] = [-130, -65];
-const BOUNDS_LAT: [number, number] = [22, 52];
+const CLAMP_LON: [number, number] = [-135, -60];
+const CLAMP_LAT: [number, number] = [20, 54];
 
-const INITIAL_VIEW_STATE = {
-  longitude: -96,
-  latitude: 38.8,
-  zoom: DESKTOP_ZOOM,
-  pitch: 0, // Task B: planes-as-icons don't need ArcLayer's depth pitch -- flat is the FlightRadar convention, and it keeps icon billboards legible
-  bearing: 0,
-  minZoom: MIN_ZOOM,
-  maxZoom: MAX_ZOOM,
-  minPitch: 0,
-  maxPitch: 0,
-};
+function getOptimalViewState(
+  isTouch: boolean,
+  snap?: DrawerSnap,
+  width?: number,
+  isLandscape?: boolean
+): MapViewState {
+  if (!isTouch || isLandscape) {
+    return {
+      longitude: -96.5,
+      latitude: 38.8,
+      zoom: DESKTOP_ZOOM,
+      pitch: 0,
+      bearing: 0,
+      minZoom: MIN_ZOOM,
+      maxZoom: MAX_ZOOM,
+      minPitch: 0,
+      maxPitch: 0,
+    };
+  }
+
+  const w = width ?? 390;
+  const isNarrow = w < 380;
+
+  if (snap === "peek") {
+    // Tall visible map (drawer is 195px, remaining height is ~75% of screen)
+    return {
+      longitude: -96.5,
+      latitude: 38.6,
+      zoom: isNarrow ? 2.85 : 3.05,
+      pitch: 0,
+      bearing: 0,
+      minZoom: MIN_ZOOM,
+      maxZoom: MAX_ZOOM,
+      minPitch: 0,
+      maxPitch: 0,
+    };
+  }
+
+  if (snap === "full") {
+    // Narrow peek at the top of the screen (drawer is 85dvh)
+    return {
+      longitude: -96.5,
+      latitude: 39.5,
+      zoom: isNarrow ? 2.2 : 2.4,
+      pitch: 0,
+      bearing: 0,
+      minZoom: MIN_ZOOM,
+      maxZoom: MAX_ZOOM,
+      minPitch: 0,
+      maxPitch: 0,
+    };
+  }
+
+  // Default "half" (50dvh sheet) - 50% map height, perfectly framed CONUS
+  return {
+    longitude: -96.5,
+    latitude: 38.9,
+    zoom: isNarrow ? 2.65 : 2.8,
+    pitch: 0,
+    bearing: 0,
+    minZoom: MIN_ZOOM,
+    maxZoom: MAX_ZOOM,
+    minPitch: 0,
+    maxPitch: 0,
+  };
+}
 
 // Design-token colors as [r,g,b] (deck.gl doesn't take CSS strings).
 // Theme v2: the map is the reference's own explicitly-named "only dark
@@ -161,12 +216,15 @@ export function USMap({
   const pulsePhase = usePulse(2200);
   const deckRef = useRef<DeckGLRef>(null);
 
+  const { drawerSnap, isLandscapeMobile } = useDrawer();
   const { enabled: inspectorMode } = useInspectorMode();
-  const [initialViewState, setInitialViewState] = useState(INITIAL_VIEW_STATE);
+  const [initialViewState, setInitialViewState] = useState<MapViewState>(() =>
+    getOptimalViewState(false)
+  );
   const [currentPos, setCurrentPos] = useState({
     zoom: DESKTOP_ZOOM,
-    lat: INITIAL_VIEW_STATE.latitude,
-    lon: INITIAL_VIEW_STATE.longitude,
+    lat: 38.8,
+    lon: -96.5,
   });
   const [isTouchDevice, setIsTouchDevice] = useState(false);
 
@@ -174,14 +232,24 @@ export function USMap({
     if (typeof window !== "undefined") {
       const isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0 || window.innerWidth < 1024;
       setIsTouchDevice(isTouch);
-      if (window.innerWidth < 768) {
-        setInitialViewState({
-          ...INITIAL_VIEW_STATE,
-          zoom: DESKTOP_ZOOM - MOBILE_ZOOM_DELTA,
-        });
-      }
     }
   }, []);
+
+  // Whenever the control panel drawer changes size (peek, half, full), smoothly adapt map sizing
+  useEffect(() => {
+    if (!isTouchDevice || isLandscapeMobile || typeof window === "undefined") return;
+    const target = getOptimalViewState(true, drawerSnap, window.innerWidth, false);
+    setInitialViewState({
+      ...target,
+      transitionDuration: 400,
+      transitionInterpolator: new FlyToInterpolator({ speed: 1.5 }),
+    });
+    setCurrentPos({
+      zoom: target.zoom,
+      lat: target.latitude,
+      lon: target.longitude,
+    });
+  }, [drawerSnap, isTouchDevice, isLandscapeMobile]);
 
   // Task 8c: the current view window's own days (Task 8b) -- multi-day
   // airport stats are summed over exactly these, matching "download/show
@@ -536,10 +604,6 @@ export function USMap({
           dragPan: true,
           inertia: 120,
           doubleClickZoom: true,
-          maxBounds: [
-            [BOUNDS_LON[0], BOUNDS_LAT[0]],
-            [BOUNDS_LON[1], BOUNDS_LAT[1]],
-          ],
         }}
         onViewStateChange={({ viewState }) => {
           // Strictly lock bearing to 0 (North-Up) and pitch to 0 (Flat radar projection)
@@ -547,10 +611,10 @@ export function USMap({
           viewState.pitch = 0;
           if (viewState.zoom < MIN_ZOOM) viewState.zoom = MIN_ZOOM;
           if (viewState.zoom > MAX_ZOOM) viewState.zoom = MAX_ZOOM;
-          if (viewState.longitude < BOUNDS_LON[0]) viewState.longitude = BOUNDS_LON[0];
-          if (viewState.longitude > BOUNDS_LON[1]) viewState.longitude = BOUNDS_LON[1];
-          if (viewState.latitude < BOUNDS_LAT[0]) viewState.latitude = BOUNDS_LAT[0];
-          if (viewState.latitude > BOUNDS_LAT[1]) viewState.latitude = BOUNDS_LAT[1];
+          if (viewState.longitude < CLAMP_LON[0]) viewState.longitude = CLAMP_LON[0];
+          if (viewState.longitude > CLAMP_LON[1]) viewState.longitude = CLAMP_LON[1];
+          if (viewState.latitude < CLAMP_LAT[0]) viewState.latitude = CLAMP_LAT[0];
+          if (viewState.latitude > CLAMP_LAT[1]) viewState.latitude = CLAMP_LAT[1];
           setCurrentPos({
             zoom: viewState.zoom,
             lat: viewState.latitude,
@@ -617,9 +681,16 @@ export function USMap({
         <button
           type="button"
           onClick={() => {
+            const target = getOptimalViewState(true, drawerSnap, window.innerWidth, isLandscapeMobile);
             setInitialViewState({
-              ...INITIAL_VIEW_STATE,
-              zoom: DESKTOP_ZOOM - MOBILE_ZOOM_DELTA,
+              ...target,
+              transitionDuration: 500,
+              transitionInterpolator: new FlyToInterpolator({ speed: 2 }),
+            });
+            setCurrentPos({
+              zoom: target.zoom,
+              lat: target.latitude,
+              lon: target.longitude,
             });
           }}
           aria-label="Recenter Nationwide Airspace"
