@@ -126,3 +126,4 @@ export function WorkspaceSwitcher({
 }
 
 export default WorkspaceSwitcher;
+
