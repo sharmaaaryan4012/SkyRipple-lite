@@ -4,17 +4,19 @@ import { useMemo, useState } from "react";
 import { formatUsd, formatCount } from "@/lib/format";
 import { RadarDot } from "@/components/ui/RadarDot";
 import { useInspectorMode } from "@/lib/inspectorMode";
-import type { ScenarioData } from "@/lib/types";
+import type { ScenarioData, BackendDisruptionRequest } from "@/lib/types";
 import type { RecoveryView } from "@/lib/recoveryView";
 
 export function FloatingTopHudPill({
   scenario,
   recovery,
   isCleanBoot,
+  disruptions: _disruptions,
 }: {
   scenario: ScenarioData;
   recovery?: RecoveryView | null;
   isCleanBoot?: boolean;
+  disruptions?: BackendDisruptionRequest[] | null;
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const { enabled: inspectorMode, setEnabled: setInspectorMode } = useInspectorMode();
