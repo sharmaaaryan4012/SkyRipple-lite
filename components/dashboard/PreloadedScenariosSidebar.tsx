@@ -108,35 +108,9 @@ export function PreloadedScenariosSidebar({
       </div>
 
       {/* =========================================================
-          2. QUICK FILTER CHIPS (1-Click Switcher)
+          2. VERTICALLY SCROLLABLE LIST OF SCENARIO CARDS
          ========================================================= */}
-      <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none pb-0.5">
-        {PRELOADED_SCENARIOS.map((sc) => {
-          const isActive =
-            (sc.id === "baseline" && isCleanBoot) ||
-            (activeScenarioId === sc.id && !isCleanBoot);
-
-          return (
-            <button
-              key={`chip-${sc.id}`}
-              type="button"
-              onClick={() => onSelectScenario(sc.id)}
-              className={`px-2.5 py-1 rounded-md text-[11px] font-mono transition-all whitespace-nowrap active:scale-[0.98] ${
-                isActive
-                  ? "bg-blue-600 text-white font-bold shadow-md border border-blue-400/50"
-                  : "bg-slate-950/80 hover:bg-slate-800 text-slate-400 hover:text-slate-200 border border-slate-800"
-              }`}
-            >
-              {sc.shortLabel}
-            </button>
-          );
-        })}
-      </div>
-
-      {/* =========================================================
-          3. VERTICALLY SCROLLABLE LIST OF SCENARIO CARDS
-         ========================================================= */}
-      <div className="flex flex-col gap-2.5 max-h-[calc(100vh-210px)] overflow-y-auto pr-1">
+      <div className="flex flex-col gap-2.5 max-h-[calc(100vh-170px)] overflow-y-auto pr-1">
         {PRELOADED_SCENARIOS.map((sc) => {
           const isActive =
             (sc.id === "baseline" && isCleanBoot) ||
