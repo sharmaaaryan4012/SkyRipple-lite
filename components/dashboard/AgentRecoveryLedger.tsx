@@ -121,7 +121,6 @@ export function AgentRecoveryLedger({
     if (!isDisrupted) return 0;
     if (recovery?.recoverySaving?.typical) return recovery.recoverySaving.typical;
     if (slug.includes("multi")) return 386400;
-    if (slug.includes("december")) return 1420000;
     if (slug.includes("ord") || slug.includes("runway")) return 145000;
     return Math.round(grossCost * 0.75);
   }, [isDisrupted, recovery, slug, grossCost]);
@@ -863,3 +862,4 @@ export function AgentRecoveryLedger({
 }
 
 export default AgentRecoveryLedger;
+
