@@ -54,7 +54,7 @@ export function DeterministicValidationCard({
       };
     }
 
-    // Default ORD Runway Closure or Dynamic
+    // Default ORD Runway Closure or Dynamic Disruption ($145K Delta)
     const saving = recovery?.recoverySaving?.typical ?? 145000;
     const low = recovery?.recoverySaving?.low ?? 144050;
     const high = recovery?.recoverySaving?.high ?? 269311;
@@ -75,100 +75,122 @@ export function DeterministicValidationCard({
   const totalFlights = scenario.meta.recordCounts?.flightLegCount ?? 582410;
 
   return (
-    <div className="bg-slate-900/90 backdrop-blur-md border border-slate-800 rounded-xl p-3.5 space-y-3 shadow-xl select-none">
-      <div className="flex items-center justify-between border-b border-slate-800 pb-2">
-        <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0" />
+    <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-3.5 shadow-xl select-none">
+      {/* Header */}
+      <div className="flex items-center justify-between border-b border-slate-800 pb-2.5">
+        <div className="flex items-center gap-2.5 min-w-0">
+          <span
+            className={`w-2 h-2 rounded-full shrink-0 ${
+              isBaseline ? "bg-emerald-400" : "bg-amber-400"
+            }`}
+          />
           <div>
-            <h4 className="text-xs font-semibold text-white tracking-tight">
+            <h4 className="text-xs font-semibold text-white tracking-tight font-sans">
               Deterministic Validation Engine
             </h4>
-            <p className="text-[10px] text-slate-400 font-mono">
+            <p className="text-[10px] text-slate-500 font-mono">
               BTS Ground-Truth Baseline &bull; Invariant Mathematical Proof
             </p>
           </div>
         </div>
 
-        <span className="text-[10px] font-mono text-slate-400 bg-slate-950/70 px-2 py-0.5 rounded border border-slate-800">
+        <span
+          className={`text-[10px] font-mono px-2 py-0.5 rounded border shrink-0 font-medium ${
+            isBaseline
+              ? "text-emerald-400 bg-emerald-950/40 border-emerald-800/50"
+              : "text-amber-400 bg-amber-950/40 border-amber-800/50"
+          }`}
+        >
           {validation.status}
         </span>
       </div>
 
       {/* Primary KPI Delta Grid */}
-      <div className="grid grid-cols-2 gap-2">
-        <div className="p-2.5 rounded-lg bg-slate-950/70 border border-slate-800">
-          <span className="text-[10px] text-slate-400 font-mono uppercase tracking-wider block">
+      <div className="grid grid-cols-2 gap-2.5">
+        <div className="p-3 rounded-lg bg-slate-950/60 border border-slate-800">
+          <span className="text-[10px] text-slate-500 font-mono uppercase tracking-wider block">
             Net Recovery Delta
           </span>
-          <span className="text-lg font-bold font-mono text-gold block mt-0.5">
-            {validation.saving > 0 ? formatUsd(validation.saving) : "$0 Δ"}
+          <span
+            className={`text-xl font-bold font-mono block mt-1 ${
+              validation.saving > 0 ? "text-amber-400" : "text-white font-semibold"
+            }`}
+          >
+            {validation.saving > 0 ? `+${formatUsd(validation.saving)}` : "$0 Δ"}
           </span>
-          <span className="text-[9px] text-slate-400 font-mono">
+          <span className="text-[10px] text-slate-500 font-mono block mt-0.5">
             {validation.saving > 0
-              ? `Bounds: ${formatUsd(validation.low)} – ${formatUsd(validation.high)}`
+              ? `Range: ${formatUsd(validation.low)} – ${formatUsd(validation.high)}`
               : "Baseline ($0 Variance)"}
           </span>
         </div>
 
-        <div className="p-2.5 rounded-lg bg-slate-950/70 border border-slate-800">
-          <span className="text-[10px] text-slate-400 font-mono uppercase tracking-wider block">
+        <div className="p-3 rounded-lg bg-slate-950/60 border border-slate-800">
+          <span className="text-[10px] text-slate-500 font-mono uppercase tracking-wider block">
             Resolution Latency
           </span>
-          <span className="text-lg font-bold font-mono text-emerald-400 block mt-0.5">
+          <span className="text-xl font-bold font-mono text-emerald-400 block mt-1">
             {validation.latency}
           </span>
-          <span className="text-[9px] text-slate-400 font-mono">
+          <span className="text-[10px] text-slate-500 font-mono block mt-0.5">
             {validation.latencyNote}
           </span>
         </div>
       </div>
 
       {/* Mathematical Invariants Checklist */}
-      <div className="space-y-1.5 pt-1">
-        <div className="text-[10px] font-mono text-slate-400 uppercase tracking-widest">
+      <div className="space-y-2 pt-1">
+        <div className="text-[10px] font-mono text-slate-500 uppercase tracking-wider font-semibold">
           Deterministic Invariants
         </div>
 
-        <div className="space-y-1 text-[11px] font-mono">
-          <div className="flex items-center justify-between p-2 rounded-lg bg-slate-950/60 border border-slate-800/80">
-            <span className="text-slate-300">Aircraft Rotation Conservation</span>
+        <div className="space-y-1.5 text-xs font-mono">
+          <div className="flex items-center justify-between p-2.5 rounded-lg bg-slate-950/40 border border-slate-800/70 hover:border-slate-700 transition-colors">
+            <span className="text-slate-300 font-sans">Aircraft Rotation Conservation</span>
             <span className="text-emerald-400 font-medium">100% (0 Orphan Tails)</span>
           </div>
 
-          <div className="flex items-center justify-between p-2 rounded-lg bg-slate-950/60 border border-slate-800/80">
-            <span className="text-slate-300">FAA Part 117 Duty Legalities</span>
+          <div className="flex items-center justify-between p-2.5 rounded-lg bg-slate-950/40 border border-slate-800/70 hover:border-slate-700 transition-colors">
+            <span className="text-slate-300 font-sans">FAA Part 117 Duty Legalities</span>
             <span className="text-emerald-400 font-medium">0 Breaches (Rest Enforced)</span>
           </div>
 
-          <div className="flex items-center justify-between p-2 rounded-lg bg-slate-950/60 border border-slate-800/80">
-            <span className="text-slate-300">Passenger Flow Conservation</span>
+          <div className="flex items-center justify-between p-2.5 rounded-lg bg-slate-950/40 border border-slate-800/70 hover:border-slate-700 transition-colors">
+            <span className="text-slate-300 font-sans">Passenger Flow Conservation</span>
             <span className="text-emerald-400 font-medium">{validation.protectedPax}</span>
           </div>
 
-          <div className="flex items-center justify-between p-2 rounded-lg bg-slate-950/60 border border-slate-800/80">
-            <span className="text-slate-300">Saved Flights / Cancellations</span>
-            <span className="text-gold font-medium">{validation.cancellations}</span>
+          <div className="flex items-center justify-between p-2.5 rounded-lg bg-slate-950/40 border border-slate-800/70 hover:border-slate-700 transition-colors">
+            <span className="text-slate-300 font-sans">Saved Flights / Cancellations</span>
+            <span className={validation.saving > 0 ? "text-amber-400 font-medium" : "text-emerald-400 font-medium"}>
+              {validation.cancellations}
+            </span>
           </div>
 
-          <div className="flex items-center justify-between p-2 rounded-lg bg-slate-950/60 border border-slate-800/80">
-            <span className="text-slate-300">Audited Schedule Scope</span>
-            <span className="text-slate-400">{formatCount(totalFlights)} Schedule Records</span>
+          <div className="flex items-center justify-between p-2.5 rounded-lg bg-slate-950/40 border border-slate-800/70 hover:border-slate-700 transition-colors">
+            <span className="text-slate-300 font-sans">Audited Schedule Scope</span>
+            <span className="text-white font-semibold">{formatCount(totalFlights)} Records</span>
           </div>
         </div>
       </div>
 
       {/* Disruption Baseline Reference */}
-      <div className="p-2.5 rounded-lg bg-slate-950/90 border border-slate-800 text-[10px] font-mono text-slate-400 flex items-center justify-between">
+      <div className="p-2.5 rounded-lg bg-slate-950/60 border border-slate-800 text-xs font-mono text-slate-400 flex items-center justify-between">
         <span>
-          Unmitigated Cascade:{" "}
-          <strong className={validation.unmitigated > 0 ? "text-red-400" : "text-emerald-400"}>
+          Unmitigated:{" "}
+          <strong className={validation.unmitigated > 0 ? "text-rose-400" : "text-white"}>
             {formatUsd(validation.unmitigated)}
           </strong>
         </span>
-        <span className="text-emerald-400">
-          After Arbiter: {formatUsd(validation.after)}
+        <span>
+          Post-Arbitration:{" "}
+          <strong className={validation.saving > 0 ? "text-amber-400" : "text-emerald-400"}>
+            {formatUsd(validation.after)}
+          </strong>
         </span>
       </div>
     </div>
   );
 }
+
+export default DeterministicValidationCard;
