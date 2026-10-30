@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useInspectorMode } from "@/lib/inspectorMode";
-import { AboutModal } from "@/components/ui/AboutModal";
+import { GuidedTourModal } from "@/components/ui/GuidedTourModal";
 import { WorkspaceSwitcher, type OCCWorkspace } from "@/components/controls/WorkspaceSwitcher";
 import type { ScenarioData, BackendDisruptionRequest } from "@/lib/types";
 
@@ -15,12 +15,35 @@ export interface TopCommandBarProps {
   onWorkspaceChange?: (workspace: OCCWorkspace) => void;
 }
 
+const TOUR_STORAGE_KEY = "skyripple_guided_tour_seen";
+
 export function TopCommandBar({
   activeWorkspace = "radar",
   onWorkspaceChange,
 }: TopCommandBarProps) {
-  const [aboutOpen, setAboutOpen] = useState(false);
+  const [tourOpen, setTourOpen] = useState(false);
   const { enabled: inspectorMode, setEnabled: setInspectorMode } = useInspectorMode();
+
+  // Auto-launch Guided Tour on first visit
+  useEffect(() => {
+    try {
+      const seen = localStorage.getItem(TOUR_STORAGE_KEY);
+      if (!seen) {
+        setTourOpen(true);
+      }
+    } catch {
+      // LocalStorage unavailable in restricted environment
+    }
+  }, []);
+
+  const handleCloseTour = () => {
+    setTourOpen(false);
+    try {
+      localStorage.setItem(TOUR_STORAGE_KEY, "true");
+    } catch {
+      // LocalStorage unavailable
+    }
+  };
 
   return (
     <>
@@ -58,7 +81,7 @@ export function TopCommandBar({
           )}
         </div>
 
-        {/* Right: Dev Mode Switch & About Launcher */}
+        {/* Right: Dev Mode Switch & Subtle Guided Tour Button */}
         <div className="flex items-center gap-3 shrink-0 z-10">
           {/* Dev Mode Toggle Switch */}
           <div className="flex items-center gap-2 px-2.5 py-1 rounded-md border border-border bg-white/[0.02]">
@@ -82,10 +105,11 @@ export function TopCommandBar({
             </button>
           </div>
 
-          {/* About Modal Launcher */}
+          {/* Subtle Dull-Styled Guided Tour Button */}
           <button
-            onClick={() => setAboutOpen(true)}
-            className="flex items-center gap-1 px-2.5 py-1 rounded-md border border-border text-xs font-medium text-muted hover:text-white hover:bg-elevated transition-colors"
+            onClick={() => setTourOpen(true)}
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-slate-800 text-xs font-mono text-slate-400 hover:text-slate-200 hover:bg-slate-900/60 transition-colors"
+            title="Start Guided Tour"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -99,15 +123,19 @@ export function TopCommandBar({
               strokeLinejoin="round"
             >
               <circle cx="12" cy="12" r="10" />
-              <line x1="12" y1="16" x2="12" y2="12" />
-              <line x1="12" y1="8" x2="12.01" y2="8" />
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
             </svg>
-            <span className="hidden sm:inline">About</span>
+            <span className="hidden sm:inline">Guided Tour</span>
           </button>
         </div>
       </header>
 
-      <AboutModal open={aboutOpen} onClose={() => setAboutOpen(false)} />
+      <GuidedTourModal
+        open={tourOpen}
+        onClose={handleCloseTour}
+        onSwitchWorkspace={onWorkspaceChange}
+      />
     </>
   );
 }

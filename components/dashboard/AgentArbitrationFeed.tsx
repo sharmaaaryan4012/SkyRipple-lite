@@ -44,7 +44,7 @@ const ORD_PROFILE: ScenarioArbitrationProfile = {
       content: "ORD runway capacity restricted to 40%. Inbound leg UA-422 turnaround buffer compromised. Proposing tail swap: N418UA ↔ N892UA (MSP arrival) at Concourse B.",
       deltaCost: -42500,
       tradeoff: "Adds 12m ground service buffer; prevents cascading downstream cancellation on outbound UA-784.",
-      metric: "Rotation Conservation: 100%",
+      metric: "Aircraft Routing Intact: 100%",
     },
     {
       id: "ord-2",
@@ -73,7 +73,7 @@ const ORD_PROFILE: ScenarioArbitrationProfile = {
       content: "FAR Part 117 Audit: 15m hold on UA-1184 pushes First Officer over the 14-hour maximum duty limit. Dispatching ORD Standby Reserve First Officer #4102.",
       deltaCost: -28000,
       tradeoff: "Incurs $1,800 reserve callout cost; avoids illegal crew duty fine ($20,000) and stranded aircraft.",
-      metric: "FAR Part 117: Compliant",
+      metric: "Crew Rest Rules (FAA): Met",
     },
     {
       id: "ord-5",
@@ -104,7 +104,7 @@ const MULTI_HUB_PROFILE: ScenarioArbitrationProfile = {
       content: "Compound dual-hub constraint: Concurrent 60% ORD capacity cut, 35% DEN capacity throttle, and United N464UA maintenance grounding. Swapping widebody N671UA on DEN-SFO transcon route.",
       deltaCost: -118500,
       tradeoff: "Absorbs 28m ground delay at Denver; eliminates 3 downstream cancellations on West Coast trunk routes.",
-      metric: "3 Trunk Legs Rescued",
+      metric: "3 Flights Saved from Cancellation",
     },
     {
       id: "multi-2",
@@ -133,7 +133,7 @@ const MULTI_HUB_PROFILE: ScenarioArbitrationProfile = {
       content: "FAR Part 117 Legality Shield: Denver ground stop strands 4 cockpit crews beyond legal duty thresholds. Dispatched emergency reserve pairs from ORD Pool #308 and DEN Standby #512.",
       deltaCost: -125900,
       tradeoff: "Deploys 2 reserve pairs ($4,200 total expenses); averts FAA duty violation fines and stranded tails.",
-      metric: "FAR Part 117: Compliant",
+      metric: "Crew Rest Rules (FAA): Met",
     },
     {
       id: "multi-5",
@@ -164,7 +164,7 @@ const BASELINE_PROFILE: ScenarioArbitrationProfile = {
       content: "All scheduled rotations operating within published turnaround windows. 2,840 daily aircraft tails tracking nominal flight trajectories without tail swap intervention.",
       deltaCost: 0,
       tradeoff: "Standard buffers preserved; zero rotation changes required.",
-      metric: "Rotation Conservation: 100%",
+      metric: "Aircraft Routing Intact: 100%",
     },
     {
       id: "base-2",
@@ -194,7 +194,7 @@ const BASELINE_PROFILE: ScenarioArbitrationProfile = {
       content: "FAR Part 117 legality audit nominal. All active cockpit and cabin crews have minimum rest buffers verified. Reserve crews remain unallocated on standby.",
       deltaCost: 0,
       tradeoff: "Standard duty schedules maintained without overtime or penalty.",
-      metric: "FAR Part 117: Compliant",
+      metric: "Crew Rest Rules (FAA): Met",
     },
     {
       id: "base-5",
@@ -243,7 +243,7 @@ function resolveProfile(
         time: "Active Window",
         content: `Active bottleneck at ${primaryHub}: Re-allocating aircraft turnaround buffers to protect downstream connecting rotations.`,
         deltaCost: -Math.round(estimatedSaving * 0.3),
-        metric: "Rotation Conservation: 100%",
+        metric: "Aircraft Routing Intact: 100%",
       },
       {
         id: "dyn-2",
@@ -269,7 +269,7 @@ function resolveProfile(
         time: "Active Window",
         content: "FAR Part 117 Compliance Watch: Deploying domicile reserve crews to prevent duty timeout cancellations.",
         deltaCost: -Math.round(estimatedSaving * 0.15),
-        metric: "FAR Part 117: Compliant",
+        metric: "Crew Rest Rules (FAA): Met",
       },
       {
         id: "dyn-5",

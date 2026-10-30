@@ -208,7 +208,7 @@ export function ControlRoomApp({
                           </span>
                         </div>
                         <h2 className="text-lg font-bold text-white tracking-tight font-sans mt-1">
-                          5-Agent Arbitration Stream &amp; Deterministic Invariant Proofs
+                          AI Recovery Log &amp; Safety Audit
                         </h2>
                       </div>
                       <span className="px-2.5 py-1 rounded bg-slate-950 border border-slate-800 text-xs font-mono text-emerald-400 self-start md:self-auto font-medium">
@@ -216,7 +216,7 @@ export function ControlRoomApp({
                       </span>
                     </div>
                     <p className="text-xs text-slate-300 leading-relaxed mt-3 max-w-5xl font-sans">
-                      Real-time multi-agent arbitration engine arbitrating trade-offs across Aircraft, Crew, Passenger, Gate, and Duty Manager controllers. The discrete-event solver outputs are verified on every step against FAA Part 117 rest mandates and tail rotation conservation.
+                      Real-time multi-agent arbitration engine arbitrating trade-offs across Aircraft, Crew, Passenger, Gate, and Duty Manager controllers. The discrete-event solver outputs are verified on every step against FAA crew rest rules and intact aircraft routing.
                     </p>
                   </div>
 

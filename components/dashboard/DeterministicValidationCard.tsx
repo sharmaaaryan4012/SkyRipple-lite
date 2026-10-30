@@ -64,7 +64,7 @@ export function DeterministicValidationCard({
       high,
       latency: "< 20s",
       latencyNote: "Measured: 18.4s deterministic",
-      status: "Replay: Hash Match",
+      status: "Data Integrity Verified",
       protectedPax: "Verified (48 Protected on Transcon)",
       cancellations: "+14 Flights Kept (0 Cascade)",
       unmitigated: summary.totalCostUsd.typical || 181375,
@@ -146,12 +146,12 @@ export function DeterministicValidationCard({
 
         <div className="space-y-1.5 text-xs font-mono">
           <div className="flex items-center justify-between p-2.5 rounded-lg bg-slate-950/40 border border-slate-800/70 hover:border-slate-700 transition-colors">
-            <span className="text-slate-300 font-sans">Aircraft Rotation Conservation</span>
+            <span className="text-slate-300 font-sans">Aircraft Routing Intact</span>
             <span className="text-emerald-400 font-medium">100% (0 Orphan Tails)</span>
           </div>
 
           <div className="flex items-center justify-between p-2.5 rounded-lg bg-slate-950/40 border border-slate-800/70 hover:border-slate-700 transition-colors">
-            <span className="text-slate-300 font-sans">FAA Part 117 Duty Legalities</span>
+            <span className="text-slate-300 font-sans">Crew Rest Rules (FAA) Met</span>
             <span className="text-emerald-400 font-medium">0 Breaches (Rest Enforced)</span>
           </div>
 
@@ -161,7 +161,7 @@ export function DeterministicValidationCard({
           </div>
 
           <div className="flex items-center justify-between p-2.5 rounded-lg bg-slate-950/40 border border-slate-800/70 hover:border-slate-700 transition-colors">
-            <span className="text-slate-300 font-sans">Saved Flights / Cancellations</span>
+            <span className="text-slate-300 font-sans">Flights Saved from Cancellation</span>
             <span className={validation.saving > 0 ? "text-amber-400 font-medium" : "text-emerald-400 font-medium"}>
               {validation.cancellations}
             </span>

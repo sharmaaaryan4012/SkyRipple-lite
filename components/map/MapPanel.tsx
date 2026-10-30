@@ -44,6 +44,7 @@ export function MapPanel({
   isCleanBoot?: boolean;
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isDetailOpen, setIsDetailOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Close dropdown on outside click or Escape key
@@ -113,12 +114,17 @@ export function MapPanel({
         impactSummary={impactSummary}
         airportDaily={airportDaily}
         flightsDetailDay={flightsDetailDay}
+        onDetailOpenChange={setIsDetailOpen}
       />
 
       {/* State-Driven Top-Right Airspace Status Pill with On-Click Dropdown */}
       <div
         ref={dropdownRef}
-        className="absolute top-3 right-3 z-30 pointer-events-auto"
+        className={`absolute top-3 right-3 z-30 transition-all duration-200 ${
+          isDetailOpen
+            ? "opacity-0 pointer-events-none -translate-y-2"
+            : "opacity-100 pointer-events-auto translate-y-0"
+        }`}
         onTouchStart={(e) => e.stopPropagation()}
       >
         {/* Pill Trigger Button */}
@@ -269,9 +275,9 @@ export function MapPanel({
                     All 582,410 published airline schedule legs operating without cascade delay.
                   </p>
                   <div className="pt-2 border-t border-slate-800/80 flex items-center justify-center gap-2 text-[10px] font-mono text-slate-400">
-                    <span>100% Tail Conservation</span>
+                    <span>Aircraft Routing Intact</span>
                     <span>&bull;</span>
-                    <span>0 Part 117 Breaches</span>
+                    <span>Crew Rest Rules (FAA) Met</span>
                   </div>
                 </div>
               )}

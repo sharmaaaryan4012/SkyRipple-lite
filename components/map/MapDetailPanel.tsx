@@ -64,7 +64,7 @@ export function MapDetailPanel({
 
   return (
     <div
-      className="fixed inset-x-0 bottom-0 z-50 max-h-[85dvh] w-full rounded-t-3xl border-t border-slate-700/80 shadow-[0_-16px_48px_rgba(0,0,0,0.95)] bg-slate-900/98 backdrop-blur-2xl flex flex-col overflow-hidden lg:absolute lg:inset-x-auto lg:bottom-auto lg:top-0 lg:right-0 lg:h-full lg:w-[380px] lg:rounded-none lg:border-t-0 lg:border-l lg:border-slate-800 lg:z-30 lg:max-h-full state-transition select-none"
+      className="fixed inset-x-0 bottom-0 z-50 max-h-[85dvh] w-full rounded-t-3xl border-t border-slate-700/80 shadow-[0_-16px_48px_rgba(0,0,0,0.95)] bg-slate-900/98 backdrop-blur-2xl flex flex-col overflow-hidden lg:absolute lg:inset-x-auto lg:bottom-auto lg:top-0 lg:right-0 lg:h-full lg:w-[380px] lg:rounded-none lg:border-t-0 lg:border-l lg:border-slate-800 lg:z-50 lg:max-h-full state-transition select-none"
       data-testid="flight-detail-panel"
       onTouchStart={(e) => e.stopPropagation()}
     >

@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, ReferenceLine } from "recharts";
 import type { CostTimeseries, DisruptionMarker, ClusteredDisruptionMarker } from "@/lib/types";
 import { assignCarrierColors } from "@/lib/carrierColors";
+import { getFullCarrierName } from "@/lib/carrierNames";
 import { formatUsd } from "@/lib/format";
 import { useViewWindow } from "@/lib/viewWindowContext";
 import { windowedCumulative, bucketByHour, bucketByDay, markersInWindow, clusterMarkersByDay } from "@/lib/timeAggregation";
@@ -79,8 +80,8 @@ export function CostTimeseriesChart({ data: rawData, markers: rawMarkers }: { da
     const impactOf = (code: string) => {
       const series = data.carriers[code];
       if (!series) return 0;
-      if (!multiDay || scale === "day") return lastValue(series.scenario) - lastValue(series.baseline);
-      return sum(series.scenario) - sum(series.baseline);
+      if (!multiDay || scale === "day") return Math.max(0, lastValue(series.scenario) - lastValue(series.baseline));
+      return Math.max(0, sum(series.scenario) - sum(series.baseline));
     };
     return [...carrierCodes].sort((a, b) => impactOf(b) - impactOf(a));
   }, [carrierCodes, data, multiDay, scale]);
@@ -93,8 +94,10 @@ export function CostTimeseriesChart({ data: rawData, markers: rawMarkers }: { da
     return data.bucketStartMin.map((min, i) => {
       const row: ChartRow = { min };
       for (const code of carrierCodes) {
-        row[`${code}_baseline`] = data.carriers[code]?.baseline[i] ?? 0;
-        row[`${code}_scenario`] = data.carriers[code]?.scenario[i] ?? 0;
+        const base = Math.max(0, data.carriers[code]?.baseline[i] ?? 0);
+        const scenRaw = data.carriers[code]?.scenario[i] ?? 0;
+        row[`${code}_baseline`] = base;
+        row[`${code}_scenario`] = Math.max(0, Math.max(base, scenRaw));
       }
       return row;
     });
@@ -241,12 +244,18 @@ export function CostTimeseriesChart({ data: rawData, markers: rawMarkers }: { da
 
         {/* Legend, colored to match each carrier's line. */}
         <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1 px-2">
-          {shownCarriers.map((code) => (
-            <div key={code} className="flex items-center gap-1.5">
-              <span className="inline-block w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: colors[code] }} />
-              <span className="font-mono text-xs text-muted">{code}</span>
-            </div>
-          ))}
+          {shownCarriers.map((code) => {
+            const fullName = getFullCarrierName(code);
+            return (
+              <div key={code} className="flex items-center gap-1.5" title={`${fullName} (${code})`}>
+                <span className="inline-block w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: colors[code] }} />
+                <span className="font-mono text-xs text-slate-300">{fullName}</span>
+                {fullName !== code && (
+                  <span className="font-mono text-[10px] text-muted">({code})</span>
+                )}
+              </div>
+            );
+          })}
         </div>
 
         {hovered && <MarkerBubble marker={hovered} />}
