@@ -1,4 +1,5 @@
 import { assignCarrierColors } from "@/lib/carrierColors";
+import { getFullCarrierName } from "@/lib/carrierNames";
 import { formatUsd } from "@/lib/format";
 import type { CarrierLedgerRow } from "@/lib/types";
 
@@ -9,9 +10,9 @@ import type { CarrierLedgerRow } from "@/lib/types";
  * up there without a shared legend forcing them to cross-reference codes.
  */
 export function CarrierBreakdownTable({ rows }: { rows: CarrierLedgerRow[] }) {
-  const sorted = [...rows].sort((a, b) => b.total.variance.typical - a.total.variance.typical);
+  const sorted = [...rows].sort((a, b) => Math.max(0, b.total.variance.typical) - Math.max(0, a.total.variance.typical));
   const colors = assignCarrierColors(rows.map((r) => r.carrierCode));
-  const maxAbsTypical = Math.max(1, ...sorted.map((r) => Math.abs(r.total.variance.typical)));
+  const maxAbsTypical = Math.max(1, ...sorted.map((r) => Math.max(0, r.total.variance.typical)));
 
   return (
     <table className="w-full text-sm">
@@ -24,14 +25,20 @@ export function CarrierBreakdownTable({ rows }: { rows: CarrierLedgerRow[] }) {
       </thead>
       <tbody>
         {sorted.map((row) => {
-          const typical = row.total.variance.typical;
-          const widthPct = (Math.abs(typical) / maxAbsTypical) * 100;
+          const typical = Math.max(0, row.total.variance.typical);
+          const low = Math.max(0, row.total.variance.low);
+          const high = Math.max(0, row.total.variance.high);
+          const fullName = getFullCarrierName(row.carrierCode);
+          const widthPct = (typical / maxAbsTypical) * 100;
           return (
             <tr key={row.carrierCode} className="border-t border-border">
               <td className="py-2 pl-1">
                 <span className="inline-flex items-center gap-2">
-                  <span className="inline-block w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: colors[row.carrierCode] }} />
-                  <span className="font-mono text-aubergine">{row.carrierCode}</span>
+                  <span className="inline-block w-2.5 h-2.5 rounded-sm shrink-0" style={{ backgroundColor: colors[row.carrierCode] }} />
+                  <span className="font-medium text-slate-200">{fullName}</span>
+                  {fullName !== row.carrierCode && (
+                    <span className="font-mono text-xs text-muted">({row.carrierCode})</span>
+                  )}
                 </span>
               </td>
               <td className="py-2 pr-2">
@@ -46,9 +53,9 @@ export function CarrierBreakdownTable({ rows }: { rows: CarrierLedgerRow[] }) {
                 </div>
               </td>
               <td className="py-2 pr-1 text-right">
-                <span className="font-mono tabular-nums text-aubergine">{formatUsd(typical)}</span>
+                <span className="font-mono tabular-nums text-aubergine font-semibold">{formatUsd(typical)}</span>
                 <span className="font-mono tabular-nums text-xs text-muted ml-2">
-                  ({formatUsd(row.total.variance.low)}&ndash;{formatUsd(row.total.variance.high)})
+                  ({formatUsd(low)}&ndash;{formatUsd(high)})
                 </span>
               </td>
             </tr>

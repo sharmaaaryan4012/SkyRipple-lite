@@ -160,7 +160,7 @@ export function AgentRecoveryLedger({
           content: "All scheduled rotations operating within published turnaround windows. 2,840 daily aircraft tails tracking nominal flight trajectories without tail swap intervention.",
           deltaCost: 0,
           tradeoff: "Standard buffers preserved; zero rotation changes required.",
-          metric: "Rotation Conservation: 100%",
+          metric: "Aircraft Routing Intact: 100%",
         },
         {
           id: "base-gate",
@@ -190,7 +190,7 @@ export function AgentRecoveryLedger({
           content: "FAR Part 117 legality audit nominal. All active cockpit and cabin crews have minimum rest buffers verified. Reserve crews remain unallocated on standby.",
           deltaCost: 0,
           tradeoff: "Standard duty schedules maintained without overtime or penalty.",
-          metric: "FAR Part 117: Compliant",
+          metric: "Crew Rest Rules (FAA): Met",
         },
         {
           id: "base-mgr",
@@ -218,7 +218,7 @@ export function AgentRecoveryLedger({
           affectedIds: ["N464UA", "N671UA"],
           deltaCost: -118500,
           tradeoff: "Absorbs 28m ground delay at Denver; eliminates 3 downstream cancellations on West Coast trunk routes.",
-          metric: "3 Trunk Legs Rescued",
+          metric: "3 Flights Saved from Cancellation",
         },
         {
           id: "multi-2",
@@ -253,7 +253,7 @@ export function AgentRecoveryLedger({
           affectedIds: ["ORD #308", "DEN #512"],
           deltaCost: -125900,
           tradeoff: "Deploys 2 reserve pairs ($4,200 total expenses); averts FAA duty violation fines and stranded tails.",
-          metric: "FAR Part 117: Compliant",
+          metric: "Crew Rest Rules (FAA): Met",
         },
         {
           id: "multi-5",
@@ -285,7 +285,7 @@ export function AgentRecoveryLedger({
         affectedIds: ["UA-422", "N892UA"],
         deltaCost: -42500,
         tradeoff: "Adds 12m ground service buffer; prevents cascading downstream cancellation on outbound UA-784.",
-        metric: "Rotation Conservation: 100%",
+        metric: "Aircraft Routing Intact: 100%",
       },
       {
         id: "arb-gate",
@@ -320,7 +320,7 @@ export function AgentRecoveryLedger({
         affectedIds: ["Reserve FO #4102"],
         deltaCost: -28000,
         tradeoff: "Incurs $1,800 reserve callout cost; avoids illegal crew duty fine ($20,000) and stranded aircraft.",
-        metric: "FAR Part 117: Compliant",
+        metric: "Crew Rest Rules (FAA): Met",
       },
       {
         id: "arb-mgr",

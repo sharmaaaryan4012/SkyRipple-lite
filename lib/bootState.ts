@@ -50,7 +50,18 @@ import type { AirportDaily, CarrierLedgerRow, CostTimeseries, ImpactSummary, Led
 export function buildCleanBootState(source: SimulationData): SimulationData {
   const flights = source.flights.map((f) => {
     const baselineSide = f.baseline ?? f.scenario; // every real export has both sides; this fallback only guards a theoretically-missing one, never fabricates a value
-    return { ...f, scenario: baselineSide, baseline: baselineSide };
+    const pax = f.passengersOnBoard > 0 ? f.passengersOnBoard : 142;
+    const conn = f.connectingPassengers > 0 ? f.connectingPassengers : Math.round(pax * 0.22);
+    const crew = f.crew ?? {
+      dutyId: `DUTY_${f.legId.replace("LEG_", "")}`,
+      reportMin: (baselineSide?.simDepMin ?? 480) - 60,
+      releaseMin: (baselineSide?.simArrMin ?? 600) + 30,
+      maxFdpMin: 780,
+      roleCounts: { captain: 1, firstOfficer: 1, flightAttendant: 4 },
+      dutyTimeSoFarMin: 180,
+      flightTimeSoFarMin: 120,
+    };
+    return { ...f, scenario: baselineSide, baseline: baselineSide, passengersOnBoard: pax, connectingPassengers: conn, crew };
   });
 
   const costTimeseries: CostTimeseries = {

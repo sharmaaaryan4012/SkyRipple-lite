@@ -3,6 +3,7 @@
 import React, { useMemo, useState } from "react";
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from "recharts";
 import { assignCarrierColors } from "@/lib/carrierColors";
+import { getFullCarrierName } from "@/lib/carrierNames";
 import { formatUsd } from "@/lib/format";
 import type { CarrierLedgerRow } from "@/lib/types";
 
@@ -78,11 +79,15 @@ export function CarrierDonutChart({ rows }: { rows: CarrierLedgerRow[] }) {
               content={({ active, payload }) => {
                 if (!active || !payload || !payload.length) return null;
                 const data = payload[0].payload as CarrierSlice;
+                const fullName = getFullCarrierName(data.name);
                 return (
                   <div className="bg-slate-950/95 backdrop-blur-md border border-slate-700/80 px-3 py-2 rounded-lg shadow-2xl text-xs font-mono ring-1 ring-slate-800">
                     <div className="flex items-center gap-2">
                       <span className="w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: data.color }} />
-                      <span className="font-semibold text-white">{data.name}</span>
+                      <span className="font-semibold text-white">{fullName}</span>
+                      {fullName !== data.name && (
+                        <span className="text-slate-400 text-[10px]">({data.name})</span>
+                      )}
                     </div>
                     <div className="mt-1 text-slate-300">
                       Impact: <span className="text-amber-400 font-bold">{formatUsd(data.value)}</span>
@@ -133,14 +138,17 @@ export function CarrierDonutChart({ rows }: { rows: CarrierLedgerRow[] }) {
       </div>
 
       {/* Legend Grid */}
-      <div className="grid grid-cols-3 gap-1.5 pt-2 border-t border-slate-800/80 font-mono text-[11px]">
-        {slices.map((slice) => (
-          <div key={slice.name} className="flex items-center gap-1.5 truncate">
-            <span className="w-2 h-2 rounded-sm shrink-0" style={{ backgroundColor: slice.color }} />
-            <span className="text-slate-300 font-medium">{slice.name}</span>
-            <span className="text-slate-400 text-[10px] ml-auto">{slice.percentage}%</span>
-          </div>
-        ))}
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5 pt-2 border-t border-slate-800/80 font-mono text-[11px]">
+        {slices.map((slice) => {
+          const fullName = getFullCarrierName(slice.name);
+          return (
+            <div key={slice.name} className="flex items-center gap-1.5 truncate" title={`${fullName} (${slice.name})`}>
+              <span className="w-2 h-2 rounded-sm shrink-0" style={{ backgroundColor: slice.color }} />
+              <span className="text-slate-300 font-medium truncate">{fullName}</span>
+              <span className="text-slate-400 text-[10px] ml-auto shrink-0">{slice.percentage}%</span>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

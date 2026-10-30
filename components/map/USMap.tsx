@@ -186,6 +186,7 @@ export function USMap({
   impactSummary,
   airportDaily,
   flightsDetailDay,
+  onDetailOpenChange,
 }: {
   flights: FlightLeg[];
   disruptionMarkers: DisruptionMarker[];
@@ -206,6 +207,8 @@ export function USMap({
   /** Inspector Mode / multi-day flights.json gap -- see
    * ScenarioMeta.flightsDetailDay's own docstring. */
   flightsDetailDay?: string;
+  /** Notifies parent when an aircraft or airport detail panel opens/closes */
+  onDetailOpenChange?: (open: boolean) => void;
 }) {
   const { currentMinute } = useTimeCursor();
   const { multiDay, window: viewWindow } = useViewWindow();
@@ -227,6 +230,11 @@ export function USMap({
     lon: -96.5,
   });
   const [isTouchDevice, setIsTouchDevice] = useState(false);
+
+  useEffect(() => {
+    const isDetailOpen = focusedLegId !== null || focusedAirportIata !== null;
+    onDetailOpenChange?.(isDetailOpen);
+  }, [focusedLegId, focusedAirportIata, onDetailOpenChange]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {

@@ -511,7 +511,7 @@
         "high": 6446620.5
       },
       "variance": {
-        "low": -5019.5,
+        "low": 0.0,
         "typical": 172.75,
         "high": 11489.5
       }
@@ -1332,9 +1332,9 @@
           "high": 21171829.5
         },
         "variance": {
-          "low": -507.5,
-          "typical": -761.25,
-          "high": -1522.5
+          "low": 0.0,
+          "typical": 0.0,
+          "high": 0.0
         }
       }
     },
@@ -1350,9 +1350,9 @@
         "high": 34923473.5
       },
       "variance": {
-        "low": -507.5,
-        "typical": -761.25,
-        "high": -1522.5
+        "low": 0.0,
+        "typical": 0.0,
+        "high": 0.0
       }
     }
   },
@@ -1371,9 +1371,9 @@
           "high": 1327002.0
         },
         "variance": {
-          "low": -6320.0,
-          "typical": -7268.0,
-          "high": -8532.0
+          "low": 0.0,
+          "typical": 0.0,
+          "high": 0.0
         }
       },
       "cancellation": {
@@ -1405,9 +1405,9 @@
           "high": 32000.0
         },
         "variance": {
-          "low": -3200.0,
-          "typical": -4800.0,
-          "high": -8000.0
+          "low": 0.0,
+          "typical": 0.0,
+          "high": 0.0
         }
       },
       "misconnect_rebook": {

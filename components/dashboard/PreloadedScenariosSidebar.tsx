@@ -36,7 +36,7 @@ export const PRELOADED_SCENARIOS: PreloadedScenarioConfig[] = [
     rawCost: "$181,375 Gross",
     badge: "Benchmark",
     latency: "18.4s Deterministic",
-    metrics: ["48 Pax Protected", "14 Kept Flights", "100% Tail Conservation"],
+    metrics: ["48 Pax Protected", "14 Flights Saved from Cancellation", "Aircraft Routing Intact"],
   },
   {
     id: "multi-disruption-cascade",
@@ -49,7 +49,7 @@ export const PRELOADED_SCENARIOS: PreloadedScenarioConfig[] = [
     rawCost: "$520,000 Gross",
     badge: "Compound",
     latency: "19.8s Multi-Hub",
-    metrics: ["312 Pax Protected", "22 Rescued Flights", "FAR Part 117 Enforced"],
+    metrics: ["312 Pax Protected", "22 Flights Saved from Cancellation", "Crew Rest Rules (FAA) Met"],
   },
   {
     id: "baseline",
@@ -62,7 +62,7 @@ export const PRELOADED_SCENARIOS: PreloadedScenarioConfig[] = [
     rawCost: "$0 Variance",
     badge: "Nominal Baseline",
     latency: "Steady-State",
-    metrics: ["582,410 Legs", "0 Misconnections", "0 Part 117 Breaches"],
+    metrics: ["582,410 Legs", "0 Misconnections", "Crew Rest Rules (FAA) Met"],
   },
 ];
 
