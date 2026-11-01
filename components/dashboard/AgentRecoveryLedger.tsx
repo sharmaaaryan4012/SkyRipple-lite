@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { formatUsd, humanizeActionType, formatSimClock } from "@/lib/format";
 import { RadarDot } from "@/components/ui/RadarDot";
-import { ProgressBar } from "@/components/ui/ProgressBar";
 import type { RecoveryAction, RecoveryResult } from "@/lib/backendClient";
 import type { RecoveryView } from "@/lib/recoveryView";
 import type { ScenarioData, BackendDisruptionRequest, SimulationData } from "@/lib/types";
@@ -104,10 +103,6 @@ export function AgentRecoveryLedger({
   const [constraintInput, setConstraintInput] = useState("");
   const [isInjecting, setIsInjecting] = useState(false);
   const [injectedConstraints, setInjectedConstraints] = useState<{ id: string; text: string; timestamp: string }[]>([]);
-
-  // Simulation Progress state for in-browser resolution
-  const [simState, setSimState] = useState<"idle" | "running" | "done">("idle");
-  const [simProgress, setSimProgress] = useState(0);
 
   const slug = scenario.meta?.scenarioId?.toLowerCase() ?? "";
   const hasMarkers = scenario.disruptionMarkers && scenario.disruptionMarkers.length > 0;
@@ -404,24 +399,6 @@ export function AgentRecoveryLedger({
     setIsInjecting(false);
   }
 
-  // Client-side quick arbitration simulation run
-  function handleRunSimulation() {
-    if (simState === "running") return;
-    setSimState("running");
-    setSimProgress(10);
-    const interval = setInterval(() => {
-      setSimProgress((p) => {
-        if (p >= 100) {
-          clearInterval(interval);
-          setSimState("done");
-          runReplay();
-          return 100;
-        }
-        return p + 30;
-      });
-    }, 250);
-  }
-
   return (
     <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-4 shadow-xl select-none">
       {/* =========================================================
@@ -459,30 +436,8 @@ export function AgentRecoveryLedger({
           >
             {isSimulatingReplay ? "Streaming…" : "Replay"}
           </button>
-
-          {isDisrupted && (
-            <button
-              type="button"
-              onClick={handleRunSimulation}
-              disabled={simState === "running"}
-              className="px-3 py-1 rounded text-[10px] font-mono font-semibold bg-amber-500 hover:bg-amber-400 text-slate-950 transition shadow-sm disabled:opacity-50"
-            >
-              {simState === "running" ? "Arbitrating…" : "Re-Arbitrate"}
-            </button>
-          )}
         </div>
       </div>
-
-      {/* Progress Bar for Active Simulation */}
-      {simState === "running" && (
-        <div className="p-3 rounded-lg bg-slate-950/70 border border-amber-500/40 space-y-2 animate-pulse">
-          <div className="flex items-center justify-between text-xs font-mono">
-            <span className="text-amber-400 font-medium">Agents evaluating Pareto trade-off frontier…</span>
-            <span className="text-white font-bold">{simProgress}%</span>
-          </div>
-          <ProgressBar progress={simProgress / 100} />
-        </div>
-      )}
 
       {/* =========================================================
           SECTION 2: FINANCIAL IMPACT TRACKER (DYNAMIC COST DELTAS)
