@@ -166,6 +166,13 @@ function OverviewTab({
   recoveryAction?: RecoveryAction | null;
   inspectorMode?: boolean;
 }) {
+  const hasPassengers = (flight.passengersOnBoard ?? 0) > 0;
+  const hasTrackedCost = Boolean(
+    (s.directCostUsd && (s.directCostUsd.typical > 0 || s.directCostUsd.high > 0)) ||
+    (s.delayMin != null && s.delayMin > 0) ||
+    (s.severity !== "on_time")
+  );
+
   return (
     <>
       {inspectorMode && (
@@ -222,57 +229,75 @@ function OverviewTab({
         </div>
       )}
 
-      <div className="px-4 py-3 border-b border-slate-800">
-        <p className="font-mono text-xs uppercase tracking-widest text-slate-400 font-semibold mb-2">Passenger Impact</p>
-        <div className="grid grid-cols-2 gap-3">
-          <div className="p-2.5 rounded-lg bg-slate-950/70 border border-slate-800">
-            <p className="font-mono tabular-nums text-xl text-white font-bold">{formatCount(flight.passengersOnBoard)}</p>
-            <p className="text-[11px] text-slate-400 mt-0.5">passengers on board</p>
+      {/* Conditionally render Passenger Impact only when passengers are on board */}
+      {hasPassengers && (
+        <div className="px-4 py-3 border-b border-slate-800">
+          <p className="font-mono text-xs uppercase tracking-widest text-slate-400 font-semibold mb-2">Passenger Impact</p>
+          <div className="grid grid-cols-2 gap-3">
+            <div className="p-2.5 rounded-lg bg-slate-950/70 border border-slate-800">
+              <p className="font-mono tabular-nums text-xl text-white font-bold">{formatCount(flight.passengersOnBoard)}</p>
+              <p className="text-[11px] text-slate-400 mt-0.5">passengers on board</p>
+            </div>
+            <div className="p-2.5 rounded-lg bg-slate-950/70 border border-slate-800">
+              <p className="font-mono tabular-nums text-xl text-blue-400 font-bold">{formatCount(flight.connectingPassengers)}</p>
+              <p className="text-[11px] text-slate-400 mt-0.5">connecting onward</p>
+            </div>
           </div>
-          <div className="p-2.5 rounded-lg bg-slate-950/70 border border-slate-800">
-            <p className="font-mono tabular-nums text-xl text-blue-400 font-bold">{formatCount(flight.connectingPassengers)}</p>
-            <p className="text-[11px] text-slate-400 mt-0.5">connecting onward</p>
-          </div>
-        </div>
 
-        {flight.connectingPassengers > 0 && (
-          <div className="mt-3 pt-3 border-t border-slate-800/80">
-            {b && s.misconnectionsCaused !== b.misconnectionsCaused ? (
-              <>
+          {flight.connectingPassengers > 0 && (
+            <div className="mt-3 pt-3 border-t border-slate-800/80">
+              {b && s.misconnectionsCaused !== b.misconnectionsCaused ? (
+                <>
+                  <p className="text-xs text-slate-200">
+                    This flight&rsquo;s delay caused{" "}
+                    <span className="font-mono tabular-nums text-red-400 font-bold">
+                      {formatCount(s.misconnectionsCaused)} of {formatCount(flight.connectingPassengers)}
+                    </span>{" "}
+                    connecting passenger(s) ({s.misconnectCausedPct ?? 0}%) to miss their connection.
+                  </p>
+                  <p className="text-xs text-slate-400 mt-1.5 font-mono">
+                    Without disruption: <span className="font-mono tabular-nums text-slate-300">{formatCount(b.misconnectionsCaused)}</span> would misconnect ({b.misconnectCausedPct ?? 0}%).
+                  </p>
+                </>
+              ) : (
                 <p className="text-xs text-slate-200">
-                  This flight&rsquo;s delay caused{" "}
                   <span className="font-mono tabular-nums text-red-400 font-bold">
                     {formatCount(s.misconnectionsCaused)} of {formatCount(flight.connectingPassengers)}
                   </span>{" "}
-                  connecting passenger(s) ({s.misconnectCausedPct ?? 0}%) to miss their connection.
+                  connecting passenger(s) ({s.misconnectCausedPct ?? 0}%) missed their connection because of this flight.
                 </p>
-                <p className="text-xs text-slate-400 mt-1.5 font-mono">
-                  Without disruption: <span className="font-mono tabular-nums text-slate-300">{formatCount(b.misconnectionsCaused)}</span> would misconnect ({b.misconnectCausedPct ?? 0}%).
-                </p>
-              </>
-            ) : (
-              <p className="text-xs text-slate-200">
-                <span className="font-mono tabular-nums text-red-400 font-bold">
-                  {formatCount(s.misconnectionsCaused)} of {formatCount(flight.connectingPassengers)}
-                </span>{" "}
-                connecting passenger(s) ({s.misconnectCausedPct ?? 0}%) missed their connection because of this flight.
-              </p>
-            )}
-          </div>
-        )}
-      </div>
+              )}
+            </div>
+          )}
+        </div>
+      )}
 
-      <div className="px-4 py-3">
-        <p className="font-mono text-xs uppercase tracking-widest text-slate-400 font-semibold mb-2">Direct Cost Impact</p>
-        {s.directCostUsd ? (
-          <RangeValue low={s.directCostUsd.low} typical={s.directCostUsd.typical} high={s.directCostUsd.high} tone="neutral" size="base" />
-        ) : (
-          <p className="text-xs text-slate-400 font-mono">Not tracked for this flight.</p>
-        )}
-        <p className="text-[11px] text-slate-400 mt-1.5">
-          This flight&rsquo;s own operating/cancellation/crew/delay cost. Excludes downstream hotel accommodations and cross-carrier passenger rebooking.
-        </p>
-      </div>
+      {/* Conditionally render Direct Cost Impact only when tracked costs or active disruption exist */}
+      {hasTrackedCost && (
+        <div className="px-4 py-3">
+          <p className="font-mono text-xs uppercase tracking-widest text-slate-400 font-semibold mb-2">Direct Cost Impact</p>
+          {s.directCostUsd ? (
+            <RangeValue low={s.directCostUsd.low} typical={s.directCostUsd.typical} high={s.directCostUsd.high} tone="neutral" size="base" />
+          ) : (
+            <p className="text-xs text-slate-300 font-mono">Disruption delay penalty tracked.</p>
+          )}
+          <p className="text-[11px] text-slate-400 mt-1.5">
+            This flight&rsquo;s own operating/cancellation/crew/delay cost. Excludes downstream hotel accommodations and cross-carrier passenger rebooking.
+          </p>
+        </div>
+      )}
+
+      {/* Clean nominal state indicator when no disruptions, costs, or passenger anomalies exist */}
+      {!hasPassengers && !hasTrackedCost && (
+        <div className="px-4 py-3 text-xs text-slate-400 font-sans leading-relaxed">
+          <p className="font-mono text-[11px] uppercase tracking-widest text-slate-400 font-semibold mb-1">
+            Nominal Operations
+          </p>
+          <p>
+            Flight is operating strictly on published schedule with zero delay contagion or cost variance.
+          </p>
+        </div>
+      )}
     </>
   );
 }
