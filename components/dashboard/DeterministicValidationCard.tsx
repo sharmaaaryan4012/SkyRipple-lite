@@ -81,7 +81,7 @@ export function DeterministicValidationCard({
         <div className="flex items-center gap-2.5 min-w-0">
           <span
             className={`w-2 h-2 rounded-full shrink-0 ${
-              isBaseline ? "bg-emerald-400" : "bg-amber-400"
+              isBaseline ? "bg-slate-400" : "bg-amber-400"
             }`}
           />
           <div>
@@ -97,7 +97,7 @@ export function DeterministicValidationCard({
         <span
           className={`text-[10px] font-mono px-2 py-0.5 rounded border shrink-0 font-medium ${
             isBaseline
-              ? "text-emerald-400 bg-emerald-950/40 border-emerald-800/50"
+              ? "text-slate-300 bg-slate-950/60 border-slate-800"
               : "text-amber-400 bg-amber-950/40 border-amber-800/50"
           }`}
         >
@@ -129,7 +129,7 @@ export function DeterministicValidationCard({
           <span className="text-[10px] text-slate-500 font-mono uppercase tracking-wider block">
             Resolution Latency
           </span>
-          <span className="text-xl font-bold font-mono text-emerald-400 block mt-1">
+          <span className="text-xl font-bold font-mono text-white block mt-1">
             {validation.latency}
           </span>
           <span className="text-[10px] text-slate-500 font-mono block mt-0.5">
@@ -147,22 +147,22 @@ export function DeterministicValidationCard({
         <div className="space-y-1.5 text-xs font-mono">
           <div className="flex items-center justify-between p-2.5 rounded-lg bg-slate-950/40 border border-slate-800/70 hover:border-slate-700 transition-colors">
             <span className="text-slate-300 font-sans">Aircraft Routing Intact</span>
-            <span className="text-emerald-400 font-medium">100% (0 Orphan Tails)</span>
+            <span className="text-slate-300 font-medium">100% (0 Orphan Tails)</span>
           </div>
 
           <div className="flex items-center justify-between p-2.5 rounded-lg bg-slate-950/40 border border-slate-800/70 hover:border-slate-700 transition-colors">
             <span className="text-slate-300 font-sans">Crew Rest Rules (FAA) Met</span>
-            <span className="text-emerald-400 font-medium">0 Breaches (Rest Enforced)</span>
+            <span className="text-slate-300 font-medium">0 Breaches (Rest Enforced)</span>
           </div>
 
           <div className="flex items-center justify-between p-2.5 rounded-lg bg-slate-950/40 border border-slate-800/70 hover:border-slate-700 transition-colors">
             <span className="text-slate-300 font-sans">Passenger Flow Conservation</span>
-            <span className="text-emerald-400 font-medium">{validation.protectedPax}</span>
+            <span className={validation.saving > 0 ? "text-amber-400 font-medium" : "text-slate-300 font-medium"}>{validation.protectedPax}</span>
           </div>
 
           <div className="flex items-center justify-between p-2.5 rounded-lg bg-slate-950/40 border border-slate-800/70 hover:border-slate-700 transition-colors">
             <span className="text-slate-300 font-sans">Flights Saved from Cancellation</span>
-            <span className={validation.saving > 0 ? "text-amber-400 font-medium" : "text-emerald-400 font-medium"}>
+            <span className={validation.saving > 0 ? "text-amber-400 font-medium" : "text-slate-300 font-medium"}>
               {validation.cancellations}
             </span>
           </div>
@@ -184,7 +184,7 @@ export function DeterministicValidationCard({
         </span>
         <span>
           Post-Arbitration:{" "}
-          <strong className={validation.saving > 0 ? "text-amber-400" : "text-emerald-400"}>
+          <strong className={validation.saving > 0 ? "text-amber-400" : "text-white"}>
             {formatUsd(validation.after)}
           </strong>
         </span>
