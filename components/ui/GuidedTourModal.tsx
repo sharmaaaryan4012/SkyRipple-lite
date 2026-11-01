@@ -26,7 +26,7 @@ const TOUR_STEPS: TourStep[] = [
     badge: "STEP 01 OF 03 • SYSTEM PURPOSE",
     title: "Welcome to SkyRipple",
     description:
-      "Welcome to SkyRipple. This is not just a flight tracker—it is an AI-driven Operations Control Center (OCC) simulator that resolves cascading airline delays.",
+      "Welcome to SkyRipple. This is not just a flight tracker. It is an AI-driven Operations Control Center (OCC) simulator that resolves cascading airline delays.",
     callout:
       "Unlike simple radar maps that only show past GPS positions, SkyRipple simulates nationwide schedule cascades across 582,410 flights using discrete-event mathematical engines.",
     icon: (
@@ -136,7 +136,7 @@ export function GuidedTourModal({
       role="dialog"
       aria-modal="true"
       aria-label="SkyRipple Guided Tour"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-150"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-150"
     >
       <div className="relative w-full max-w-lg bg-slate-900 border border-slate-700/80 rounded-2xl shadow-2xl overflow-hidden select-none animate-in zoom-in-95 duration-150">
         {/* Header Bar */}
@@ -172,7 +172,7 @@ export function GuidedTourModal({
 
           <div className="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800/90 text-xs text-slate-300 leading-relaxed font-sans">
             <span className="text-amber-400 font-semibold font-mono block mb-1">
-              KEY OCC TAKEAWAY
+              KEY TAKEAWAY
             </span>
             {step.callout}
           </div>
@@ -250,3 +250,4 @@ export function GuidedTourModal({
 }
 
 export default GuidedTourModal;
+
