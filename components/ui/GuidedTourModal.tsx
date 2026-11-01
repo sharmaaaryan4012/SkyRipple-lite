@@ -23,12 +23,12 @@ interface TourStep {
 const TOUR_STEPS: TourStep[] = [
   {
     stepNumber: 1,
-    badge: "STEP 01 OF 03 • SYSTEM PURPOSE",
-    title: "Welcome to SkyRipple",
+    badge: "TAB 01 OF 03 • TACTICAL RADAR",
+    title: "Welcome to SkyRipple OCC",
     description:
-      "Welcome to SkyRipple. This is not just a flight tracker. It is an AI-driven Operations Control Center (OCC) simulator that resolves cascading airline delays.",
+      "Welcome to SkyRipple. This is not just a flight tracker. It is an AI-driven Operations Control Center (OCC) simulator that resolves cascading airline delays across 582,410 flights.",
     callout:
-      "Unlike simple radar maps that only show past GPS positions, SkyRipple simulates nationwide schedule cascades across 582,410 flights using discrete-event mathematical engines.",
+      "Unlike simple radar maps that only track past GPS positions, SkyRipple simulates nationwide schedule cascades and turn delays across 340 airports using discrete-event engines. Select a disruption scenario in the right rail to begin.",
     icon: (
       <svg className="w-6 h-6 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="12" cy="12" r="10" />
@@ -37,34 +37,36 @@ const TOUR_STEPS: TourStep[] = [
         <circle cx="12" cy="12" r="4" />
       </svg>
     ),
+    actionText: "Explore Tactical Radar (Tab 01)",
     actionWorkspace: "radar",
   },
   {
     stepNumber: 2,
-    badge: "STEP 02 OF 03 • THE PROBLEM",
-    title: "Select an Operational Scenario",
+    badge: "TAB 02 OF 03 • FINANCIAL & CARRIER ANALYTICS",
+    title: "Analyze Airspace Financial Exposure",
     description:
-      "Explore how severe airspace disruptions cascade across airline schedules. Use the Preloaded Scenarios selector in the right rail to load realistic incident benchmarks.",
+      "Switch to Tab 02 to inspect the compounding economic cost of airspace delays. Explore cumulative cost timeseries, airline exposure distributions, and passenger misconnection metrics in the Bento-box analytics suite.",
     callout:
-      "Select 'Chicago O'Hare (ORD) Runway Closure' to see a 60% runway capacity reduction spark widespread flight delays, missed passenger connections, and crew duty timeouts.",
+      "Pinpoint which airlines bear the heaviest delay penalties and examine how runway constraints at hub airports cascade into multi-carrier financial exposure.",
     icon: (
       <svg className="w-6 h-6 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
-        <line x1="12" y1="9" x2="12" y2="13" />
-        <line x1="12" y1="17" x2="12.01" y2="17" />
+        <line x1="18" y1="20" x2="18" y2="10" />
+        <line x1="12" y1="20" x2="12" y2="4" />
+        <line x1="6" y1="20" x2="6" y2="14" />
+        <line x1="2" y1="20" x2="22" y2="20" />
       </svg>
     ),
-    actionText: "View Scenarios in Tactical Radar",
-    actionWorkspace: "radar",
+    actionText: "View Financial Analytics (Tab 02)",
+    actionWorkspace: "analytics",
   },
   {
     stepNumber: 3,
-    badge: "STEP 03 OF 03 • THE SOLUTION",
+    badge: "TAB 03 OF 03 • EXPLAINABILITY & SAFETY AUDIT",
     title: "Watch 5 Autonomous Agents Recover the Airspace",
     description:
-      "Switch to Tab 03 ('Explainability & Audit') to watch the 5 agents negotiate the recovery and prove mathematically that zero FAA Part 117 limits or rotations are violated.",
+      "Switch to Tab 03 to watch 5 autonomous OCC agents negotiate trade-offs in real time, proving mathematically that zero FAA Part 117 limits or aircraft rotations are broken while recovering over $145K in delay costs.",
     callout:
-      "Aircraft, Crew, Passenger, Gate, and Duty Manager controllers arbitrate trade-offs in under 20 seconds, successfully recovering over $145K in delay costs.",
+      "Aircraft, Crew, Passenger, Gate, and Duty Manager controllers arbitrate complex multi-hub constraints in under 20 seconds with 100% deterministic safety verification.",
     icon: (
       <svg className="w-6 h-6 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
@@ -82,6 +84,16 @@ export function GuidedTourModal({
   onSwitchWorkspace,
 }: GuidedTourModalProps) {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
+
+  // Reset to first step and switch to radar on open
+  useEffect(() => {
+    if (open) {
+      setCurrentStepIndex(0);
+      if (onSwitchWorkspace) {
+        onSwitchWorkspace("radar");
+      }
+    }
+  }, [open, onSwitchWorkspace]);
 
   // Close on Escape key
   useEffect(() => {
@@ -125,11 +137,7 @@ export function GuidedTourModal({
     if (step.actionWorkspace && onSwitchWorkspace) {
       onSwitchWorkspace(step.actionWorkspace);
     }
-    if (isLast) {
-      onClose();
-    } else {
-      handleNext();
-    }
+    onClose();
   };
 
   return (
