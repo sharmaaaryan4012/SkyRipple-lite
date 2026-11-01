@@ -197,8 +197,8 @@ export function ControlRoomApp({
               }
               auditSlot={
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
-                  {/* Left Column: Deterministic Invariant Proofs */}
-                  <div className="space-y-4">
+                  {/* Left Column: Deterministic Invariant Proofs (Sticky) */}
+                  <div className="lg:sticky lg:top-6 lg:self-start space-y-4">
                     <DeterministicValidationCard
                       scenario={data.scenario}
                       recovery={recovery}
@@ -207,7 +207,7 @@ export function ControlRoomApp({
                   </div>
 
                   {/* Right Column: 5-Agent Arbitration Engine */}
-                  <div className="space-y-4">
+                  <div className="space-y-4 min-w-0">
                     <AgentRecoveryLedger
                       key={`audit-${activeKey}`}
                       scenario={data.scenario}
