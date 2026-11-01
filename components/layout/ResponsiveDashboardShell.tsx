@@ -290,21 +290,7 @@ export function ResponsiveDashboardShell({
             </aside>
           </div>
 
-          {/* VIEW 2: Explainability & Deterministic Audit (Two-Column Engine Room) */}
-          {currentWorkspace === "audit" && (
-            <div
-              id="workspace-panel-audit"
-              role="tabpanel"
-              aria-labelledby="workspace-tab-audit"
-              className="flex-1 min-h-0 overflow-y-auto bg-page px-4 sm:px-6 py-6"
-            >
-              <div className="max-w-[1720px] w-full mx-auto pb-12 animate-in fade-in duration-150">
-                {auditSlot}
-              </div>
-            </div>
-          )}
-
-          {/* VIEW 3: Financial & Carrier Analytics (12-Col Bento Grid) */}
+          {/* VIEW 2: Financial & Carrier Analytics (12-Col Bento Grid) */}
           {currentWorkspace === "analytics" && (
             <div
               id="workspace-panel-analytics"
@@ -314,6 +300,20 @@ export function ResponsiveDashboardShell({
             >
               <div className="max-w-[1720px] w-full mx-auto pb-12 animate-in fade-in duration-150">
                 {analyticsSlot}
+              </div>
+            </div>
+          )}
+
+          {/* VIEW 3: Explainability & Deterministic Audit (Two-Column Engine Room) */}
+          {currentWorkspace === "audit" && (
+            <div
+              id="workspace-panel-audit"
+              role="tabpanel"
+              aria-labelledby="workspace-tab-audit"
+              className="flex-1 min-h-0 overflow-y-auto bg-page px-4 sm:px-6 py-6"
+            >
+              <div className="max-w-[1720px] w-full mx-auto pb-12 animate-in fade-in duration-150">
+                {auditSlot}
               </div>
             </div>
           )}
@@ -347,7 +347,7 @@ export function ResponsiveDashboardShell({
                 </div>
 
                 <div className="grid grid-cols-3 gap-1 p-1.5 bg-slate-950/80 border-b border-slate-800 shrink-0 text-xs font-mono font-medium">
-                  {(["ledger", "audit", "analytics"] as MobileTab[]).map((tab) => (
+                  {(["ledger", "analytics", "audit"] as MobileTab[]).map((tab) => (
                     <button
                       key={tab}
                       onClick={() => {
@@ -360,15 +360,15 @@ export function ResponsiveDashboardShell({
                           : "text-slate-400 hover:text-slate-200 bg-slate-900/60 hover:bg-slate-800 border border-transparent"
                       }`}
                     >
-                      {tab === "ledger" ? "Scenarios" : tab === "audit" ? "Audit" : "Analytics"}
+                      {tab === "ledger" ? "Scenarios" : tab === "analytics" ? "Analytics" : "Audit"}
                     </button>
                   ))}
                 </div>
 
                 <div className="flex-1 overflow-y-auto p-3 space-y-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
                   {activeTab === "ledger" && controlsSlot}
-                  {activeTab === "audit" && auditSlot}
                   {activeTab === "analytics" && analyticsSlot}
+                  {activeTab === "audit" && auditSlot}
                 </div>
               </div>
             </div>
@@ -423,21 +423,6 @@ export function ResponsiveDashboardShell({
                   <button
                     type="button"
                     onClick={() => {
-                      setActiveTab("audit");
-                      handleWorkspaceChange("audit");
-                      if (drawerSnap === "peek") setDrawerSnap("half");
-                    }}
-                    className={`min-h-[44px] rounded-xl text-xs font-mono transition flex items-center justify-center ${
-                      activeTab === "audit"
-                        ? "bg-blue-900/30 text-blue-400 border border-blue-700/50 shadow-sm font-semibold"
-                        : "text-slate-400 hover:text-slate-200 bg-slate-900/60 hover:bg-slate-800 border border-transparent"
-                    }`}
-                  >
-                    Audit
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
                       setActiveTab("analytics");
                       handleWorkspaceChange("analytics");
                       if (drawerSnap === "peek") setDrawerSnap("half");
@@ -450,12 +435,27 @@ export function ResponsiveDashboardShell({
                   >
                     Analytics
                   </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setActiveTab("audit");
+                      handleWorkspaceChange("audit");
+                      if (drawerSnap === "peek") setDrawerSnap("half");
+                    }}
+                    className={`min-h-[44px] rounded-xl text-xs font-mono transition flex items-center justify-center ${
+                      activeTab === "audit"
+                        ? "bg-blue-900/30 text-blue-400 border border-blue-700/50 shadow-sm font-semibold"
+                        : "text-slate-400 hover:text-slate-200 bg-slate-900/60 hover:bg-slate-800 border border-transparent"
+                    }`}
+                  >
+                    Audit
+                  </button>
                 </div>
 
                 <div className="flex-1 overflow-y-auto p-3.5 space-y-3 pb-[max(1rem,env(safe-area-inset-bottom))]">
                   {activeTab === "ledger" && controlsSlot}
-                  {activeTab === "audit" && auditSlot}
                   {activeTab === "analytics" && analyticsSlot}
+                  {activeTab === "audit" && auditSlot}
                 </div>
               </div>
             </div>
