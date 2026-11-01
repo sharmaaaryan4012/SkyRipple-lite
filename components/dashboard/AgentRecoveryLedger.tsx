@@ -635,7 +635,7 @@ export function AgentRecoveryLedger({
         {/* FEED BODY */}
         {viewMode === "cards" ? (
           /* Card-based Feed */
-          <div className={`space-y-2.5 overflow-y-auto pr-1 ${expandedMode ? "max-h-[580px]" : "max-h-[300px]"}`}>
+          <div className={`space-y-2.5 overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-slate-700 ${expandedMode ? "max-h-[580px]" : "max-h-[300px]"}`}>
             {filteredLogs.map((msg) => {
               const cfg = AGENT_CONFIG[msg.role];
               return (
@@ -715,7 +715,7 @@ export function AgentRecoveryLedger({
           </div>
         ) : (
           /* Terminal Feed View */
-          <div className={`p-3 rounded-lg bg-slate-950 border border-slate-800 font-mono text-[10px] leading-relaxed overflow-y-auto space-y-1.5 pr-1 ${expandedMode ? "max-h-[580px]" : "max-h-[300px]"}`}>
+          <div className={`p-3 rounded-lg bg-slate-950 border border-slate-800 font-mono text-[10px] leading-relaxed overflow-y-auto space-y-1.5 pr-1 scrollbar-thin scrollbar-thumb-slate-700 ${expandedMode ? "max-h-[580px]" : "max-h-[300px]"}`}>
             <div className="text-slate-500 border-b border-slate-800 pb-1.5 flex items-center justify-between">
               <span>OCC MULTI-AGENT ARBITRATION AUDIT STREAM</span>
               <span className="text-slate-400 font-medium">LIVE STREAM</span>
