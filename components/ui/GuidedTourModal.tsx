@@ -37,6 +37,7 @@ const TOUR_STEPS: TourStep[] = [
         <circle cx="12" cy="12" r="4" />
       </svg>
     ),
+    actionWorkspace: "radar",
   },
   {
     stepNumber: 2,
@@ -61,7 +62,7 @@ const TOUR_STEPS: TourStep[] = [
     badge: "STEP 03 OF 03 • THE SOLUTION",
     title: "Watch 5 Autonomous Agents Recover the Airspace",
     description:
-      "Switch to the 'Explainability & Audit' view to watch the 5 agents negotiate the recovery and prove mathematically that zero FAA Part 117 limits or rotations are violated.",
+      "Switch to Tab 03 ('Explainability & Audit') to watch the 5 agents negotiate the recovery and prove mathematically that zero FAA Part 117 limits or rotations are violated.",
     callout:
       "Aircraft, Crew, Passenger, Gate, and Duty Manager controllers arbitrate trade-offs in under 20 seconds, successfully recovering over $145K in delay costs.",
     icon: (
@@ -70,7 +71,7 @@ const TOUR_STEPS: TourStep[] = [
         <path d="m9 12 2 2 4-4" />
       </svg>
     ),
-    actionText: "Open Explainability & Audit View",
+    actionText: "Open Explainability & Audit (Tab 03)",
     actionWorkspace: "audit",
   },
 ];

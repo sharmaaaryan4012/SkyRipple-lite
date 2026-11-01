@@ -21,7 +21,7 @@ export interface FinancialAnalyticsViewProps {
 }
 
 /**
- * Workspace 3: Financial & Carrier Analytics.
+ * Workspace 02: Financial & Carrier Analytics.
  * Bento-box CSS Grid (grid-cols-12):
  * - Top Row: 4 compact KPI cards (Cost Above Normal, Delay Mins, Cancellations, Pax Misconnected) spanning 3 cols each
  * - Middle Row: CostTimeseriesChart (8 cols) + CarrierDonutChart (4 cols) with interactive hover tooltips
