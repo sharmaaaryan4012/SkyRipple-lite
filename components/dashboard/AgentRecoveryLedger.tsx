@@ -432,7 +432,7 @@ export function AgentRecoveryLedger({
           {isDisrupted ? (
             <RadarDot size="sm" />
           ) : (
-            <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0" />
+            <span className="w-2 h-2 rounded-full bg-slate-400 shrink-0" />
           )}
           <div className="min-w-0">
             <div className="flex items-center gap-2">
@@ -494,7 +494,7 @@ export function AgentRecoveryLedger({
             className={`px-2 py-0.5 rounded font-mono font-medium ${
               totalSaved > 0
                 ? "text-amber-400 bg-amber-950/40 border border-amber-800/50"
-                : "text-emerald-400 bg-emerald-950/40 border border-emerald-800/50"
+                : "text-slate-300 bg-slate-950/60 border border-slate-800"
             }`}
           >
             {isDisrupted ? `${recoveryEfficiency}% Cost Mitigated` : "Schedule On-Time (100%)"}
@@ -563,7 +563,7 @@ export function AgentRecoveryLedger({
                 />
               </>
             ) : (
-              <div className="h-full w-full bg-emerald-500/50" />
+              <div className="h-full w-full bg-slate-800" />
             )}
           </div>
           <div className="flex items-center justify-between text-[10px] font-mono text-slate-400 px-0.5">
@@ -573,7 +573,7 @@ export function AgentRecoveryLedger({
                 <span>Residual Loss: <strong className="text-rose-400 font-semibold">{formatUsd(netRecoveredCost)}</strong></span>
               </>
             ) : (
-              <span>Published Schedule Active &bull; <span className="text-emerald-400 font-medium">Nominal Airspace Baseline</span></span>
+              <span>Published Schedule Active &bull; <span className="text-slate-300 font-medium">Nominal Airspace Baseline</span></span>
             )}
           </div>
         </div>
@@ -718,7 +718,7 @@ export function AgentRecoveryLedger({
           <div className={`p-3 rounded-lg bg-slate-950 border border-slate-800 font-mono text-[10px] leading-relaxed overflow-y-auto space-y-1.5 pr-1 ${expandedMode ? "max-h-[580px]" : "max-h-[300px]"}`}>
             <div className="text-slate-500 border-b border-slate-800 pb-1.5 flex items-center justify-between">
               <span>OCC MULTI-AGENT ARBITRATION AUDIT STREAM</span>
-              <span className="text-emerald-400 font-medium">LIVE STREAM</span>
+              <span className="text-slate-400 font-medium">LIVE STREAM</span>
             </div>
             {filteredLogs.map((msg, i) => {
               const cfg = AGENT_CONFIG[msg.role];
@@ -851,7 +851,7 @@ export function AgentRecoveryLedger({
           className={`text-[10px] font-mono px-2.5 py-0.5 rounded border shrink-0 font-medium ${
             totalSaved > 0
               ? "text-amber-400 bg-amber-950/40 border-amber-800/50"
-              : "text-emerald-400 bg-emerald-950/40 border-emerald-800/50"
+              : "text-slate-300 bg-slate-950/60 border border-slate-800"
           }`}
         >
           {isDisrupted ? "Plan Approved" : "Airspace Nominal"}

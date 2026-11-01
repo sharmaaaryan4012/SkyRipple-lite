@@ -196,64 +196,38 @@ export function ControlRoomApp({
                 />
               }
               auditSlot={
-                <div className="space-y-6">
-                  {/* Workspace 2 Header */}
-                  <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-xl">
-                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-4">
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <span className="w-2 h-2 rounded-full bg-blue-400" />
-                          <span className="text-[11px] font-mono font-semibold uppercase tracking-widest text-blue-400">
-                            Workspace 02 &bull; Engine Room: Explainability &amp; Audit
-                          </span>
-                        </div>
-                        <h2 className="text-lg font-bold text-white tracking-tight font-sans mt-1">
-                          AI Recovery Log &amp; Safety Audit
-                        </h2>
-                      </div>
-                      <span className="px-2.5 py-1 rounded bg-slate-950 border border-slate-800 text-xs font-mono text-emerald-400 self-start md:self-auto font-medium">
-                        BTS Audit: 582,410 Records Verified
-                      </span>
-                    </div>
-                    <p className="text-xs text-slate-300 leading-relaxed mt-3 max-w-5xl font-sans">
-                      Real-time multi-agent arbitration engine arbitrating trade-offs across Aircraft, Crew, Passenger, Gate, and Duty Manager controllers. The discrete-event solver outputs are verified on every step against FAA crew rest rules and intact aircraft routing.
-                    </p>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+                  {/* Left Column: Deterministic Invariant Proofs */}
+                  <div className="space-y-4">
+                    <DeterministicValidationCard
+                      scenario={data.scenario}
+                      recovery={recovery}
+                      isCleanBoot={isCleanBoot}
+                    />
                   </div>
 
-                  {/* Two-Column 50/50 Split Workspace */}
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
-                    {/* Left Column: Deterministic Invariant Proofs */}
-                    <div className="space-y-4">
-                      <DeterministicValidationCard
-                        scenario={data.scenario}
-                        recovery={recovery}
-                        isCleanBoot={isCleanBoot}
-                      />
-                    </div>
-
-                    {/* Right Column: 5-Agent Arbitration Engine */}
-                    <div className="space-y-4">
-                      <AgentRecoveryLedger
-                        key={`audit-${activeKey}`}
-                        scenario={data.scenario}
-                        recovery={recovery}
-                        isCleanBoot={isCleanBoot}
-                        activeDisruptions={active.disruptions}
-                        day={data.scenario.meta.day}
-                        defaultViewMode="cards"
-                        expandedMode={true}
-                        onRecoveryDone={(result) =>
-                          setRecovery(
-                            buildRecoveryView(
-                              result,
-                              recoveryResultToSimulationData(result),
-                              data.scenario.impactSummary
-                            )
+                  {/* Right Column: 5-Agent Arbitration Engine */}
+                  <div className="space-y-4">
+                    <AgentRecoveryLedger
+                      key={`audit-${activeKey}`}
+                      scenario={data.scenario}
+                      recovery={recovery}
+                      isCleanBoot={isCleanBoot}
+                      activeDisruptions={active.disruptions}
+                      day={data.scenario.meta.day}
+                      defaultViewMode="cards"
+                      expandedMode={true}
+                      onRecoveryDone={(result) =>
+                        setRecovery(
+                          buildRecoveryView(
+                            result,
+                            recoveryResultToSimulationData(result),
+                            data.scenario.impactSummary
                           )
-                        }
-                        onActivateLive={activateLive}
-                      />
-                    </div>
+                        )
+                      }
+                      onActivateLive={activateLive}
+                    />
                   </div>
                 </div>
               }
