@@ -75,3 +75,4 @@ z-0:    Map Canvas / Switcher Center Container (auto)
 2. **Standardize Layer Stacking via CSS Variables:** Establish a strict 6-tier z-index scale:
    `--z-base: 0`, `--z-overlay: 10`, `--z-sticky: 20`, `--z-header: 30`, `--z-drawer: 40`, `--z-modal: 50`.
 3. **Enforce Semantic Palette Rules:** Restrict `emerald` exclusively to on-time/recovered states, `amber` to moderate delays/warnings, and `rose` to ground stops/severe cancellations. Navigation buttons must use neutral slate highlights (`bg-slate-800 text-white`).
+

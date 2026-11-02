@@ -92,3 +92,4 @@ SimulationProvider (Yields data & error)
 2. **Convert `SimulationProvider` to Context:** Replace the render-prop pattern with a true `SimulationContext.Provider`. Components like `MapPanel`, `FlightDeck`, and `FinancialAnalyticsView` can consume telemetry directly via `useSimulation()`, eliminating 150+ lines of prop plumbing in `ControlRoomApp`.
 3. **Delete Dead Files:** Safely remove `AgentArbitrationFeed.tsx`.
 4. **Isolate Desktop Drag & Mobile Drawer Hooks:** Extract mouse drag logic into `useSidebarResize.ts` and touch drawer state into `useMobileDrawer.ts` to reduce `ResponsiveDashboardShell.tsx` to under 180 lines.
+

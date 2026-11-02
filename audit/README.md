@@ -48,3 +48,4 @@ This directory contains the comprehensive findings of the frontend architecture 
 | **P1** | UX Ergonomics | View 2 KPI redundancy & asymmetric scroll void | Remove duplicated financial cards from `AgentRecoveryLedger`; let validation card own KPIs | `AgentRecoveryLedger.tsx` |
 | **P2** | Design System | Legacy token collision (`gold`, `aubergine`, `surface`) | Consolidate entire styling system into Tailwind `slate-950/900/800` | `tailwind.config.ts`, `FlightDeck.tsx` |
 | **P2** | Architecture | Prop drilling from `SimulationProvider` render prop | Refactor `SimulationProvider` to expose `useSimulation()` Context hook | `SimulationProvider.tsx`, `ControlRoomApp.tsx` |
+

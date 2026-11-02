@@ -88,3 +88,4 @@ React mounts 500+ Complex Card Nodes
    * `lg:` (1024px–1279px): Show Icon + Short Label ("Radar")
    * `< lg:`: Show Icon Only with hover tooltips
 4. **Adaptive View 2 Grid:** Change `grid-cols-1 lg:grid-cols-2` to `grid-cols-1 xl:grid-cols-2`. On 13-inch displays (1024px–1279px), stack `DeterministicValidationCard` cleanly on top of `AgentRecoveryLedger` rather than squeezing them into two uncomfortably narrow 470px columns.
+

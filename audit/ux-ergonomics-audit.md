@@ -125,3 +125,4 @@ In `CarrierBreakdownTable.tsx` (line 18), if `rows` is empty or all variances ar
 2. **De-duplicate View 2:** Strip the redundant KPI cards (`Unmitigated`, `Net Value Saved`, `Recovered Cost`) out of `AgentRecoveryLedger`. Let `DeterministicValidationCard` own the invariant metrics, and dedicate the right rail solely to the multi-agent arbitration stream.
 3. **Fix Carrier Donut Empty State:** When `totalCost === 0`, render a single neutral concentric slate ring (`#1e293b`) with centered typography: *"Airspace Nominal — $0 Variance"*, suppressing interactive tooltip slices entirely.
 4. **Transparent Constraints Affordance:** Either connect operator constraint injection to a mock recalculation worker or label the injection panel clearly as *"Demonstration Sandbox (Static Simulation Mode)"* with an explicit tooltip explaining that solver re-run requires backend compute.
+
