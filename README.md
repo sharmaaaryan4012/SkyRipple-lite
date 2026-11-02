@@ -1,37 +1,29 @@
-# ✈️ SkyRipple: Distributed Multi-Agent Airspace Disruption & Recovery Simulator
+# SkyRipple-lite
 
-[![Next.js](https://img.shields.io/badge/Next.js-15.1-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
-[![React](https://img.shields.io/badge/React-19.0-61DAFB?style=for-the-badge&logo=react)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
-[![deck.gl](https://img.shields.io/badge/deck.gl-9.3-000000?style=for-the-badge&logo=webgl)](https://deck.gl/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+An interactive Operations Control Center (OCC) simulator and delay-propagation visualizer that models nationwide flight disruptions and autonomous multi-agent consensus recovery at 60 FPS.
 
-> **Live Demo:** [skyripple.saaryan.com](https://skyripple.saaryan.com) &nbsp;|&nbsp; **Portfolio:** [saaryan.com](https://www.saaryan.com) &nbsp;|&nbsp; **Architecture Audits:** [`/audit`](./audit)
+[Live Demo](https://skyripple.saaryan.com) · [Documentation](https://skyripple.saaryan.com/case-study) · [Architecture](#architecture)
 
----
+## Overview
 
-## 📌 Executive Summary
+Commercial airline operations control centers (OCCs) face cascading flight delays when localized disruptions—such as severe weather or runway closures—trigger non-linear knock-on effects across tight aircraft rotations, crew duty limits, and connecting passenger itineraries. Legacy airline recovery workflows rely on siloed, manual dispatcher interventions or slow batch optimizers that cannot simulate nationwide cascade dynamics interactively in real time. SkyRipple-lite solves this by providing a high-performance, client-side simulation engine and autonomous multi-agent arbitration cockpit, enabling operators to explore delay propagation across 582,000+ flights and evaluate mathematically invariant recovery strategies instantaneously.
 
-**SkyRipple** is an agentic US-domestic air traffic delay-propagation engine and interactive Operations Control Center (OCC) simulator. Built on empirical **Bureau of Transportation Statistics (BTS)** ground truth (December 2025 schedule baseline), SkyRipple models how isolated airport disruptions cascade through 582,410 commercial flight legs, quantifies financial loss distributions, and executes multi-agent autonomous recovery under non-negotiable FAA regulatory invariants.
+## Key Results
 
-This repository (`aviation-lite`) hosts the high-performance, client-side **Executive Cockpit interface**, decoupling heavy backend discrete-event simulation (DES) computation into zero-cost, statically optimized telemetry streams rendered at 60 FPS via WebGL (`deck.gl`).
+- **582,410 Flight Legs Across 340 Hubs:** Modeled full-scale US domestic airspace operations spanning 14 major carriers using Bureau of Transportation Statistics (BTS) baseline schedules.
+- **60 FPS Hardware-Accelerated Rendering:** Maintained smooth client-side WebGL telemetry animation across thousands of simultaneous airborne flights via deck.gl instanced rendering.
+- **<20s Consensus Recovery Latency & 100% Invariant Compliance:** Evaluated 5 autonomous OCC recovery agents against FAA Part 117 duty limits and aircraft flow conservation, achieving zero orphan tails and saving $145K–$386K in arbitrated operational cascade costs.
 
-```
-┌────────────────────────────────────────────────────────────────────────────────────────┐
-│                                 KEY SYSTEM BENCHMARKS                                  │
-├────────────────────────┬────────────────────────┬──────────────────────────────────────┤
-│ 582,410 Flight Legs    │ 340 Commercial Hubs    │ 60 FPS WebGL Map Rendering           │
-│ 14 Major US Carriers   │ 5 Autonomous OCC Agents│ < 20s Consensus Recovery Latency     │
-│ 5.19× Cascade Multiplier│ 100% Invariant Checked│ $145K–$386K Arbitrated Value Saved   │
-└────────────────────────┴────────────────────────┴──────────────────────────────────────┘
-```
+## Key Features
 
----
+- **Tactical Airspace Radar (`deck.gl`):** Interactive WebGL nationwide flight visualization with delay severity color grading, tail-number inspection, route trajectory arcs, and continuous 1440-minute temporal scrubbing.
+- **Financial & Carrier Exposure Analytics:** 12-column bento-grid dashboard visualizing cumulative delay cost curves, passenger misconnections, cancellation counts, and per-carrier loss distributions with CSV/JSON ledger exports.
+- **Autonomous Multi-Agent Consensus Recovery:** 5 specialized recovery agents (Aircraft, Crew, Passenger, Gate, and Duty Manager) that negotiate tail swaps, reserve crew dispatch, passenger rebooking, and hardstand assignments under non-negotiable FAA safety invariants.
+- **Multi-Scale Horizon & Scenario Engine:** Instant scenario switching between nominal published schedules, single-hub outages (e.g., Chicago O'Hare capacity cuts), and compound multi-hub winter storms with multi-day horizon scaling (Day, Week, Month).
 
-## 🏗️ High-Level System Architecture
+## Architecture
 
-SkyRipple decouples simulation data generation, mathematical validation, and real-time visualization into a three-tier architecture:
+SkyRipple-lite is architected into three primary tiers: a ground-truth data plane, a discrete-event simulation and multi-agent solver plane, and a high-performance client presentation plane.
 
 ```mermaid
 flowchart TB
@@ -43,23 +35,23 @@ flowchart TB
         FAA --> World
     end
 
-    subgraph SimulationPlane["2. Discrete-Event Engine (DES) & Multi-Agent Solver"]
+    subgraph SimulationPlane["2. Discrete-Event Engine & Multi-Agent Solver"]
         DES["4-Channel Discrete-Event Engine<br/>• Aircraft Rotations (r=+0.6 BTS correlation)<br/>• Crew Duty Limits (FAA Part 117)<br/>• Gate Ramp Allocations<br/>• Dynamic Passenger Misconnections"]
         Agents["5-Agent Autonomous Arbitration<br/>• Aircraft Controller (Tail swaps)<br/>• Crew Controller (Standby dispatch)<br/>• Passenger Controller (Proactive rebook)<br/>• Gate Controller (Hardstand reroutes)<br/>• Duty Manager (Pareto cost objective)"]
-        Verifier["Deterministic Invariant Verifier<br/>(Mathematical Proof: 0 Orphan Tails · 0 Legal Breaches)"]
+        Verifier["Deterministic Invariant Verifier<br/>(0 Orphan Tails · 0 Legal Breaches)"]
         
         World --> DES
         DES --> Agents
         Agents --> Verifier
     end
 
-    subgraph PresentationPlane["3. Client Executive Cockpit (aviation-lite)"]
-        Stream["Statically Rehydrated Telemetry Packets<br/>(JSON Slices · Stale-While-Revalidate)"]
+    subgraph PresentationPlane["3. Client Executive Cockpit (SkyRipple-lite)"]
+        Stream["Statically Optimized Telemetry Streams<br/>(JSON Slices · Stale-While-Revalidate)"]
         State["Simulation Context & Time Cursor Engine<br/>(1440m Scrubbing · 1x/2x/4x Playback)"]
         
-        V1["View 1: Tactical Radar<br/>(deck.gl WebGL Canvas · FlightDeck Horizon)"]
-        V2["View 2: Financial Analytics<br/>(12-Col Bento Grid · Carrier Exposure Donut)"]
-        V3["View 3: Explainability & Audit<br/>(Live Agent Arbitration Ledger · Invariant Checklist)"]
+        V1["Tactical Radar View<br/>(deck.gl WebGL Canvas)"]
+        V2["Financial Analytics View<br/>(Bento Grid · Carrier Donut)"]
+        V3["Explainability View<br/>(Agent Arbitration Ledger)"]
         
         Verifier --> Stream
         Stream --> State
@@ -69,156 +61,137 @@ flowchart TB
     end
 ```
 
----
+### Design Decisions
 
-## 🧠 Core Engineering Innovations & Technical Challenges
+| Decision | Rationale | Trade-off |
+|---|---|---|
+| Client-Side WebGL Rendering (`deck.gl`) | Offloads viewport transformations and flight instancing to the GPU, guaranteeing 60 FPS animation without blocking the main thread. | Requires WebGL-compatible hardware and careful buffer lifecycle management. |
+| Precomputed Scenario Telemetry Streaming | Decouples intensive discrete-event simulations from client devices, allowing instant scenario switching and static CDN hosting. | Limits real-time scenario mutation to pre-calculated parameters and deterministic client-side deltas. |
+| Rule-Bounded Multi-Agent Arbitration | Prevents LLM or agent hallucination by validating all tail swap and crew dispatch proposals against strict FAA Part 117 invariants. | Rejects candidate recovery actions that cannot be formally proven safe by construction. |
+| Synchronized 1440-Minute Time Cursor | Binds map animations, financial cost curves, and recovery event logs to a single temporal clock hook. | Requires global time state coordination across decoupled UI views and controls. |
 
-### 1. High-Density Spatial Telemetry at 60 FPS (`deck.gl` + React 19)
-* **The Challenge:** Animating thousands of simultaneous aircraft across 340 airports on every animation frame throttles the JavaScript main thread when managed with naive DOM or SVG elements.
-* **Engineering Solution:** Implemented hardware-accelerated WebGL instanced rendering via `@deck.gl/react` and `@deck.gl/layers`. Flight coordinates, headings, and delay severity tiers are computed via linear trajectory interpolation over a continuous 1440-minute daily timeline cursor (`lib/timeCursor.tsx`).
-* **Frame Budget Optimization:** Viewport matrix transformations run purely on the GPU. Aircraft hover states are lazily projected and debounced to prevent React re-render thrashing during continuous drag/pan actions.
+## Tech Stack
 
-### 2. Autonomous Multi-Agent Consensus Recovery
-When runway capacity collapses (e.g. Chicago O'Hare 60% capacity cut from 08:00–10:00 CST), delay propagates exponentially through downstream turns (5.19× cascade multiplier). SkyRipple models 5 specialized agents that negotiate multi-dimensional constraints:
-* **Aircraft Controller (`ACFT`):** Identifies turnaround buffer collapse and authorizes tail swaps between inbound and outbound transcon flights at hub concourses.
-* **Crew Controller (`CREW`):** Monitors FAR Part 117 duty limits and dispatches standby reserve flight crews from airport pools before duty-time expiration cliffs are breached.
-* **Passenger Controller (`PAX`):** Detects stranded overnight connecting travelers and triggers cross-carrier seat holds, preventing hotel voucher liabilities.
-* **Gate Controller (`GATE`):** De-conflicts taxiway ramp saturation by reallocating arrivals to hardstands and sequencing dual-tug pushbacks.
-* **Duty Manager (`MGR`):** Evaluates candidate action vectors against a macro objective cost function. The final arbitrated consensus plan is **guaranteed safe by construction**: recovery actions are rejected if their cumulative net operational cost exceeds the unmitigated delay cascade.
+- **Languages:** TypeScript 5.7 (Strict Mode)
+- **Frameworks:** Next.js 15.1 (App Router, Static Export), React 19
+- **Data and storage:** Precomputed JSON telemetry streams, TopoJSON US boundaries, Bureau of Transportation Statistics (BTS) TransStats database
+- **Infrastructure:** Node.js 18+, Tailwind CSS 3.4, PostCSS, Framer Motion 13.1, Recharts 2.15, Playwright 1.62
 
-### 3. Deterministic Invariant Proofs
-Rather than treating LLM decisions as unverified black boxes, the engine validates all recovery outcomes against strict mathematical invariants:
-* **Aircraft Flow Conservation:** Every scheduled aircraft tail ends in a legal turnaround state with 100% rotation continuity (0 orphan tails).
-* **FAA Part 117 Legality Shield:** Rest periods and cumulative flight duty periods strictly enforce zero duty-time infractions.
-* **Passenger Flow Conservation:** Zero dropped itineraries; all rebookings preserve legal minimum connection times (MCT).
+## How It Works
 
-### 4. Continuous Multi-Day Horizon & Temporal Scrubbing
-* Extends beyond single-day toy simulations to support **multi-day schedule continuous cascades** (December multi-hub winter storm).
-* Provides multi-scale time horizon switching (`Day` / `Week` / `Month`), bucketed cost timeseries aggregation, and sub-minute precision scrubbing with keyboard hotkeys (Arrow keys, Space for pause/play, 1x/2x/4x multiplier toggles).
+1. **Schedule Ingestion:** BTS TransStats baseline data is normalized into 582,410 flight legs across 340 airports with linked aircraft tail rotations, crew duty schedules, and passenger connection graphs.
+2. **Disruption Injection:** A disruption scenario (such as a 60% runway capacity reduction at ORD) is introduced, initiating a 5.19× exponential delay cascade across downstream flights.
+3. **Multi-Agent Negotiation:**
+   - **Aircraft Controller (`ACFT`)** detects turnaround buffer collapse and negotiates tail swaps between inbound and outbound transcon flights.
+   - **Crew Controller (`CREW`)** monitors Part 117 flight duty periods and dispatches standby reserve crews before expiration cutoffs.
+   - **Passenger Controller (`PAX`)** flags stranded itineraries and triggers proactive cross-carrier rebooking to avoid hotel voucher liabilities.
+   - **Gate Controller (`GATE`)** de-conflicts ramp saturation by rerouting arrivals to available hardstands.
+   - **Duty Manager (`MGR`)** evaluates all proposed actions against a net Pareto cost function and commits the optimal recovery plan.
+4. **Invariant Verification:** Proposed actions pass through a mathematical invariant checker ensuring 100% rotation continuity (zero orphan tails) and zero legal duty breaches.
+5. **Interactive Visualization:** The updated telemetry is streamed to the client-side cockpit, where users scrub through the 1440-minute daily timeline and inspect spatial, financial, and agent-level impacts.
 
----
-
-## 🔍 Engineering Rigor: Senior UI/UX & Systems Audit
-
-To demonstrate production-grade software craftsmanship, this repository underwent an exhaustive, read-only architectural teardown documented in the [`/audit`](./audit) directory. The audit identifies critical failure modes, layout bottlenecks, and establishes a prioritized engineering roadmap:
-
-| Report | Core Focus & Findings | Strategic Recommendation |
-| :--- | :--- | :--- |
-| **[`ui-design-system-audit.md`](./audit/ui-design-system-audit.md)** | **Dual-Token System Collision:** Coexistence of legacy tokens (`gold`, `aubergine`) and Tailwind `slate`. Identified critical desktop z-index collision where Dev Mode HUD (`z-20`) obscured schedule mode buttons (`z-10`). | Purge legacy tokens; establish strict 6-tier CSS variable z-index scale; enforce semantic colors only for data deltas. |
-| **[`ux-ergonomics-audit.md`](./audit/ux-ergonomics-audit.md)** | **View 2 Redundancy & Empty State Bug:** Identifies metric duplication across validation cards and ledger, plus a critical bug in `CarrierDonutChart.tsx` where nominal operations generated synthetic dummy carrier losses ($45 UAL). | De-duplicate redundant KPI cards; render clean neutral baseline state during nominal operations. |
-| **[`code-consistency-architecture.md`](./audit/code-consistency-architecture.md)** | **Monolithic File Creep:** `AgentRecoveryLedger.tsx` grew to 820 lines; identified 450 lines of unreferenced dead code in `AgentArbitrationFeed.tsx`; prop drilling from `SimulationProvider` render prop. | Decompose ledger into modular sub-components; safely remove dead code; refactor `SimulationProvider` to standard React Context. |
-| **[`responsive-edge-cases.md`](./audit/responsive-edge-cases.md)** | **13-Inch Laptop Viewport Degradation:** Header collisions between brand and 600px workspace switcher; DOM bloat and typing lag under 500+ log stress tests without virtualization. | Implement responsive switcher collapsing (`hidden xl:inline`); virtualize arbitration feeds via `@tanstack/react-virtual`. |
-
----
-
-## 🕹️ Cockpit Views Walkthrough
-
-The simulator is structured into three dedicated executive environments:
-
-### View 1: Tactical Airspace Radar (`/simulation?workspace=radar`)
-* **Interactive WebGL Airspace Canvas:** Real-time nationwide aircraft positions colored by delay severity (ontime, minor, moderate, severe).
-* **Flight Detail Inspector:** Click any aircraft to inspect tail number, origin/destination, current delay minutes, connecting passenger counts, and downstream rotational legs.
-* **FlightDeck Scrubber:** Unified time horizon scope (Day/Week/Month) with synchronized 24-hour cost sparkline and play/pause controls.
-* **Preloaded Scenarios Rail:** Instant switching between single-hub disasters (Chicago O'Hare Runway Closure), compound multi-hub cascades (ORD + Denver Storm), and Nominal Published Baseline.
-
-### View 2: Financial & Carrier Analytics (`/simulation?workspace=analytics`)
-* **12-Column Bento Grid:** Compact KPI summary cards (Cost Above Normal, System Delay Minutes, Flight Cancellations, Passengers Misconnected).
-* **Cumulative Delay Cost Timeseries:** Cost accumulation curve plotted against timestamped disruption trigger markers.
-* **Carrier Exposure Donut Chart:** Proportional delay penalty distribution across major carriers with interactive tooltip inspection.
-* **Carrier Variance Matrix & Data Export:** Granular table breaking down low/typical/high variance ranges by airline with one-click JSON/CSV ledger export.
-
-### View 3: Explainability & Deterministic Audit (`/simulation?workspace=audit`)
-* **Deterministic Invariant Validation Card:** Real-time proofs verifying zero FAA Part 117 breaches, zero orphan tails, and network resolution latency (<20s).
-* **Multi-Agent Arbitration Ledger:** Live stream of autonomous agent proposals with toggleable Card and Raw Terminal modes.
-* **Interactive Constraint Injection Sandbox:** OCC operator console to inject custom operational boundary conditions (e.g. *"Force hold UA1184 15m"* or *"Lock Gate C08"*).
-
----
-
-## 🛠️ Tech Stack & Technical Specifications
-
-| Layer | Technologies | Rationale |
-| :--- | :--- | :--- |
-| **Framework** | Next.js 15.1 (App Router), React 19 | Server-side static generation (`output: export`) for zero-cost hosting and instantaneous page transitions. |
-| **Language** | TypeScript 5.7 (Strict Mode) | Strong typings across 29 entity schemas, flight telemetry packets, and simulation state transitions. |
-| **Visualization** | deck.gl 9.3, Recharts 2.15, TopoJSON | Hardware-accelerated WebGL flight rendering combined with accessible SVG statistical charts. |
-| **Styling** | Tailwind CSS 3.4, PostCSS | Aerospace dark slate aesthetic (`#0A1128`), responsive grid breakpoints, tabular numeral alignment. |
-| **Animation** | Framer Motion 13.1 | Smooth page transitions, collapsible HUD panels, and layout state preservation. |
-| **Testing** | Playwright 1.62, ESLint 9 | End-to-end integration testing for time-scrubbing interactions and automated accessibility audits. |
-
----
-
-## 🚀 Local Development & Setup
+## Getting Started
 
 ### Prerequisites
-* **Node.js:** `>= 18.18.0` (LTS recommended)
-* **Package Manager:** `npm` (or `pnpm` / `bun`)
 
-### 1. Clone the Repository
+- **Node.js:** `>= 18.18.0` (LTS recommended)
+- **Package Manager:** `npm`, `pnpm`, or `bun`
+
+### Installation
+
+Clone the repository and install dependencies:
+
 ```bash
 git clone https://github.com/sharmaaaryan4012/SkyRipple-lite.git
 cd SkyRipple-lite
-```
-
-### 2. Install Dependencies
-```bash
 npm install
 ```
 
-### 3. Run Development Server
+### Configuration
+
+Optionally configure the API base URL in `.env.local` (precomputed scenarios run fully offline by default):
+
+```bash
+NEXT_PUBLIC_API_BASE_URL=http://localhost:8000
+```
+
+### Run
+
+Start the local development server:
+
 ```bash
 npm run dev
 ```
-Open [http://localhost:3000](http://localhost:3000) in your browser. The simulator boots directly into the static baseline simulation.
 
-### 4. Static Export & Production Build
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+To create an optimized production static export:
+
 ```bash
 npm run build
 ```
-This generates a fully optimized, production-grade static build in the `/out` directory, deployable to Cloudflare Pages, Vercel, or AWS S3.
 
----
+The output files are generated in the `/out` directory.
 
-## 📊 Repository Structure
+## Evaluation
+
+- **Dataset:** Bureau of Transportation Statistics (BTS) TransStats baseline schedule (December 2025), encompassing 582,410 commercial flight legs across 340 US commercial airports and 14 major domestic carriers, merged with the FAA Aircraft Registry and OurAirports geographical metadata.
+- **Baselines:** Unmitigated Delay Cascade Baseline (unconstrained exponential delay propagation without OCC intervention) compared against the Nominal Published Baseline.
+- **Metrics:**
+  - *Cascade Multiplier:* Downstream delay propagation factor relative to the root disruption (measured at 5.19× unmitigated).
+  - *Consensus Recovery Latency:* Time elapsed for the 5-agent solver to arbitrate a legally compliant recovery plan (<20 seconds).
+  - *Invariant Violation Rate:* Frequency of FAA Part 117 duty breaches or orphan aircraft tail assignments (0.0%).
+  - *Arbitrated Value Saved:* Net cost reduction achieved by mitigating misconnections, cancellations, and duty timeouts ($145K–$386K per disruption event).
+  - *Rendering Throughput:* Telemetry update rate on the interactive airspace map (sustained 60 FPS).
+- **Results:** The multi-agent solver consistently curtailed delay cascades by cutting downstream propagation while strictly maintaining all regulatory safety and flow conservation invariants.
+
+## Project Structure
 
 ```
-├── app/                          # Next.js App Router root
-│   ├── simulation/page.tsx       # OCC Executive Cockpit primary route
-│   ├── case-study/page.tsx       # Architectural deep-dive & cascade economics
-│   ├── product-journey/page.tsx  # Product iteration & design evolution notes
-│   ├── pitch-deck/page.tsx       # Executive presentation viewer
-│   └── globals.css               # Base styles, safe area rules, scanline animations
-├── audit/                        # Comprehensive Frontend Systems & UX Audits
-│   ├── README.md                 # Audit manifest & prioritized engineering matrix
-│   ├── ui-design-system-audit.md # Token fragmentation & z-index collisions
-│   ├── ux-ergonomics-audit.md    # Cognitive load, click paths, and empty state bugs
-│   ├── code-consistency-architecture.md # Monolithic files & state management
-│   └── responsive-edge-cases.md  # 13" laptop degradation & 500+ log stress tests
+SkyRipple-lite/
+├── app/                          # Next.js App Router routes & layouts
+│   ├── simulation/               # Primary OCC Executive Cockpit route
+│   │   └── page.tsx
+│   ├── case-study/               # Cascade economics & recovery deep-dive
+│   │   └── page.tsx
+│   ├── pitch-deck/               # Executive presentation slide viewer
+│   │   └── page.tsx
+│   ├── product-journey/          # Architecture evolution notes
+│   │   └── page.tsx
+│   ├── globals.css               # Core styling & UI animations
+│   ├── layout.tsx                # Root layout & metadata
+│   └── page.tsx                  # Landing page & scenario router
 ├── components/                   # Modular React UI components
-│   ├── controls/                 # FlightDeck, TimelineScrubber, TopCommandBar, WorkspaceSwitcher
-│   ├── dashboard/                # AgentRecoveryLedger, DeterministicValidationCard, Bento Charts
-│   ├── layout/                   # ResponsiveDashboardShell, ControlRoomShell
-│   ├── map/                      # USMap (deck.gl), AirportDetailPanel, MapPanel
-│   └── ui/                       # GuidedTourModal, MonoStat, RangeValue, RadarDot
-├── lib/                          # Core simulation libraries & state providers
-│   ├── timeCursor.tsx            # Continuous timeline playback engine & hooks
-│   ├── viewWindowContext.tsx     # Day/Week/Month temporal aggregation context
-│   ├── loadScenario.ts           # Precomputed scenario JSON streaming loaders
-│   └── types.ts                  # Comprehensive TypeScript domain interfaces
-└── public/                       # Static assets & precomputed scenario telemetry
+│   ├── controls/                 # FlightDeck scrubber, command bar, workspace switchers
+│   ├── dashboard/                # Agent recovery ledger, validation cards, bento charts
+│   ├── layout/                   # Responsive dashboard shells & control room layouts
+│   ├── map/                      # deck.gl US map canvas, airport panels, radar controls
+│   └── ui/                       # Stat badges, modal dialogs, status indicators
+├── lib/                          # State management, data loading, & utilities
+│   ├── backendClient.ts          # Simulation backend API client
+│   ├── loadScenario.ts           # Precomputed scenario JSON loaders
+│   ├── scenarioRegistry.ts       # Registry of disruption scenarios
+│   ├── timeCursor.tsx            # Continuous timeline playback engine & state hook
+│   ├── types.ts                  # TypeScript domain models and invariant interfaces
+│   └── viewWindowContext.tsx     # Temporal aggregation context (Day/Week/Month)
+├── public/                       # Static assets, media, & scenario data
+│   └── scenarios/                # Precomputed scenario telemetry JSON files
+├── next.config.ts                # Next.js configuration (static export)
+├── package.json                  # Dependencies and build scripts
+├── tailwind.config.ts            # Tailwind CSS design system tokens
+└── tsconfig.json                 # TypeScript strict compiler configuration
 ```
 
----
+## Limitations and Future Work
 
-## 👨‍💻 Author
+- **Current limitations:** Telemetry playback currently utilizes precomputed scenario slices rather than a live in-browser discrete-event solver; weather impacts are represented through airport capacity degradation percentages rather than dynamic convective radar polygons.
+- **Known failure cases:** Heavy scrubbing on devices without hardware WebGL acceleration can lead to momentary frame drops; simultaneous total multi-hub shutdowns may deplete reserve crew pools, triggering unmitigated cancellations.
+- **Planned improvements:** Real-time client-side WebAssembly (WASM) discrete-event simulation engine for user-defined disruptions, live ADS-B flight telemetry integration via WebSockets, and multi-airline collaborative decision-making (CDM) negotiation protocols.
 
-**Aaryan Sharma**  
-*Full-Stack & Systems Engineer*  
-* **Portfolio:** [saaryan.com](https://www.saaryan.com)  
-* **GitHub:** [@sharmaaaryan4012](https://github.com/sharmaaaryan4012)  
-* **Project Overview:** [SkyRipple Case Study](https://skyripple.saaryan.com/case-study)
+## Status and Contributions
 
----
+SkyRipple-lite is an active research and demonstration prototype exploring agentic operations control and real-time spatial visualization in aviation. Contributions, bug reports, and discussions are welcome. Please open an issue or submit a pull request for improvements.
 
-<p align="center">
-  <sub>Built with engineering rigor for the complex dynamics of the skies. ✈️</sub>
-</p>
+## License
+
+This project is licensed under the MIT License.
